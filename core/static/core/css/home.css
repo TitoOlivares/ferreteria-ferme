@@ -1,21 +1,21 @@
-/* Sticky Footer Classes */
+/*!* Sticky Footer Classes *!*/
 
-html,
-body {
-    height: 100%;
-}
+/*html,*/
+/*body {*/
+/*    height: 100%;*/
+/*}*/
 
-#page-content {
-    flex: 1 0 auto;
-}
+/*#page-content {*/
+/*    flex: 1 0 auto;*/
+/*}*/
 
-#sticky-footer {
-    flex-shrink: none;
-}
+/*#sticky-footer {*/
+/*    flex-shrink: none;*/
+/*}*/
 
-/* Other Classes for Page Styling */
+/*!* Other Classes for Page Styling *!*/
 
-body {
-    background: #007bff;
-    background: linear-gradient(to right, #0062E6, #33AEFF);
-}
+/*body {*/
+/*    background: #007bff;*/
+/*    background: linear-gradient(to right, #0062E6, #33AEFF);*/
+/*}*/
