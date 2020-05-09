@@ -20,6 +20,9 @@ class Boleta(models.Model):
         managed = False
         db_table = 'boleta'
 
+    def __str__(self):
+        return 'Boleta nro ' + self.nro_boleta
+
 
 class CatProducto(models.Model):
     id_categoria = models.SmallAutoField(primary_key=True)
@@ -28,6 +31,10 @@ class CatProducto(models.Model):
     class Meta:
         managed = False
         db_table = 'cat_producto'
+        verbose_name_plural = 'Categorías de productos'
+
+    def __str__(self):
+        return self.nombre
 
 
 class DetalleBoleta(models.Model):
@@ -39,6 +46,10 @@ class DetalleBoleta(models.Model):
     class Meta:
         managed = False
         db_table = 'detalle_boleta'
+        verbose_name_plural = 'Detalles de boletas'
+
+    def __str__(self):
+        return 'Boleta nro ' + self.nro_boleta
 
 
 class DetalleFactura(models.Model):
@@ -50,6 +61,10 @@ class DetalleFactura(models.Model):
     class Meta:
         managed = False
         db_table = 'detalle_factura'
+        verbose_name_plural = 'Detalles de facturas'
+
+    def __str__(self):
+        return 'Factura nro ' + self.nro_factura
 
 
 class DetalleOrden(models.Model):
@@ -61,6 +76,10 @@ class DetalleOrden(models.Model):
     class Meta:
         managed = False
         db_table = 'detalle_orden'
+        verbose_name_plural = 'Detalles órdenes de compra'
+
+    def __str__(self):
+        return 'Orden nro ' + self.id_orden
 
 
 class DetalleVenta(models.Model):
@@ -72,6 +91,10 @@ class DetalleVenta(models.Model):
     class Meta:
         managed = False
         db_table = 'detalle_venta'
+        verbose_name_plural = 'Detalles de ventas'
+
+    def __str__(self):
+        return 'Detalle de venta ' + self.id_venta
 
 
 class EstadoOrden(models.Model):
@@ -81,6 +104,10 @@ class EstadoOrden(models.Model):
     class Meta:
         managed = False
         db_table = 'estado_orden'
+        verbose_name_plural = 'Estados de órdenes'
+
+    def __str__(self):
+        return self.descripcion
 
 
 class EstadoVenta(models.Model):
@@ -90,6 +117,10 @@ class EstadoVenta(models.Model):
     class Meta:
         managed = False
         db_table = 'estado_venta'
+        verbose_name_plural = 'Estados de ventas'
+
+    def __str__(self):
+        return self.descripcion
 
 
 class Factura(models.Model):
@@ -110,6 +141,9 @@ class Factura(models.Model):
         managed = False
         db_table = 'factura'
 
+    def __str__(self):
+        return 'Factura nro ' + self.nro_factura
+
 
 class OrdenCompra(models.Model):
     id_orden = models.AutoField(primary_key=True)
@@ -121,6 +155,10 @@ class OrdenCompra(models.Model):
     class Meta:
         managed = False
         db_table = 'orden_compra'
+        verbose_name_plural = 'Órdenes de compras'
+
+    def __str__(self):
+        return 'Orden número ' + self.id_orden
 
 
 class Perfil(models.Model):
@@ -130,6 +168,10 @@ class Perfil(models.Model):
     class Meta:
         managed = False
         db_table = 'perfil'
+        verbose_name_plural = 'Perfiles'
+
+    def __str__(self):
+        return self.nombre
 
 
 class Producto(models.Model):
@@ -147,6 +189,9 @@ class Producto(models.Model):
         managed = False
         db_table = 'producto'
 
+    def __str__(self):
+        return self.nombre
+
 
 class Recepcion(models.Model):
     id_recepcion = models.AutoField(primary_key=True)
@@ -158,7 +203,11 @@ class Recepcion(models.Model):
     class Meta:
         managed = False
         db_table = 'recepcion'
+        verbose_name_plural = "Recepciones"
         unique_together = (('id_recepcion', 'id_orden'),)
+
+    def __str__(self):
+        return 'Recepción orden ' + self.id_orden
 
 
 class Usuario(models.Model):
@@ -179,6 +228,9 @@ class Usuario(models.Model):
         managed = False
         db_table = 'usuario'
 
+    def __str__(self):
+        return self.nombre + ' ' + self.apellido
+
 
 class Venta(models.Model):
     id_venta = models.FloatField(primary_key=True)
@@ -189,3 +241,6 @@ class Venta(models.Model):
     class Meta:
         managed = False
         db_table = 'venta'
+
+    def __str__(self):
+        return self.id_venta
