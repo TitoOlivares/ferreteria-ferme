@@ -75,7 +75,7 @@ class AuthUserUserPermissions(models.Model):
 
 
 class Boleta(models.Model):
-    nro_boleta = models.IntegerField(primary_key=True)
+    nro_boleta = models.AutoField(primary_key=True)
     total = models.FloatField()
     fecha = models.DateField()
     estado = models.FloatField()
@@ -88,7 +88,7 @@ class Boleta(models.Model):
 
 
 class CatProducto(models.Model):
-    id_categoria = models.IntegerField(primary_key=True)
+    id_categoria = models.SmallAutoField(primary_key=True)
     nombre = models.CharField(max_length=30)
 
     class Meta:
@@ -203,7 +203,7 @@ class EstadoVenta(models.Model):
 
 
 class Factura(models.Model):
-    nro_factura = models.BigIntegerField(primary_key=True)
+    nro_factura = models.BigAutoField(primary_key=True)
     fecha = models.DateField()
     razon_soc = models.CharField(max_length=100)
     giro = models.CharField(max_length=100)
@@ -222,7 +222,7 @@ class Factura(models.Model):
 
 
 class OrdenCompra(models.Model):
-    id_orden = models.FloatField(primary_key=True)
+    id_orden = models.AutoField(primary_key=True)
     fecha = models.DateField()
     valor_total = models.FloatField()
     id_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='id_usuario')
@@ -259,7 +259,7 @@ class Producto(models.Model):
 
 
 class Recepcion(models.Model):
-    id_recepcion = models.FloatField(primary_key=True)
+    id_recepcion = models.AutoField(primary_key=True)
     fecha = models.DateField()
     estado = models.FloatField()
     id_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='id_usuario')
@@ -272,7 +272,7 @@ class Recepcion(models.Model):
 
 
 class Usuario(models.Model):
-    id_usuario = models.FloatField(primary_key=True)
+    id_usuario = models.AutoField(primary_key=True)
     password = models.CharField(max_length=15)
     rut = models.CharField(unique=True, max_length=10)
     nombre = models.CharField(max_length=50)
@@ -291,7 +291,7 @@ class Usuario(models.Model):
 
 
 class Venta(models.Model):
-    id_venta = models.FloatField(primary_key=True)
+    id_venta = models.AutoField(primary_key=True)
     fecha = models.DateField()
     id_estado = models.ForeignKey(EstadoVenta, models.DO_NOTHING, db_column='id_estado')
     id_usuario = models.ForeignKey(Usuario, models.DO_NOTHING, db_column='id_usuario')
