@@ -37,6 +37,7 @@ class CatProducto(models.Model):
         return self.nombre
 
 
+# TODO: llenar al final cuando tenga datos para completarlos
 class DetalleBoleta(models.Model):
     id_producto = models.ForeignKey('Producto', models.DO_NOTHING, db_column='id_producto')
     nro_boleta = models.ForeignKey(Boleta, models.DO_NOTHING, db_column='nro_boleta')
@@ -51,7 +52,7 @@ class DetalleBoleta(models.Model):
     def __str__(self):
         return 'Boleta nro ' + self.nro_boleta
 
-
+# TODO: llenar al final cuando tenga datos para completarlos
 class DetalleFactura(models.Model):
     nro_factura = models.ForeignKey('Factura', models.DO_NOTHING, db_column='nro_factura')
     id_producto = models.ForeignKey('Producto', models.DO_NOTHING, db_column='id_producto')
@@ -66,7 +67,7 @@ class DetalleFactura(models.Model):
     def __str__(self):
         return 'Factura nro ' + self.nro_factura
 
-
+# TODO: llenar al final cuando tenga datos para completarlos
 class DetalleOrden(models.Model):
     id_producto = models.ForeignKey('Producto', models.DO_NOTHING, db_column='id_producto')
     id_orden = models.ForeignKey('OrdenCompra', models.DO_NOTHING, db_column='id_orden')
@@ -81,7 +82,7 @@ class DetalleOrden(models.Model):
     def __str__(self):
         return 'Orden nro ' + self.id_orden
 
-
+# TODO: llenar al final cuando tenga datos para completarlos
 class DetalleVenta(models.Model):
     id_venta = models.ForeignKey('Venta', models.DO_NOTHING, db_column='id_venta')
     id_producto = models.ForeignKey('Producto', models.DO_NOTHING, db_column='id_producto')
@@ -157,8 +158,8 @@ class OrdenCompra(models.Model):
         db_table = 'orden_compra'
         verbose_name_plural = 'Órdenes de compras'
 
-    def __str__(self):
-        return 'Orden número ' + self.id_orden
+    def __int__(self):
+        return 'Orden: ' + self.id_usuario
 
 
 class Perfil(models.Model):
