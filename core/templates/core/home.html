@@ -1,37 +1,45 @@
 {% extends 'core/base.html' %}
 
 {% block contenido %}
-    <body class="d-flex flex-column">
 
-    <div>
-
-        <!-- Example split danger button -->
-        <div class="btn-group">
-            <button type="button" class="btn btn-danger">Action</button>
-            <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="sr-only">Toggle Dropdown</span>
-            </button>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Separated link</a>
+    <div class="row row-cols-1 row-cols-md-3">
+        <div class="col mb-4">
+            <div class="card">
+                <img src="http://loremflickr.com/300/300" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                </div>
             </div>
         </div>
-
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
-        </nav>
+        <div class="col mb-4">
+            <div class="card">
+                <img src="http://loremflickr.com/300/300" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col mb-4">
+            <div class="card">
+                <img src="http://loremflickr.com/300/300" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col mb-4">
+            <div class="card">
+                <img src="http://loremflickr.com/300/300" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                </div>
+            </div>
+        </div>
     </div>
-
-    </body>
 
 {% endblock contenido %}
 
