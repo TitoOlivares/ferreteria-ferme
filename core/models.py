@@ -76,7 +76,6 @@ class AuthUserUserPermissions(models.Model):
 
 class Boleta(models.Model):
     nro_boleta = models.AutoField(primary_key=True)
-    total = models.FloatField()
     fecha = models.DateField()
     estado = models.FloatField()
     id_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='id_usuario')
@@ -97,19 +96,20 @@ class CatProducto(models.Model):
 
 
 class DetalleBoleta(models.Model):
-    id_detalle_boleta = models.AutoField(primary_key=True)
-    id_producto = models.ForeignKey('Producto', models.DO_NOTHING, db_column='id_producto')
+    num_detalle = models.FloatField(primary_key=True)
     nro_boleta = models.ForeignKey(Boleta, models.DO_NOTHING, db_column='nro_boleta')
+    id_producto = models.ForeignKey('Producto', models.DO_NOTHING, db_column='id_producto')
     cantidad = models.FloatField()
     precio_unit = models.FloatField()
 
     class Meta:
         managed = False
         db_table = 'detalle_boleta'
+        unique_together = (('num_detalle', 'nro_boleta'),)
 
 
 class DetalleFactura(models.Model):
-    id_detalle_factura = models.AutoField(primary_key=True)
+    num_detalle = models.FloatField(primary_key=True)
     nro_factura = models.ForeignKey('Factura', models.DO_NOTHING, db_column='nro_factura')
     id_producto = models.ForeignKey('Producto', models.DO_NOTHING, db_column='id_producto')
     cantidad = models.FloatField()
@@ -118,22 +118,24 @@ class DetalleFactura(models.Model):
     class Meta:
         managed = False
         db_table = 'detalle_factura'
+        unique_together = (('num_detalle', 'nro_factura'),)
 
 
 class DetalleOrden(models.Model):
-    id_detalle_orden = models.AutoField(primary_key=True)
-    id_producto = models.ForeignKey('Producto', models.DO_NOTHING, db_column='id_producto')
+    num_detalle = models.FloatField(primary_key=True)
     id_orden = models.ForeignKey('OrdenCompra', models.DO_NOTHING, db_column='id_orden')
+    id_producto = models.ForeignKey('Producto', models.DO_NOTHING, db_column='id_producto')
     cantidad = models.FloatField()
     precio_unit = models.FloatField()
 
     class Meta:
         managed = False
         db_table = 'detalle_orden'
+        unique_together = (('num_detalle', 'id_orden'),)
 
 
 class DetalleVenta(models.Model):
-    id_detalle_venta = models.AutoField(primary_key=True)
+    num_detalle = models.FloatField(primary_key=True)
     id_venta = models.ForeignKey('Venta', models.DO_NOTHING, db_column='id_venta')
     id_producto = models.ForeignKey('Producto', models.DO_NOTHING, db_column='id_producto')
     cantidad = models.FloatField()
@@ -142,6 +144,7 @@ class DetalleVenta(models.Model):
     class Meta:
         managed = False
         db_table = 'detalle_venta'
+        unique_together = (('num_detalle', 'id_venta'),)
 
 
 class DjangoAdminLog(models.Model):
@@ -213,9 +216,6 @@ class Factura(models.Model):
     giro = models.CharField(max_length=100)
     direccion = models.CharField(max_length=300)
     contacto = models.IntegerField()
-    neto = models.FloatField()
-    iva = models.FloatField()
-    total = models.FloatField()
     estado = models.FloatField()
     id_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='id_usuario')
     id_venta = models.ForeignKey('Venta', models.DO_NOTHING, db_column='id_venta')
@@ -228,7 +228,6 @@ class Factura(models.Model):
 class OrdenCompra(models.Model):
     id_orden = models.AutoField(primary_key=True)
     fecha = models.DateField()
-    valor_total = models.FloatField()
     id_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='id_usuario')
     id_estado = models.ForeignKey(EstadoOrden, models.DO_NOTHING, db_column='id_estado')
 
@@ -295,7 +294,7 @@ class Usuario(models.Model):
 
 
 class Venta(models.Model):
-    id_venta = models.FloatField(primary_key=True)
+    id_venta = models.AutoField(primary_key=True)
     fecha = models.DateField()
     id_estado = models.ForeignKey(EstadoVenta, models.DO_NOTHING, db_column='id_estado')
     id_usuario = models.ForeignKey(Usuario, models.DO_NOTHING, db_column='id_usuario')
