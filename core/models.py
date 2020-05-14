@@ -230,6 +230,7 @@ class OrdenCompra(models.Model):
     fecha = models.DateField()
     id_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='id_usuario')
     id_estado = models.ForeignKey(EstadoOrden, models.DO_NOTHING, db_column='id_estado')
+    id_proveedor = models.FloatField()
 
     class Meta:
         managed = False
