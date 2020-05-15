@@ -1,0 +1,142 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block head %}
+
+    <link rel="stylesheet" href="{% static 'core/css/home.css' %}">
+
+{% endblock %}
+
+
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-2">
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <div align="center">
+                    <h4>Aqui van las categorias de productos</h4>
+                </div>
+                <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab"
+                   aria-controls="v-pills-home" aria-selected="true">Home</a>
+                <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab"
+                   aria-controls="v-pills-profile" aria-selected="false">Profile</a>
+                <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab"
+                   aria-controls="v-pills-messages" aria-selected="false">Messages</a>
+                <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab"
+                   aria-controls="v-pills-settings" aria-selected="false">Settings</a>
+            </div>
+
+        </div>
+        <div class="col-md-10">
+            <div align="center">
+                <h2>AQUI LOS PRODUCTOS</h2>
+            </div>
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
+                     aria-labelledby="v-pills-home-tab">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque deserunt dolor fugiat illum
+                        impedit,
+                        in iure laboriosam minima molestias officia optio quod, ratione reprehenderit veritatis
+                        voluptate?
+                        Atque perferendis ratione totam.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam amet aperiam aspernatur
+                        commodi consectetur delectus dolor dolore eligendi enim ex excepturi fugiat iste iure libero,
+                        magni molestiae numquam sit voluptate.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut autem cumque dolorem error eum,
+                        illum laboriosam, magnam mollitia obcaecati officiis quaerat totam unde ut! Fuga laborum
+                        laudantium magnam nobis reprehenderit.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque deserunt dolor fugiat illum
+                        impedit,
+                        in iure laboriosam minima molestias officia optio quod, ratione reprehenderit veritatis
+                        voluptate?
+                        Atque perferendis ratione totam.
+                    </p>
+                </div>
+                <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem eveniet minima rerum tempore!
+                        Accusamus adipisci animi beatae dignissimos dolore dolorum eius et nisi perspiciatis provident,
+                        quas
+                        quibusdam tempora totam voluptas.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio dolore ea eos, illo iste
+                        quas vel! Aperiam culpa dignissimos doloribus eligendi, esse fuga magnam minus obcaecati quasi,
+                        saepe suscipit voluptatibus!
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi consectetur consequatur
+                        excepturi minus neque numquam officiis sunt temporibus. Accusantium aliquam cum eos inventore
+                        iste minima modi officiis optio quidem reprehenderit.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque deserunt dolor fugiat illum
+                        impedit,
+                        in iure laboriosam minima molestias officia optio quod, ratione reprehenderit veritatis
+                        voluptate?
+                        Atque perferendis ratione totam.
+                    </p>
+                </div>
+                <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda explicabo labore laudantium
+                        magnam, porro tempora totam ut! Accusamus, aperiam at esse, fugit laborum nemo officia placeat
+                        quis
+                        sit ut voluptate.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A aspernatur cupiditate deleniti ea
+                        esse inventore minima natus neque, perspiciatis quisquam. Illo maiores quasi recusandae velit.
+                        Animi aperiam placeat quasi sequi!
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam consequatur dolore, dolorem
+                        enim facilis illum in laudantium, magnam maxime, recusandae rem sapiente ullam voluptatum. Autem
+                        et fugit natus necessitatibus sequi?
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque deserunt dolor fugiat illum
+                        impedit,
+                        in iure laboriosam minima molestias officia optio quod, ratione reprehenderit veritatis
+                        voluptate?
+                        Atque perferendis ratione totam.
+                    </p>
+                </div>
+                <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aliquid, aspernatur atque,
+                        delectus deleniti eligendi harum laboriosam laudantium magnam minus, nulla praesentium quae
+                        quaerat
+                        quia quibusdam quidem quis repellat vero.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aperiam beatae blanditiis
+                        doloremque doloribus ea earum, error eum eveniet ex illo inventore ipsa magni nesciunt placeat
+                        possimus quibusdam repellendus, ut.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam cumque, debitis delectus eius
+                        enim, molestiae, omnis placeat quod repellat repudiandae sint vel! Adipisci est fugit nam, saepe
+                        similique vero voluptatum?
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque deserunt dolor fugiat illum
+                        impedit,
+                        in iure laboriosam minima molestias officia optio quod, ratione reprehenderit veritatis
+                        voluptate?
+                        Atque perferendis ratione totam.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
