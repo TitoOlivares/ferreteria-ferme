@@ -22,4 +22,3 @@ admin.site.register(Venta)
 
 
 
-
