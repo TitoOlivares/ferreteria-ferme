@@ -27,6 +27,7 @@ class CatProducto(models.Model):
     class Meta:
         managed = False
         db_table = 'cat_producto'
+        verbose_name_plural = 'Categorías de productos'
 
 
 class DetalleBoleta(models.Model):
@@ -40,6 +41,7 @@ class DetalleBoleta(models.Model):
         managed = False
         db_table = 'detalle_boleta'
         unique_together = (('num_detalle', 'nro_boleta'),)
+        verbose_name_plural = 'Detalles de boleta'
 
 
 class DetalleFactura(models.Model):
@@ -53,6 +55,7 @@ class DetalleFactura(models.Model):
         managed = False
         db_table = 'detalle_factura'
         unique_together = (('nro_factura', 'num_detalle'),)
+        verbose_name_plural = 'Detalles de factura'
 
 
 class DetalleOrden(models.Model):
@@ -66,6 +69,7 @@ class DetalleOrden(models.Model):
         managed = False
         db_table = 'detalle_orden'
         unique_together = (('id_orden', 'num_detalle'),)
+        verbose_name_plural = 'Detalles de orden'
 
 
 class DetalleVenta(models.Model):
@@ -79,6 +83,7 @@ class DetalleVenta(models.Model):
         managed = False
         db_table = 'detalle_venta'
         unique_together = (('id_venta', 'num_detalle'),)
+        verbose_name_plural = 'Detalles de venta'
 
 
 class EstadoOrden(models.Model):
@@ -88,6 +93,7 @@ class EstadoOrden(models.Model):
     class Meta:
         managed = False
         db_table = 'estado_orden'
+        verbose_name_plural = 'Estados de órdenes'
 
 
 class EstadoVenta(models.Model):
@@ -97,6 +103,7 @@ class EstadoVenta(models.Model):
     class Meta:
         managed = False
         db_table = 'estado_venta'
+        verbose_name_plural = 'Estados de ventas'
 
 
 class Factura(models.Model):
@@ -125,6 +132,7 @@ class OrdenCompra(models.Model):
     class Meta:
         managed = False
         db_table = 'orden_compra'
+        verbose_name_plural = 'Órdenes de compra'
 
 
 class Perfil(models.Model):
@@ -134,7 +142,10 @@ class Perfil(models.Model):
     class Meta:
         managed = False
         db_table = 'perfil'
+        verbose_name_plural = 'Perfiles'
 
+    def __str__(self):
+        return self.nombre
 
 class Producto(models.Model):
     id_producto = models.FloatField(primary_key=True)
@@ -164,6 +175,7 @@ class Proveedor(models.Model):
     class Meta:
         managed = False
         db_table = 'proveedor'
+        verbose_name_plural = 'Proveedores'
 
 
 class Recepcion(models.Model):
@@ -177,6 +189,7 @@ class Recepcion(models.Model):
         managed = False
         db_table = 'recepcion'
         unique_together = (('id_recepcion', 'id_orden'),)
+        verbose_name_plural = 'Recepciones'
 
 
 class Usuario(models.Model):
@@ -191,6 +204,7 @@ class Usuario(models.Model):
     cargo = models.CharField(max_length=50, blank=True, null=True)
     esempresa = models.FloatField()
     id_perfil = models.ForeignKey(Perfil, models.DO_NOTHING, db_column='id_perfil')
+
 
     class Meta:
         managed = False
