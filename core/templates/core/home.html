@@ -69,7 +69,7 @@
                                     <a href="#">{{ i.nombre }}</a>
                                 </h4>
                                 {% load humanize %}
-                                <h5>{{ i.precio_unit|intcomma }}</h5>
+                                <h5>${{ i.precio_unit|intcomma }}.- c/u</h5>
                                 <p class="card-text">{{ i.descripcion }}</p>
                                 <p class="card-text">Stock: {{ i.stock }} unidades</p>
                             </div>
