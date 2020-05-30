@@ -85,6 +85,9 @@ class Boleta(models.Model):
         managed = False
         db_table = 'boleta'
 
+    def __str__(self):
+        return 'Boleta nro: {}'.format(self.nro_boleta)
+
 
 class CatProducto(models.Model):
     id_categoria = models.SmallAutoField(primary_key=True)
@@ -93,6 +96,11 @@ class CatProducto(models.Model):
     class Meta:
         managed = False
         db_table = 'cat_producto'
+        verbose_name = 'Categoria de producto'
+        verbose_name_plural = 'Categorias de productos'
+
+    def __str__(self):
+        return 'Categoria: ' + self.nombre
 
 
 class DetalleBoleta(models.Model):
@@ -106,6 +114,11 @@ class DetalleBoleta(models.Model):
         managed = False
         db_table = 'detalle_boleta'
         unique_together = (('num_detalle', 'nro_boleta'),)
+        verbose_name = 'Detalle de boleta'
+        verbose_name_plural = 'Detalles de boletas'
+
+    def __str__(self):
+        return 'Detalle de boleta: {}'.format(self.nro_boleta)
 
 
 class DetalleFactura(models.Model):
@@ -119,6 +132,11 @@ class DetalleFactura(models.Model):
         managed = False
         db_table = 'detalle_factura'
         unique_together = (('nro_factura', 'num_detalle'),)
+        verbose_name = 'Detalle de factura'
+        verbose_name_plural = 'Detalles de facturas'
+
+    def __str__(self):
+        return 'Detalle de factura: {}'.format(self.nro_factura)
 
 
 class DetalleOrden(models.Model):
@@ -132,6 +150,11 @@ class DetalleOrden(models.Model):
         managed = False
         db_table = 'detalle_orden'
         unique_together = (('id_orden', 'num_detalle'),)
+        verbose_name = 'Detalle de orden'
+        verbose_name_plural = 'Detalles de ordenes'
+
+    def __str__(self):
+        return 'Detalle de orden: {}'.format(self.id_orden)
 
 
 class DetalleVenta(models.Model):
@@ -145,6 +168,11 @@ class DetalleVenta(models.Model):
         managed = False
         db_table = 'detalle_venta'
         unique_together = (('id_venta', 'num_detalle'),)
+        verbose_name = 'Detalle de venta'
+        verbose_name_plural = 'Detalles de ventas'
+
+    def __str__(self):
+        return 'Detalle de venta: {}'.format(self.id_venta)
 
 
 class DjangoAdminLog(models.Model):
@@ -198,6 +226,11 @@ class EstadoOrden(models.Model):
     class Meta:
         managed = False
         db_table = 'estado_orden'
+        verbose_name = 'Estado de orden'
+        verbose_name_plural = 'Estados de ordenes'
+
+    def __str__(self):
+        return 'Estado: ' + self.descripcion
 
 
 class EstadoVenta(models.Model):
@@ -207,6 +240,11 @@ class EstadoVenta(models.Model):
     class Meta:
         managed = False
         db_table = 'estado_venta'
+        verbose_name = 'Estado de venta'
+        verbose_name_plural = 'Estados de ventas'
+
+    def __str__(self):
+        return 'Estado: ' + self.descripcion
 
 
 class Factura(models.Model):
@@ -224,6 +262,9 @@ class Factura(models.Model):
         managed = False
         db_table = 'factura'
 
+    def __str__(self):
+        return 'Factura nro: {}'.format(self.nro_factura)
+
 
 class OrdenCompra(models.Model):
     id_orden = models.AutoField(primary_key=True)
@@ -235,6 +276,11 @@ class OrdenCompra(models.Model):
     class Meta:
         managed = False
         db_table = 'orden_compra'
+        verbose_name = 'Orden de compra'
+        verbose_name_plural = 'Ordenes de compra'
+
+    def __str__(self):
+        return 'Orden de compra nro: {}'.format(self.id_orden)
 
 
 class Perfil(models.Model):
@@ -244,6 +290,10 @@ class Perfil(models.Model):
     class Meta:
         managed = False
         db_table = 'perfil'
+        verbose_name_plural = 'Perfiles'
+
+    def __str__(self):
+        return 'Perfil: ' + self.nombre
 
 
 class Producto(models.Model):
@@ -263,6 +313,9 @@ class Producto(models.Model):
         managed = False
         db_table = 'producto'
 
+    def __str__(self):
+        return 'Producto: ' + self.nombre
+
 
 class Proveedor(models.Model):
     id_proveedor = models.AutoField(primary_key=True)
@@ -275,6 +328,10 @@ class Proveedor(models.Model):
     class Meta:
         managed = False
         db_table = 'proveedor'
+        verbose_name_plural = 'Proveedores'
+
+    def __str__(self):
+        return 'Proveedor: ' + self.nombre
 
 
 class Recepcion(models.Model):
@@ -288,6 +345,10 @@ class Recepcion(models.Model):
         managed = False
         db_table = 'recepcion'
         unique_together = (('id_recepcion', 'id_orden'),)
+        verbose_name_plural = 'Recepciones'
+
+    def __str__(self):
+        return 'Recepción nro: {}'.format(self.id_recepcion)
 
 
 class Usuario(models.Model):
@@ -308,6 +369,9 @@ class Usuario(models.Model):
         managed = False
         db_table = 'usuario'
 
+    def __str__(self):
+        return 'Usuario: ' + self.nombre + ' ' + self.apellido
+
 
 class Venta(models.Model):
     id_venta = models.AutoField(primary_key=True)
@@ -318,3 +382,6 @@ class Venta(models.Model):
     class Meta:
         managed = False
         db_table = 'venta'
+
+    def __str__(self):
+        return 'Venta nro: {}'.format(self.id_venta)

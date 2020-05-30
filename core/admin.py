@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Perfil, Usuario, Boleta, CatProducto, DetalleBoleta, DetalleFactura, DetalleOrden, DetalleVenta
-from .models import EstadoOrden, EstadoVenta, Factura, OrdenCompra, Producto, Recepcion, Venta
+from .models import EstadoOrden, EstadoVenta, Factura, OrdenCompra, Producto, Proveedor, Recepcion, Venta
 
 # Register your models here.
 
@@ -17,5 +17,6 @@ admin.site.register(EstadoVenta)
 admin.site.register(Factura)
 admin.site.register(OrdenCompra)
 admin.site.register(Producto)
+admin.site.register(Proveedor)
 admin.site.register(Recepcion)
 admin.site.register(Venta)
