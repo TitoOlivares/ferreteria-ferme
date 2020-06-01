@@ -71,6 +71,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ferme.wsgi.application'
 
+AUTH_USER_MODEL = 'core.Usuario'
+
+
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases

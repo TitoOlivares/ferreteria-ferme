@@ -1,10 +1,9 @@
 from django.contrib import admin
-from .models import Perfil, Usuario, Boleta, CatProducto, DetalleBoleta, DetalleFactura, DetalleOrden, DetalleVenta
+from .models import Usuario, Boleta, CatProducto, DetalleBoleta, DetalleFactura, DetalleOrden, DetalleVenta
 from .models import EstadoOrden, EstadoVenta, Factura, OrdenCompra, Producto, Proveedor, Recepcion, Venta
 
 # Register your models here.
 
-admin.site.register(Perfil)
 admin.site.register(Usuario)
 admin.site.register(Boleta)
 admin.site.register(CatProducto)
