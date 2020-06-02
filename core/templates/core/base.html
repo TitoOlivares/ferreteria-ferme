@@ -20,7 +20,8 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand" href="#"><img height="100" width="200" src="{% static 'core/img/logo.png' %}" alt=""></a>
+            <a class="navbar-brand" href="#"><img height="100" width="200" src="{% static 'core/img/logo.png' %}"
+                                                  alt=""></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                     aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -36,14 +37,25 @@
                         <a class="nav-link" href="#">Productos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'register' %}">Registrarse</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="#">Contacto</a>
                     </li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}">Cerrar sesión</a>
+                        </li>
+                        <li>
+                            <i>
+                                <p class="nav-link">Hola {{ user.nombre }} {{ user.apellido }}!</p>
+                            </i>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'register' %}">Registrarse</a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

@@ -18,10 +18,6 @@ def home(request):
     return render(request, 'core/home.html', data)
 
 
-def login(request):
-    return render(request, 'core/login.html')
-
-
 class Register(CreateView):
     model = Usuario
     form_class = CustomUserForm
