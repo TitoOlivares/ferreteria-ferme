@@ -1,5 +1,9 @@
 from django.shortcuts import render
-from .models import Producto, CatProducto
+from django.urls import reverse_lazy
+from django.views.generic import CreateView
+
+from .forms import CustomUserForm
+from .models import Producto, CatProducto, Usuario
 
 
 # Create your views here.
@@ -18,6 +22,8 @@ def login(request):
     return render(request, 'core/login.html')
 
 
-def register(request):
-    return render(request, 'core/register.html')
-
+class Register(CreateView):
+    model = Usuario
+    form_class = CustomUserForm
+    template_name = 'core/register.html'
+    success_url = reverse_lazy('home')
