@@ -1,18 +1,12 @@
-from django import forms
+from django.forms import ModelForm
+from core.models import Usuario
 from django.forms import *
 from django.contrib.auth.forms import UserCreationForm
 
-from core.models import Usuario
-
-
-class CustomUserForm(UserCreationForm):
-
+class UsuarioForm(UserCreationForm):
     class Meta:
         model = Usuario
         fields = ['email', 'nombre', 'apellido', 'rut', 'telefono', 'direccion', 'comuna', 'esempresa']
-        labels = {
-            'Email', 'Nombre', 'Apellido', 'Rut', 'Telefono', 'Direccion', 'Comuna', 'Marque esta casilla si es una empresa'
-        }
         widgets = {
             'email': EmailInput(
                 attrs={
