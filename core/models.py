@@ -20,9 +20,6 @@ class Boleta(models.Model):
         managed = False
         db_table = 'boleta'
 
-    def __str__(self):
-        return 'Boleta nro: {}'.format(self.nro_boleta)
-
 
 class CatProducto(models.Model):
     id_categoria = models.SmallAutoField(primary_key=True)
@@ -31,16 +28,11 @@ class CatProducto(models.Model):
     class Meta:
         managed = False
         db_table = 'cat_producto'
-        verbose_name = 'categoria de producto'
-        verbose_name_plural = 'Categorias de productos'
-
-    def __str__(self):
-        return self.nombre
 
 
 class DetalleBoleta(models.Model):
-    num_detalle = models.FloatField(primary_key=True)
-    nro_boleta = models.ForeignKey(Boleta, models.DO_NOTHING, db_column='nro_boleta')
+    num_detalle = models.FloatField()
+    nro_boleta = models.OneToOneField('Boleta', models.DO_NOTHING, db_column='nro_boleta', primary_key=True)
     id_producto = models.ForeignKey('Producto', models.DO_NOTHING, db_column='id_producto')
     cantidad = models.FloatField()
     precio_unit = models.FloatField()
@@ -48,12 +40,7 @@ class DetalleBoleta(models.Model):
     class Meta:
         managed = False
         db_table = 'detalle_boleta'
-        unique_together = (('num_detalle', 'nro_boleta'),)
-        verbose_name = 'detalle de boleta'
-        verbose_name_plural = 'Detalles de boletas'
-
-    def __str__(self):
-        return 'Detalle boleta nro {}'.format(self.nro_boleta)
+        unique_together = (('nro_boleta', 'num_detalle'),)
 
 
 class DetalleFactura(models.Model):
@@ -67,11 +54,6 @@ class DetalleFactura(models.Model):
         managed = False
         db_table = 'detalle_factura'
         unique_together = (('nro_factura', 'num_detalle'),)
-        verbose_name = 'detalle de factura'
-        verbose_name_plural = 'Detalles de facturas'
-
-    def __str__(self):
-        return 'Detalle factura nro {}'.format(self.nro_factura)
 
 
 class DetalleOrden(models.Model):
@@ -85,11 +67,6 @@ class DetalleOrden(models.Model):
         managed = False
         db_table = 'detalle_orden'
         unique_together = (('id_orden', 'num_detalle'),)
-        verbose_name = 'detalle de orden de compra'
-        verbose_name_plural = 'Detalles de ordenes de compra'
-
-    def __str__(self):
-        return 'Detalle orden nro {}'.format(self.id_orden)
 
 
 class DetalleVenta(models.Model):
@@ -102,12 +79,7 @@ class DetalleVenta(models.Model):
     class Meta:
         managed = False
         db_table = 'detalle_venta'
-        unique_together = (('id_venta', 'num_detalle'),)
-        verbose_name = 'detalle de venta'
-        verbose_name_plural = 'Detalles de ventas'
-
-    def __str__(self):
-        return 'Detalle venta nro {}'.format(self.id_venta)
+        unique_together = (('num_detalle', 'id_venta'),)
 
 
 class EstadoOrden(models.Model):
@@ -117,11 +89,6 @@ class EstadoOrden(models.Model):
     class Meta:
         managed = False
         db_table = 'estado_orden'
-        verbose_name = 'estado de orden'
-        verbose_name_plural = 'Estados de ordenes de compra'
-
-    def __str__(self):
-        return self.descripcion
 
 
 class EstadoVenta(models.Model):
@@ -131,11 +98,6 @@ class EstadoVenta(models.Model):
     class Meta:
         managed = False
         db_table = 'estado_venta'
-        verbose_name = 'estado de venta'
-        verbose_name_plural = 'Estados de ventas'
-
-    def __str__(self):
-        return self.descripcion
 
 
 class Factura(models.Model):
@@ -153,9 +115,6 @@ class Factura(models.Model):
         managed = False
         db_table = 'factura'
 
-    def __str__(self):
-        return '{}'.format(self.nro_factura)
-
 
 class OrdenCompra(models.Model):
     id_orden = models.AutoField(primary_key=True)
@@ -167,15 +126,10 @@ class OrdenCompra(models.Model):
     class Meta:
         managed = False
         db_table = 'orden_compra'
-        verbose_name = 'orden de compra'
-        verbose_name_plural = 'Ordenes de compra'
-
-    def __str__(self):
-        return '{}'.format(self.id_orden)
 
 
 class Producto(models.Model):
-    id_producto = models.FloatField(primary_key=True)
+    id_producto = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=50)
     descripcion = models.CharField(max_length=500)
     precio_unit = models.FloatField()
@@ -191,25 +145,17 @@ class Producto(models.Model):
         managed = False
         db_table = 'producto'
 
-    def __str__(self):
-        return self.nombre
-
 
 class Proveedor(models.Model):
-    id_proveedor = models.AutoField(primary_key=True)
+    id_proveedor = models.FloatField(primary_key=True)
     nombre = models.CharField(max_length=50)
     rut = models.CharField(unique=True, max_length=10)
-    password = models.CharField(max_length=12)
     telefono = models.FloatField()
     rubro = models.CharField(max_length=50)
 
     class Meta:
         managed = False
         db_table = 'proveedor'
-        verbose_name_plural = 'Proveedores'
-
-    def __str__(self):
-        return self.nombre
 
 
 class Recepcion(models.Model):
@@ -223,10 +169,6 @@ class Recepcion(models.Model):
         managed = False
         db_table = 'recepcion'
         unique_together = (('id_recepcion', 'id_orden'),)
-        verbose_name_plural = 'Recepciones'
-
-    def __str__(self):
-        return 'Recepcion nro: {}'.format(self.id_recepcion)
 
 
 class MyAccountManager(BaseUserManager):
@@ -290,13 +232,16 @@ class Usuario(AbstractBaseUser):
     direccion = models.CharField(max_length=100, verbose_name='Direccion')
     comuna = models.CharField(max_length=30, verbose_name='Comuna')
     cargo = models.CharField(max_length=50, blank=True, null=True)
+    rubro = models.CharField(max_length=100, blank=True, null=True)
     esempresa = models.BooleanField(default=False, verbose_name='Marque esta casilla si es una empresa')
+    es_proveedor = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now=True)
+
 
     class Meta:
         managed = False
@@ -328,6 +273,3 @@ class Venta(models.Model):
     class Meta:
         managed = False
         db_table = 'venta'
-
-    def __str__(self):
-        return '{}'.format(self.id_venta)
