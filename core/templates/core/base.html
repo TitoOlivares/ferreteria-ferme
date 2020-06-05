@@ -51,6 +51,11 @@
                                 <p class="nav-link">Hola {{ user.nombre }} {{ user.apellido }}!</p>
                             </i>
                         </li>
+                        {% if user.is_admin %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="/admin">Administración</a>
+                            </li>
+                        {% endif %}
                     {% else %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a>
