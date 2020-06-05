@@ -232,7 +232,7 @@ class Usuario(AbstractBaseUser):
     direccion = models.CharField(max_length=100, verbose_name='Direccion')
     comuna = models.CharField(max_length=30, verbose_name='Comuna')
     cargo = models.CharField(max_length=50, blank=True, null=True)
-    rubro = models.CharField(max_length=100, blank=True, null=True)
+    rubro = models.CharField(max_length=100, blank=True, null=True, default='N/A')
     esempresa = models.BooleanField(default=False, verbose_name='Marque esta casilla si es una empresa')
     es_proveedor = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
