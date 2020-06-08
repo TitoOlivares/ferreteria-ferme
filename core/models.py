@@ -1,3 +1,4 @@
+
 # This is an auto-generated Django model module.
 # You'll have to do the following manually to clean this up:
 #   * Rearrange models' order
@@ -28,6 +29,9 @@ class CatProducto(models.Model):
     class Meta:
         managed = False
         db_table = 'cat_producto'
+
+    def __str__(self):
+        return self.nombre
 
 
 class DetalleBoleta(models.Model):
@@ -129,7 +133,7 @@ class OrdenCompra(models.Model):
 
 
 class Producto(models.Model):
-    id_producto = models.AutoField(primary_key=True)
+    id_producto = models.CharField(primary_key=True, max_length=20)
     nombre = models.CharField(max_length=50)
     descripcion = models.CharField(max_length=500)
     precio_unit = models.FloatField()
@@ -146,6 +150,23 @@ class Producto(models.Model):
         db_table = 'producto'
 
 
+class ProductoTemp(models.Model):
+    nombre = models.CharField(primary_key=True, max_length=50)
+    descripcion = models.CharField(max_length=500)
+    precio_unit = models.FloatField()
+    stock = models.FloatField()
+    stock_critico = models.FloatField()
+    marca = models.CharField(max_length=50)
+    fecha_venc = models.DateField(blank=True, null=True)
+    id_categoria = models.ForeignKey(CatProducto, models.DO_NOTHING, db_column='id_categoria')
+    id_proveedor = models.ForeignKey('Proveedor', models.DO_NOTHING, db_column='id_proveedor')
+    url_img = models.CharField(max_length=500, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'producto_temp'
+
+
 class Proveedor(models.Model):
     id_proveedor = models.FloatField(primary_key=True)
     nombre = models.CharField(max_length=50)
@@ -156,6 +177,9 @@ class Proveedor(models.Model):
     class Meta:
         managed = False
         db_table = 'proveedor'
+
+    def __str__(self):
+        return self.nombre
 
 
 class Recepcion(models.Model):
@@ -232,7 +256,7 @@ class Usuario(AbstractBaseUser):
     direccion = models.CharField(max_length=100, verbose_name='Direccion')
     comuna = models.CharField(max_length=30, verbose_name='Comuna')
     cargo = models.CharField(max_length=50, blank=True, null=True)
-    rubro = models.CharField(max_length=100, blank=True, null=True, default='N/A')
+    rubro = models.CharField(max_length=100, blank=True, null=True)
     esempresa = models.BooleanField(default=False, verbose_name='Marque esta casilla si es una empresa')
     es_proveedor = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)

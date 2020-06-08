@@ -1,10 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
-from .forms import UsuarioForm
-from .models import Producto, CatProducto, Usuario
-from django.contrib.auth import login, authenticate
+from .forms import UsuarioForm, ProductoForm, OrdenForm
+from .models import ProductoTemp, CatProducto, Usuario, Producto, OrdenCompra
 
 
 # Create your views here.
@@ -25,8 +24,20 @@ class registro_usuario(CreateView):
     template_name = 'registration/registrar.html'
     success_url = reverse_lazy('registration_done')
 
+
 def registration_done(request):
     return render(request, 'registration/registration_done.html')
 
 
+class registro_producto(CreateView):
+    model = ProductoTemp
+    form_class = ProductoForm
+    template_name = 'core/registro_producto.html'
+    success_url = reverse_lazy('home')
 
+
+class RegistroOrden(CreateView):
+    model = OrdenCompra
+    form_class = OrdenForm
+    template_name = 'core/registro_orden.html'
+    success_url = reverse_lazy('home')
