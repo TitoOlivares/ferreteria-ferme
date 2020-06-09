@@ -28,13 +28,8 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{% url 'home' %}">Inicio
-                            <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Productos</a>
+                        <a class="nav-link" href="{% url 'home' %}">Productos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Contacto</a>
@@ -43,20 +38,31 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">Carro de compra</a>
                         </li>
+
+                        {% if user.es_proveedor %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'RegistroOrden' %}">Ordenes de compra</a>
+                            </li>
+                        {% endif %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'logout' %}">Cerrar sesión</a>
                         </li>
-                        <li>
-                            <i>
-                                <p class="nav-link">Hola {{ user.nombre }} {{ user.apellido }}!</p>
-                            </i>
-                        </li>
-                        {% if user.is_admin %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="/admin">Administración</a>
-                            </li>
+                        {% if user.is_staff %}
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
+                                    Administración
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="{% url 'RegistroOrden' %}">Ordenes de compra</a>
+                                    <a class="dropdown-item" href="#">Link 2</a>
+                                    {% if user.is_admin %}
+                                        <a class="dropdown-item" href="/admin">Gerencia</a>
+                                    {% endif %}
+                                </div>
+                            </div>
                         {% endif %}
                     {% else %}
+
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a>
                         </li>

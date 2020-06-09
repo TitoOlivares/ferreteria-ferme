@@ -36,8 +36,8 @@ class CatProducto(models.Model):
 
 
 class DetalleBoleta(models.Model):
-    num_detalle = models.FloatField()
-    nro_boleta = models.OneToOneField('Boleta', models.DO_NOTHING, db_column='nro_boleta', primary_key=True)
+    num_detalle = models.AutoField(primary_key=True)
+    nro_boleta = models.ForeignKey('Boleta', models.DO_NOTHING, db_column='nro_boleta')
     id_producto = models.ForeignKey('Producto', models.DO_NOTHING, db_column='id_producto')
     cantidad = models.FloatField()
     precio_unit = models.FloatField()
@@ -49,8 +49,8 @@ class DetalleBoleta(models.Model):
 
 
 class DetalleFactura(models.Model):
-    num_detalle = models.FloatField()
-    nro_factura = models.OneToOneField('Factura', models.DO_NOTHING, db_column='nro_factura', primary_key=True)
+    num_detalle = models.AutoField(primary_key=True)
+    nro_factura = models.ForeignKey('Factura', models.DO_NOTHING, db_column='nro_factura')
     id_producto = models.ForeignKey('Producto', models.DO_NOTHING, db_column='id_producto')
     cantidad = models.FloatField()
     precio_unit = models.FloatField()
@@ -62,8 +62,8 @@ class DetalleFactura(models.Model):
 
 
 class DetalleOrden(models.Model):
-    num_detalle = models.FloatField()
-    id_orden = models.OneToOneField('OrdenCompra', models.DO_NOTHING, db_column='id_orden', primary_key=True)
+    num_detalle = models.AutoField(primary_key=True)
+    id_orden = models.ForeignKey('OrdenCompra', models.DO_NOTHING, db_column='id_orden')
     id_producto = models.ForeignKey('Producto', models.DO_NOTHING, db_column='id_producto')
     cantidad = models.FloatField()
     precio_unit = models.FloatField()
@@ -75,8 +75,8 @@ class DetalleOrden(models.Model):
 
 
 class DetalleVenta(models.Model):
-    num_detalle = models.FloatField()
-    id_venta = models.OneToOneField('Venta', models.DO_NOTHING, db_column='id_venta', primary_key=True)
+    num_detalle = models.AutoField(primary_key=True)
+    id_venta = models.ForeignKey('Venta', models.DO_NOTHING, db_column='id_venta')
     id_producto = models.ForeignKey('Producto', models.DO_NOTHING, db_column='id_producto')
     cantidad = models.FloatField()
     precio_unit = models.FloatField()
@@ -157,6 +157,9 @@ class Producto(models.Model):
         db_table = 'producto'
 
     def  __str__(self):
+        return self.nombre
+
+    def __str__(self):
         return self.nombre
 
 
