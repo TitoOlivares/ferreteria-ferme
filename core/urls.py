@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home, registro_usuario, registration_done, registro_producto, RegistroOrden
+from .views import home, registro_usuario, registration_done, registro_producto, RegistroOrden, RegistroDetalleOrden
 
 urlpatterns = [
     path('', home, name="home"),
@@ -7,4 +7,5 @@ urlpatterns = [
     path('registro/done', registration_done, name="registration_done"),
     path('producto/', registro_producto.as_view(), name="registro_producto"),
     path('orden/', RegistroOrden.as_view(), name="RegistroOrden"),
+    path('detalleorden/', RegistroDetalleOrden.as_view(), name="RegistroDetalle"),
 ]

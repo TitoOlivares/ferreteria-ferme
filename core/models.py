@@ -8,6 +8,7 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
+from django.utils import timezone
 
 
 class Boleta(models.Model):
@@ -94,6 +95,9 @@ class EstadoOrden(models.Model):
         managed = False
         db_table = 'estado_orden'
 
+    def  __str__(self):
+        return self.descripcion
+
 
 class EstadoVenta(models.Model):
     id_estado = models.FloatField(primary_key=True)
@@ -122,14 +126,17 @@ class Factura(models.Model):
 
 class OrdenCompra(models.Model):
     id_orden = models.AutoField(primary_key=True)
-    fecha = models.DateField()
+    fecha = models.DateField(default=timezone.now)
     id_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='id_usuario')
-    id_estado = models.ForeignKey(EstadoOrden, models.DO_NOTHING, db_column='id_estado')
+    id_estado = models.ForeignKey(EstadoOrden, models.DO_NOTHING, db_column='id_estado', default=1)
     id_proveedor = models.ForeignKey('Proveedor', models.DO_NOTHING, db_column='id_proveedor')
 
     class Meta:
         managed = False
         db_table = 'orden_compra'
+
+    def __str__(self):
+        return 'orden: {}'.format(self.id_orden)
 
 
 class Producto(models.Model):
@@ -148,6 +155,9 @@ class Producto(models.Model):
     class Meta:
         managed = False
         db_table = 'producto'
+
+    def  __str__(self):
+        return self.nombre
 
 
 class ProductoTemp(models.Model):
@@ -179,6 +189,9 @@ class Proveedor(models.Model):
         db_table = 'proveedor'
 
     def __str__(self):
+        return self.nombre
+
+    def  __str__(self):
         return self.nombre
 
 

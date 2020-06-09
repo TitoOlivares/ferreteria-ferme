@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from core.models import Usuario, ProductoTemp, OrdenCompra
+from core.models import Usuario, ProductoTemp, OrdenCompra, DetalleOrden
 from django.forms import TextInput, EmailInput, NumberInput, DateInput, Textarea
 from django.contrib.auth.forms import UserCreationForm
 
@@ -78,11 +78,10 @@ class ProductoForm(ModelForm):
 class OrdenForm(ModelForm):
     class Meta:
         model = OrdenCompra
-        fields = ['fecha', 'id_usuario', 'id_proveedor']
-        widgets = {
-            'fecha': DateInput(
-                attrs={
-                    'class': 'datepicker'
-                }
-            ),
-        }
+        fields = ['id_usuario', 'id_proveedor']
+
+
+class DetalleOrdenForm(ModelForm):
+    class Meta:
+        model = DetalleOrden
+        fields = ['num_detalle', 'id_orden', 'id_producto', 'cantidad', 'precio_unit']

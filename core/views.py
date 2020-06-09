@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
-from .forms import UsuarioForm, ProductoForm, OrdenForm
-from .models import ProductoTemp, CatProducto, Usuario, Producto, OrdenCompra
+from .forms import UsuarioForm, ProductoForm, OrdenForm, DetalleOrdenForm
+from .models import ProductoTemp, CatProducto, Usuario, Producto, OrdenCompra, DetalleOrden
 
 
 # Create your views here.
@@ -40,4 +40,11 @@ class RegistroOrden(CreateView):
     model = OrdenCompra
     form_class = OrdenForm
     template_name = 'core/registro_orden.html'
+    success_url = reverse_lazy('RegistroDetalle')
+
+
+class RegistroDetalleOrden(CreateView):
+    model = DetalleOrden
+    form_class = DetalleOrdenForm
+    template_name = 'core/detalle_orden.html'
     success_url = reverse_lazy('home')
