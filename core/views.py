@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 from .forms import UsuarioForm, ProductoForm, OrdenForm, DetalleOrdenForm
 from .models import ProductoTemp, CatProducto, Usuario, Producto, OrdenCompra, DetalleOrden
@@ -36,6 +38,7 @@ class registro_producto(CreateView):
     success_url = reverse_lazy('home')
 
 
+@method_decorator(login_required, name='dispatch')
 class RegistroOrden(CreateView):
     model = OrdenCompra
     form_class = OrdenForm
@@ -43,8 +46,9 @@ class RegistroOrden(CreateView):
     success_url = reverse_lazy('RegistroDetalle')
 
 
+@method_decorator(login_required, name='dispatch')
 class RegistroDetalleOrden(CreateView):
     model = DetalleOrden
     form_class = DetalleOrdenForm
     template_name = 'core/detalle_orden.html'
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('RegistroDetalle')

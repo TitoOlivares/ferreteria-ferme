@@ -63,10 +63,10 @@ class DetalleFactura(models.Model):
 
 class DetalleOrden(models.Model):
     num_detalle = models.AutoField(primary_key=True)
-    id_orden = models.ForeignKey('OrdenCompra', models.DO_NOTHING, db_column='id_orden')
-    id_producto = models.ForeignKey('Producto', models.DO_NOTHING, db_column='id_producto')
+    id_orden = models.ForeignKey('OrdenCompra', models.DO_NOTHING, db_column='id_orden', verbose_name='Orden')
+    id_producto = models.ForeignKey('Producto', models.DO_NOTHING, db_column='id_producto', verbose_name='Producto')
     cantidad = models.FloatField()
-    precio_unit = models.FloatField()
+    precio_unit = models.FloatField(verbose_name='Precio unitario')
 
     class Meta:
         managed = False
@@ -287,6 +287,10 @@ class Usuario(AbstractBaseUser):
         managed = False
         db_table = 'usuario'
         unique_together = (('rut', 'email'),)
+        permissions = [
+            ("editar_orden", "Puede editar las ordenes de compra"),
+            ("ver_ordenes", "Puede ver las ordenes de compra"),
+        ]
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['rut', 'nombre', 'apellido',

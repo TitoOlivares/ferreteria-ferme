@@ -5,7 +5,7 @@ urlpatterns = [
     path('', home, name="home"),
     path('registro/', registro_usuario.as_view(), name="registro_usuario"),
     path('registro/done', registration_done, name="registration_done"),
-    path('producto/', registro_producto.as_view(), name="registro_producto"),
+    path('nuevoproducto/', registro_producto.as_view(), name="registro_producto"),
     path('orden/', RegistroOrden.as_view(), name="RegistroOrden"),
     path('detalleorden/', RegistroDetalleOrden.as_view(), name="RegistroDetalle"),
 ]

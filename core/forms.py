@@ -84,4 +84,4 @@ class OrdenForm(ModelForm):
 class DetalleOrdenForm(ModelForm):
     class Meta:
         model = DetalleOrden
-        fields = ['num_detalle', 'id_orden', 'id_producto', 'cantidad', 'precio_unit']
+        fields = ['id_orden', 'id_producto', 'cantidad', 'precio_unit']
