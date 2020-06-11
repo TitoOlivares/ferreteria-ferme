@@ -1,4 +1,3 @@
-
 # This is an auto-generated Django model module.
 # You'll have to do the following manually to clean this up:
 #   * Rearrange models' order
@@ -66,7 +65,7 @@ class DetalleOrden(models.Model):
     id_orden = models.ForeignKey('OrdenCompra', models.DO_NOTHING, db_column='id_orden')
     id_producto = models.ForeignKey('Producto', models.DO_NOTHING, db_column='id_producto')
     cantidad = models.FloatField()
-    precio_unit = models.FloatField()
+    precio_unit = models.FloatField(verbose_name='Precio unitario')
 
     class Meta:
         managed = False
@@ -95,7 +94,7 @@ class EstadoOrden(models.Model):
         managed = False
         db_table = 'estado_orden'
 
-    def  __str__(self):
+    def __str__(self):
         return self.descripcion
 
 
@@ -156,7 +155,7 @@ class Producto(models.Model):
         managed = False
         db_table = 'producto'
 
-    def  __str__(self):
+    def __str__(self):
         return self.nombre
 
     def __str__(self):
@@ -194,7 +193,7 @@ class Proveedor(models.Model):
     def __str__(self):
         return self.nombre
 
-    def  __str__(self):
+    def __str__(self):
         return self.nombre
 
 
@@ -281,7 +280,6 @@ class Usuario(AbstractBaseUser):
     is_superuser = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now=True)
-
 
     class Meta:
         managed = False
