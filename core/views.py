@@ -1,8 +1,13 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.utils.decorators import method_decorator
+from django.views.generic import CreateView
+from django.http import HttpResponseRedirect
+
 
 from .forms import UsuarioForm, ProductoForm, OrdenForm, DetalleOrdenForm, ProductoFormEdit
 from .models import ProductoTemp, CatProducto, Usuario, Producto, OrdenCompra, DetalleOrden, Proveedor
@@ -57,7 +62,21 @@ class RegistroOrden(CreateView):
     template_name = 'core/registro_orden.html'
     success_url = reverse_lazy('RegistroDetalle')
 
+    def post(self, request, *args, **kwargs):
+        form = OrdenForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(self.success_url)
+        return render(request, self.template_name, {'form', form})
 
+
+@method_decorator(login_required, name='dispatch')
+class ProductList(ListView):
+    model = Producto
+    template_name = 'core/lista_productos.html'
+
+
+@method_decorator(login_required, name='dispatch')
 @method_decorator(login_required, name='dispatch')
 class RegistroDetalleOrden(CreateView):
     model = DetalleOrden
@@ -70,4 +89,13 @@ class RegistroDetalleOrden(CreateView):
 class ProveedorListView(ListView):
     model = Proveedor
     template_name = 'core/lista_proveedores.html'
+
+    success_url = reverse_lazy('RegistroDetalle')
+
+    def post(self, request, *args, **kwargs):
+        form = DetalleOrdenForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(self.success_url)
+        return render(request, self.template_name, {'form', form})
 

@@ -1,4 +1,3 @@
-
 # This is an auto-generated Django model module.
 # You'll have to do the following manually to clean this up:
 #   * Rearrange models' order
@@ -9,6 +8,7 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from django.utils import timezone
+
 
 
 class Boleta(models.Model):
@@ -74,6 +74,8 @@ class DetalleOrden(models.Model):
         unique_together = (('id_orden', 'num_detalle'),)
 
 
+
+
 class DetalleVenta(models.Model):
     num_detalle = models.AutoField(primary_key=True)
     id_venta = models.ForeignKey('Venta', models.DO_NOTHING, db_column='id_venta')
@@ -95,7 +97,7 @@ class EstadoOrden(models.Model):
         managed = False
         db_table = 'estado_orden'
 
-    def  __str__(self):
+    def __str__(self):
         return self.descripcion
 
 
@@ -127,7 +129,7 @@ class Factura(models.Model):
 class OrdenCompra(models.Model):
     id_orden = models.AutoField(primary_key=True)
     fecha = models.DateField(default=timezone.now)
-    id_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='id_usuario')
+    id_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='id_usuario') ##
     id_estado = models.ForeignKey(EstadoOrden, models.DO_NOTHING, db_column='id_estado', default=1)
     id_proveedor = models.ForeignKey('Proveedor', models.DO_NOTHING, db_column='id_proveedor')
 
@@ -137,6 +139,7 @@ class OrdenCompra(models.Model):
 
     def __str__(self):
         return 'orden: {}'.format(self.id_orden)
+
 
 
 class Producto(models.Model):
@@ -156,7 +159,7 @@ class Producto(models.Model):
         managed = False
         db_table = 'producto'
 
-    def  __str__(self):
+    def __str__(self):
         return self.nombre
 
     def __str__(self):
@@ -194,7 +197,7 @@ class Proveedor(models.Model):
     def __str__(self):
         return self.nombre
 
-    def  __str__(self):
+    def __str__(self):
         return self.nombre
 
 
@@ -281,7 +284,6 @@ class Usuario(AbstractBaseUser):
     is_superuser = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now=True)
-
 
     class Meta:
         managed = False

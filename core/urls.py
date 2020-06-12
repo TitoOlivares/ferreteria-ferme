@@ -12,3 +12,4 @@ urlpatterns = [
     path('productos/list', ProductList.as_view(), name="ListaProductos"),
     path('productos/edit/<str:pk>/', ProductEdit.as_view(), name="EditarProductos"),
 ]
+

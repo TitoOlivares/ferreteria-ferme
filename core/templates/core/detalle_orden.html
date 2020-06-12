@@ -3,41 +3,10 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form | crispy }}
 
-    <div class="container">
-        <h2>Esta sección mostrará las órdenes de compra y tendrá el botón para agregar detalles</h2>
-        <!-- Button to Open the Modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-            Agregar detalle orden de compra
-        </button>
-
-        <!-- The Modal -->
-        <div class="modal fade" id="myModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h4 class="modal-title">Detalle de orden</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                        <form action="" method="post">
-                            {% csrf_token %}
-                            {{ form | crispy }}
-
-                            <button type="submit" class="btn btn-primary">Ingresar</button>
-                            <button type="submit" class="btn" data-dismiss="modal">Cancelar</button>
-                        </form>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-
+        <button type="submit" class="btn btn-primary">Ingresar</button>
+    </form>
 {% endblock %}
