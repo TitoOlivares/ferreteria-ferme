@@ -37,8 +37,8 @@ class CatProducto(models.Model):
 
 class DetalleBoleta(models.Model):
     num_detalle = models.AutoField(primary_key=True)
-    nro_boleta = models.ForeignKey('Boleta', models.DO_NOTHING, db_column='nro_boleta')
-    id_producto = models.ForeignKey('Producto', models.DO_NOTHING, db_column='id_producto')
+    nro_boleta = models.ForeignKey('Boleta', models.CASCADE, db_column='nro_boleta')
+    id_producto = models.ForeignKey('Producto', models.CASCADE, db_column='id_producto')
     cantidad = models.FloatField()
     precio_unit = models.FloatField()
 
@@ -50,8 +50,8 @@ class DetalleBoleta(models.Model):
 
 class DetalleFactura(models.Model):
     num_detalle = models.AutoField(primary_key=True)
-    nro_factura = models.ForeignKey('Factura', models.DO_NOTHING, db_column='nro_factura')
-    id_producto = models.ForeignKey('Producto', models.DO_NOTHING, db_column='id_producto')
+    nro_factura = models.ForeignKey('Factura', models.CASCADE, db_column='nro_factura')
+    id_producto = models.ForeignKey('Producto', models.CASCADE, db_column='id_producto')
     cantidad = models.FloatField()
     precio_unit = models.FloatField()
 
@@ -63,8 +63,8 @@ class DetalleFactura(models.Model):
 
 class DetalleOrden(models.Model):
     num_detalle = models.AutoField(primary_key=True)
-    id_orden = models.ForeignKey('OrdenCompra', models.DO_NOTHING, db_column='id_orden', verbose_name='Orden')
-    id_producto = models.ForeignKey('Producto', models.DO_NOTHING, db_column='id_producto', verbose_name='Producto')
+    id_orden = models.ForeignKey('OrdenCompra', models.CASCADE, db_column='id_orden', verbose_name='Orden')
+    id_producto = models.ForeignKey('Producto', models.CASCADE, db_column='id_producto', verbose_name='Producto')
     cantidad = models.FloatField()
     precio_unit = models.FloatField(verbose_name='Precio unitario')
 
@@ -78,8 +78,8 @@ class DetalleOrden(models.Model):
 
 class DetalleVenta(models.Model):
     num_detalle = models.AutoField(primary_key=True)
-    id_venta = models.ForeignKey('Venta', models.DO_NOTHING, db_column='id_venta')
-    id_producto = models.ForeignKey('Producto', models.DO_NOTHING, db_column='id_producto')
+    id_venta = models.ForeignKey('Venta', models.CASCADE, db_column='id_venta')
+    id_producto = models.ForeignKey('Producto', models.CASCADE, db_column='id_producto')
     cantidad = models.FloatField()
     precio_unit = models.FloatField()
 
@@ -139,7 +139,6 @@ class OrdenCompra(models.Model):
 
     def __str__(self):
         return 'Nro: {} / Usuario: {} / fecha: {}'.format(self.id_orden, self.id_usuario, self.fecha)
-
 
 
 class Producto(models.Model):

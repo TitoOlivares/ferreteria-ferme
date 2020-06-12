@@ -40,9 +40,15 @@
                         </li>
 
                         {% if user.es_proveedor %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'RegistroOrden' %}">Ordenes de compra</a>
-                            </li>
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
+                                    Proveedor
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="{% url 'RegistroOrden' %}">Ordenes de compra</a>
+                                    <a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesión</a>
+                                </div>
+                            </div>
                         {% endif %}
                         {% if user.is_staff %}
                             <div class="dropdown">
@@ -54,7 +60,7 @@
                                         <a class="dropdown-item" href="/admin">Gerencia</a>
                                     {% endif %}
                                     <a class="dropdown-item" href="{% url 'RegistroOrden' %}">Ordenes de compra</a>
-                                    <a class="dropdown-item" href="{% url 'registro_producto' %}">Nuevo producto</a>
+                                    <a class="dropdown-item" href="{% url 'ListaProductos' %}">Productos</a>
                                     <a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesión</a>
                                 </div>
                             </div>
