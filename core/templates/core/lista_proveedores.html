@@ -6,6 +6,13 @@
           integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 {% endblock %}
 
+{% block titulo_lista %}
+    <h3 class="card-title text-center">
+        <i class="fas fa-list"></i>
+        Listado de Proveedores
+    </h3>
+{% endblock %}
+
 {% block columnas %}
     <tr>
         <th>ID proveedor</th>
@@ -31,4 +38,10 @@
             </td>
         </tr>
     {% endfor %}
+{% endblock %}
+
+{% block boton_lista %}
+    <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+        <i class="fas fa-plus"></i> Nuevo proveedor
+    </button>
 {% endblock %}

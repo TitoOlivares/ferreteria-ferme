@@ -1,9 +1,10 @@
-from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.http import HttpResponseRedirect
+
 
 from .forms import UsuarioForm, ProductoForm, OrdenForm, DetalleOrdenForm, ProductoFormEdit
 from .models import ProductoTemp, CatProducto, Usuario, Producto, OrdenCompra, DetalleOrden, Proveedor
@@ -35,14 +36,15 @@ def registration_done(request):
 class registro_producto(CreateView):
     model = ProductoTemp
     form_class = ProductoForm
-    template_name = 'core/registro_producto.html'
+    template_name = 'core/productos/registro_producto.html'
     success_url = reverse_lazy('home')
 
 
-class ProductEdit(CreateView):
+@method_decorator(login_required, name='dispatch')
+class ProductEdit(UpdateView):
     model = Producto
     form_class = ProductoFormEdit
-    template_name = 'core/registro_producto.html'
+    template_name = 'core/productos/registro_producto.html'
     success_url = reverse_lazy('home')
 
 
@@ -50,30 +52,34 @@ class ProductEdit(CreateView):
 class RegistroOrden(CreateView):
     model = OrdenCompra
     form_class = OrdenForm
-    template_name = 'core/registro_orden.html'
+    template_name = 'core/orden_compra/registro_orden.html'
     success_url = reverse_lazy('RegistroDetalle')
 
     def post(self, request, *args, **kwargs):
         form = OrdenForm(request.POST)
-
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(self.success_url)
         return render(request, self.template_name, {'form', form})
 
 
-
 @method_decorator(login_required, name='dispatch')
 class ProductList(ListView):
     model = Producto
-    template_name = 'core/lista_productos.html'
+    template_name = 'core/productos/lista_productos.html'
 
+
+@method_decorator(login_required, name='dispatch')
+class ProductDelete(DeleteView):
+    model = Producto
+    template_name = 'core/productos/eliminar_producto.html'
+    success_url = reverse_lazy('ListaProductos')
 
 @method_decorator(login_required, name='dispatch')
 class RegistroDetalleOrden(CreateView):
     model = DetalleOrden
     form_class = DetalleOrdenForm
-    template_name = 'core/detalle_orden.html'
+    template_name = 'core/orden_compra/detalle_orden.html'
     success_url = reverse_lazy('RegistroDetalle')
 
     def post(self, request, *args, **kwargs):

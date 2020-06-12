@@ -6,6 +6,13 @@
           integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 {% endblock %}
 
+{% block titulo_lista %}
+    <h3 class="card-title text-center">
+        <i class="fas fa-list"></i>
+        Listado de Productos
+    </h3>
+{% endblock %}
+
 {% block columnas %}
     <tr>
         <th>ID producto</th>
@@ -34,9 +41,16 @@
             <td>{{ producto.id_categoria }}</td>
             <td>{{ producto.id_proveedor }}</td>
             <td>
-                <a href="{% url 'EditarProductos' producto.id_producto %}" class="btn btn-warning btn-flat"><i class="fas fa-edit"></i></a>
-                <button class="btn btn-danger btn-flat"><i class="fas fa-trash"></i></button>
+                <a href="{% url 'EditarProductos' producto.id_producto %}" class="btn btn-warning btn-flat"><i
+                        class="fas fa-edit"></i></a>
+                <a href="{% url 'EliminarProductos' producto.id_producto %}" class="btn btn-danger btn-flat"><i class="fas fa-trash"></i></a>
             </td>
         </tr>
     {% endfor %}
+{% endblock %}
+
+{% block boton_lista %}
+    <a href="{% url 'registro_producto' %}" class="btn btn-primary">
+        <i class="fas fa-plus"></i> Nuevo producto
+    </a>
 {% endblock %}
