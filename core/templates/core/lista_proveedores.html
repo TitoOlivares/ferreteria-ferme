@@ -20,7 +20,6 @@
         <th>Rut</th>
         <th>Telefono</th>
         <th>Rubro</th>
-        <th>Accion</th>
     </tr>
 {% endblock %}
 
@@ -33,15 +32,13 @@
             <td>{{ proveedor.telefono }}</td>
             <td>{{ proveedor.rubro }}</td>
             <td>
-                <button class="btn btn-warning btn-flat"><i class="fas fa-edit"></i></button>
-                <button class="btn btn-danger btn-flat"><i class="fas fa-trash"></i></button>
             </td>
         </tr>
     {% endfor %}
 {% endblock %}
 
 {% block boton_lista %}
-    <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+    <a href="{% url 'registro_usuario' %}" class="btn btn-primary">
         <i class="fas fa-plus"></i> Nuevo proveedor
-    </button>
+    </a>
 {% endblock %}

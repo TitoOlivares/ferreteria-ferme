@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -94,8 +94,3 @@ class RegistroDetalleOrden(CreateView):
 class ProveedorListView(ListView):
     model = Proveedor
     template_name = 'core/lista_proveedores.html'
-
-    success_url = reverse_lazy('RegistroDetalle')
-
-
-
