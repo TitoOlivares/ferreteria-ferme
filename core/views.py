@@ -1,10 +1,9 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.http import HttpResponseRedirect
-
 
 from .forms import UsuarioForm, ProductoForm, OrdenForm, DetalleOrdenForm, ProductoFormEdit
 from .models import ProductoTemp, CatProducto, Usuario, Producto, OrdenCompra, DetalleOrden, Proveedor
@@ -56,10 +55,12 @@ class RegistroOrden(CreateView):
 
     def post(self, request, *args, **kwargs):
         form = OrdenForm(request.POST)
+
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(self.success_url)
         return render(request, self.template_name, {'form', form})
+
 
 
 @method_decorator(login_required, name='dispatch')
