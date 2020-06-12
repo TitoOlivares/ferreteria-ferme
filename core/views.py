@@ -50,6 +50,7 @@ class RegistroOrden(CreateView):
     def post(self, request, *args, **kwargs):
         form = OrdenForm(request.POST)
         if form.is_valid():
+            form.save()
             return HttpResponseRedirect(self.success_url)
         return render(request, self.template_name, {'form', form})
 
@@ -64,6 +65,7 @@ class RegistroDetalleOrden(CreateView):
     def post(self, request, *args, **kwargs):
         form = DetalleOrdenForm(request.POST)
         if form.is_valid():
+            form.save()
             return HttpResponseRedirect(self.success_url)
         return render(request, self.template_name, {'form', form})
 

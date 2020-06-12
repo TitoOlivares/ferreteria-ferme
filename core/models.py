@@ -10,6 +10,7 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from django.utils import timezone
 
 
+
 class Boleta(models.Model):
     nro_boleta = models.AutoField(primary_key=True)
     fecha = models.DateField()
@@ -73,6 +74,8 @@ class DetalleOrden(models.Model):
         unique_together = (('id_orden', 'num_detalle'),)
 
 
+
+
 class DetalleVenta(models.Model):
     num_detalle = models.AutoField(primary_key=True)
     id_venta = models.ForeignKey('Venta', models.DO_NOTHING, db_column='id_venta')
@@ -126,7 +129,7 @@ class Factura(models.Model):
 class OrdenCompra(models.Model):
     id_orden = models.AutoField(primary_key=True)
     fecha = models.DateField(default=timezone.now)
-    id_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='id_usuario')
+    id_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='id_usuario') ##
     id_estado = models.ForeignKey(EstadoOrden, models.DO_NOTHING, db_column='id_estado', default=1)
     id_proveedor = models.ForeignKey('Proveedor', models.DO_NOTHING, db_column='id_proveedor')
 
@@ -136,6 +139,7 @@ class OrdenCompra(models.Model):
 
     def __str__(self):
         return 'orden: {}'.format(self.id_orden)
+
 
 
 class Producto(models.Model):

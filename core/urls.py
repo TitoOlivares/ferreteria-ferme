@@ -9,3 +9,4 @@ urlpatterns = [
     path('orden/', RegistroOrden.as_view(), name="RegistroOrden"),
     path('detalleorden/', RegistroDetalleOrden.as_view(), name="RegistroDetalle"),
 ]
+
