@@ -138,7 +138,7 @@ class OrdenCompra(models.Model):
         db_table = 'orden_compra'
 
     def __str__(self):
-        return 'orden: {}'.format(self.id_orden)
+        return 'Nro: {} / Usuario: {} / fecha: {}'.format(self.id_orden, self.id_usuario, self.fecha)
 
 
 
