@@ -1,0 +1,47 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block head %}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+{% endblock %}
+
+{% block content %}
+    <style>
+        .row {
+            margin-top: 5%;
+            margin-left: 5%;
+            margin-right: 5%;
+        }
+    </style>
+    <div class="row">
+        <div class="col-sm-6 mb-4">
+            <div class="card h-70">
+                <a><img class="card-img-top" src="{{ producto.url_img }}" alt=""></a>
+            </div>
+        </div>
+        <div class="col-sm-6 mb-4">
+            <div class="card h-70">
+                <div class="card-body">
+                    <h2 class="card-title text-uppercase">
+                        {{ producto.nombre }}
+                    </h2>
+                    <h4 class="text-muted">{{ producto.marca }}</h4>
+                    <h5>${{ producto.precio_unit|intcomma }}.- c/u</h5>
+                    <p class="card-text">Cod. producto: {{ producto.id_producto }}</p>
+                    <p class="card-text">{{ producto.descripcion }}</p>
+                    {% if producto.stock <= producto.stock_critico %}
+                        <p class="card-text font-weight-bold text-danger">Stock: {{ producto.stock }} unidades</p>
+                    {% else %}
+                        <p class="card-text font-weight-bold">Stock: {{ producto.stock }} unidades</p>
+                    {% endif %}
+                    <button class="btn btn-info">
+                        <i class="fas fa-cart-plus"></i> Agregar al carro
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

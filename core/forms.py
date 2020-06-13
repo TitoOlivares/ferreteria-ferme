@@ -1,4 +1,5 @@
 from django.forms import ModelForm
+from django import forms
 from core.models import Usuario, ProductoTemp, OrdenCompra, DetalleOrden, Producto
 from django.forms import TextInput, EmailInput, NumberInput, DateInput, Textarea
 from django.contrib.auth.forms import UserCreationForm
@@ -104,5 +105,4 @@ class DetalleOrdenForm(ModelForm):
     class Meta:
         model = DetalleOrden
         fields = ['id_orden', 'id_producto', 'cantidad', 'precio_unit']
-
 

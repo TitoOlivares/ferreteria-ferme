@@ -24,7 +24,7 @@
                          alt="First slide">
                 </div>
                 <div class="carousel-item">
-                    <img class="d-block img-fluid" src="{% static 'core/img/carrusel2.jpg' %}"
+                    <img class="d-block img-fluid" src="{% static 'core/img/carrusel2.png' %}"
                          alt="Second slide">
                 </div>
                 <div class="carousel-item">
@@ -65,15 +65,19 @@
                     {% for i in productos %}
                         <div class="col-lg-4 col-md-6 mb-4">
                             <div class="card h-100">
-                                <a href="#"><img class="card-img-top" src="{{ i.url_img }}" alt=""></a>
+                                <a href="{% url 'DetalleProducto' i.id_producto %}"><img class="card-img-top"
+                                                                                         src="{{ i.url_img }}"
+                                                                                         alt=""></a>
                                 <div class="card-body">
                                     <h4 class="card-title">
-                                        <a href="#">{{ i.nombre }}</a>
+                                        <a href="{% url 'DetalleProducto' i.id_producto %}">{{ i.nombre }}</a>
                                     </h4>
                                     {% load humanize %}
                                     <h5>${{ i.precio_unit|intcomma }}.- c/u</h5>
-                                    <p class="card-text">{{ i.descripcion }}</p>
-                                    <p class="card-text">Stock: {{ i.stock }} unidades</p>
+                                    {% if i.stock <= i.stock_critico %}
+                                        <p class="card-text text-danger font-weight-bolder">¡Últimas unidades!</p>
+                                    {% endif %}
+
                                 </div>
                             </div>
                         </div>

@@ -1,5 +1,4 @@
-from django.contrib import messages
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required
@@ -49,7 +48,7 @@ class ProductEdit(UpdateView):
     model = Producto
     form_class = ProductoFormEdit
     template_name = 'core/productos/registro_producto.html'
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('ListaProductos')
 
 
 @method_decorator(login_required, name='dispatch')
@@ -116,3 +115,10 @@ class DetalleOrdenList(UpdateView):
     model = DetalleOrden
     form_class = DetalleOrdenForm
     template_name = 'core/Orden_Seleccionada.html'
+
+
+class DetalleProducto(UpdateView):
+    model = Producto
+    form_class = ProductoFormEdit
+    template_name = 'core/productos/detalle_producto.html'
+

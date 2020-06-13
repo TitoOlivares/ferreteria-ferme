@@ -1,5 +1,6 @@
 {% extends 'core/lista_base.html' %}
 {% load static %}
+{% load humanize %}
 {#{% load crispy_forms_tags %}#}
 {% block head %}
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
@@ -34,7 +35,7 @@
             <td>{{ producto.id_producto }}</td>
             <td>{{ producto.nombre }}</td>
             <td>{{ producto.descripcion }}</td>
-            <td>{{ producto.precio_unit }}</td>
+            <td>${{ producto.precio_unit|intcomma }}.-</td>
             <td>{{ producto.marca }}</td>
             <td>{{ producto.stock }}</td>
             <td>{{ producto.fecha_venc }}</td>
