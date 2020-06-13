@@ -25,7 +25,7 @@
                 <div class="modal-body">
                     <form action="" method="post">
                         {% csrf_token %}
-                        {{ orden | crispy }}
+                        {{ form | crispy }}
 
                         <button type="submit" class="btn btn-primary">Crear</button>
                     </form>
