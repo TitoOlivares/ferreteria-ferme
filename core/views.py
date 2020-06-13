@@ -98,7 +98,6 @@ class RegistroDetalleOrden(CreateView):
 class ProveedorListView(ListView):
     model = Proveedor
     template_name = 'core/lista_proveedores.html'
-    success_url = reverse_lazy('RegistroDetalle')
 
 
 @method_decorator(login_required, name='dispatch')
@@ -110,11 +109,16 @@ class OrdenList(ListView):
         return OrdenCompra.objects.filter(id_proveedor=self.request.user.id_usuario)
 
 
-@method_decorator(login_required, name='dispatch')
-class DetalleOrdenList(UpdateView):
-    model = DetalleOrden
-    form_class = DetalleOrdenForm
-    template_name = 'core/Orden_Seleccionada.html'
+@login_required
+def detalle_orden_list(request, indice):
+    detalles = DetalleOrden.objects.filter(id_orden=indice)
+    data ={
+        'detalles':detalles,
+        'index':indice
+    }
+
+    return render(request, 'core/Orden_Seleccionada.html', data)
+
 
 
 class DetalleProducto(UpdateView):
