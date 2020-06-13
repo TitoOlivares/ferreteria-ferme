@@ -5,10 +5,8 @@ from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect
-#
-from django.views.generic import TemplateView
-#
 
+# from django.db import connection
 
 from .forms import UsuarioForm, ProductoForm, OrdenForm, DetalleOrdenForm, ProductoFormEdit
 from .models import ProductoTemp, CatProducto, Usuario, Producto, OrdenCompra, DetalleOrden, Proveedor
@@ -110,8 +108,31 @@ class OrdenList(ListView):
         return OrdenCompra.objects.filter(id_proveedor=self.request.user.id_usuario)
 
 
-@method_decorator(login_required, name='dispatch')
-class DetalleOrdenList(UpdateView):
-    model = DetalleOrden
-    form_class = DetalleOrdenForm
-    template_name = 'core/Orden_Seleccionada.html'
+@login_required
+def detalle_orden_list(request, indice):
+    detalles = DetalleOrden.objects.filter(id_orden=indice)
+    data ={
+        'detalles':detalles,
+        'index':indice
+    }
+
+    return render(request, 'core/Orden_Seleccionada.html', data)
+
+
+
+
+
+
+
+# def filtro_orden( id_orden):
+#     django_cursor = connection.cursor()
+#     cursor = django_cursor.connection.cursor()
+#     out_cur = django_cursor.connection.cursor()
+#
+#     cursor.callproc('SP_LISTAR_DET_ORDEN()', [out_cur])
+#
+#     lista = []
+#     for fila in out_cur:
+#         lista.append(fila)
+#
+#     return(lista)

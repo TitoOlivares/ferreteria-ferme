@@ -138,7 +138,7 @@ class OrdenCompra(models.Model):
         db_table = 'orden_compra'
 
     def __str__(self):
-        return 'Nro: {} / Usuario: {} / fecha: {}'.format(self.id_orden, self.id_usuario, self.fecha)
+        return 'Usuario: {} / fecha: {}'.format(self.id_usuario, self.fecha)
 
 
 class Producto(models.Model):
@@ -300,7 +300,7 @@ class Usuario(AbstractBaseUser):
     objects = MyAccountManager()
 
     def __str__(self):
-        return self.email
+        return self.nombre + ' ' + self.apellido
 
     def has_perm(self, perm, obj=None):
         return self.is_admin

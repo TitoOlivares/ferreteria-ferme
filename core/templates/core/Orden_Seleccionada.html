@@ -9,15 +9,16 @@
 {% block titulo_lista %}
     <h3 class="card-title text-center">
         <i class="fas fa-list"></i>
-        Orden de compra N°: {{ form.id_orden }}
+        Orden de compra N°: {{ index }}
     </h3>
 {% endblock %}
 
 {% block columnas %}
     <tr>
-        <th>Orden</th>
-        <th>Proveedor</th>
-        <th>Link detalles</th>
+        <th>Creado por: / Fecha</th>
+        <th>Producto</th>
+        <th>Cantidad</th>
+        <th>Precio unitario</th>
 
     </tr>
 {% endblock %}
@@ -26,14 +27,15 @@
 
 
 
-    {% for detalle in object_list %}
+    {% for detalle in detalles %}
 
         <tr>
 
             <td>{{ detalle.id_orden }}</td>
             <td>{{ detalle.id_producto }}</td>
             <td>{{ detalle.cantidad }}</td>
-            <td>{{ detalle.precio_unit }}</td>
+            {% load humanize %}
+            <td> ${{ detalle.precio_unit | intcomma }}</td>
 
 
         </tr>
