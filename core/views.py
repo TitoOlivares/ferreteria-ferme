@@ -122,3 +122,4 @@ class DetalleProducto(UpdateView):
     form_class = ProductoFormEdit
     template_name = 'core/productos/detalle_producto.html'
 
+
