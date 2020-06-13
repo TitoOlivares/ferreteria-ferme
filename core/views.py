@@ -118,21 +118,3 @@ def detalle_orden_list(request, indice):
 
     return render(request, 'core/Orden_Seleccionada.html', data)
 
-
-
-
-
-
-
-# def filtro_orden( id_orden):
-#     django_cursor = connection.cursor()
-#     cursor = django_cursor.connection.cursor()
-#     out_cur = django_cursor.connection.cursor()
-#
-#     cursor.callproc('SP_LISTAR_DET_ORDEN()', [out_cur])
-#
-#     lista = []
-#     for fila in out_cur:
-#         lista.append(fila)
-#
-#     return(lista)
