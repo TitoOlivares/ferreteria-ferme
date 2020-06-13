@@ -1,9 +1,13 @@
+from django.contrib import messages
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect
+#
+from django.views.generic import TemplateView
+#
 
 
 from .forms import UsuarioForm, ProductoForm, OrdenForm, DetalleOrdenForm, ProductoFormEdit
@@ -75,6 +79,7 @@ class ProductDelete(DeleteView):
     template_name = 'core/productos/eliminar_producto.html'
     success_url = reverse_lazy('ListaProductos')
 
+
 @method_decorator(login_required, name='dispatch')
 class RegistroDetalleOrden(CreateView):
     model = DetalleOrden
@@ -95,7 +100,18 @@ class ProveedorListView(ListView):
     model = Proveedor
     template_name = 'core/lista_proveedores.html'
 
-    success_url = reverse_lazy('RegistroDetalle')
+
+@method_decorator(login_required, name='dispatch')
+class OrdenList(ListView):
+    model = OrdenCompra
+    template_name = 'core/lista_ordenes.html'
+
+    def get_queryset(self):
+        return OrdenCompra.objects.filter(id_proveedor=self.request.user.id_usuario)
 
 
-
+@method_decorator(login_required, name='dispatch')
+class DetalleOrdenList(UpdateView):
+    model = DetalleOrden
+    form_class = DetalleOrdenForm
+    template_name = 'core/Orden_Seleccionada.html'

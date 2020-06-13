@@ -6,12 +6,13 @@ urlpatterns = [
     path('registro/', registro_usuario.as_view(), name="registro_usuario"),
     path('registro/done', registration_done, name="registration_done"),
     path('orden/', RegistroOrden.as_view(), name="RegistroOrden"),
-    # path('orden/', orden_compra, name="RegistroOrden"),
     path('detalleorden/', RegistroDetalleOrden.as_view(), name="RegistroDetalle"),
     path('lista_proveedores/', ProveedorListView.as_view(), name="ListaProveedor"),
-    path('productos/new', registro_producto.as_view(), name="registro_producto"),
+    path('productos/new/', registro_producto.as_view(), name="registro_producto"),
     path('productos/list', ProductList.as_view(), name="ListaProductos"),
     path('productos/edit/<str:pk>/', ProductEdit.as_view(), name="EditarProductos"),
     path('productos/delete/<str:pk>/', ProductDelete.as_view(), name="EliminarProductos"),
+    path('lista_ordenes/', OrdenList.as_view(), name="ListaOrdenes"),
+    # path('orden_detallada/edit/<str:id_orden>/', DetalleOrdenList.as_view(), name="DetallesOrden"),
 ]
 

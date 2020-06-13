@@ -10,6 +10,7 @@
 
 
 
+
     <div class="modal fade" id="OrdenCompra">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -24,7 +25,7 @@
                 <div class="modal-body">
                     <form action="" method="post">
                         {% csrf_token %}
-                        {{ form | crispy }}
+                        {{ orden | crispy }}
 
                         <button type="submit" class="btn btn-primary">Crear</button>
                     </form>
@@ -35,6 +36,8 @@
             </div>
         </div>
     </div>
+
+
 
 
 
