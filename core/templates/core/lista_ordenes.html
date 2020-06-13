@@ -1,0 +1,43 @@
+{% extends 'core/lista_base.html' %}
+{% load static %}
+{#{% load crispy_forms_tags %}#}
+{% block head %}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+{% endblock %}
+
+{% block titulo_lista %}
+    <h3 class="card-title text-center">
+        <i class="fas fa-list"></i>
+        Listado de Ordenes de compra usuario: {{ user.nombre }}
+    </h3>
+{% endblock %}
+
+{% block columnas %}
+    <tr>
+        <th>Orden</th>
+        <th>Proveedor</th>
+        <th>Fecha</th>
+        <th>Link detalles</th>
+
+    </tr>
+{% endblock %}
+
+{% block filas %}
+
+
+
+        {% for orden in object_list %}
+
+            <tr>
+                <td>{{ orden.id_orden }}</td>
+                <td>{{ orden.id_proveedor }}</td>
+                <td>{{ orden.fecha }}</td>
+
+
+            </tr>
+
+        {% endfor %}
+
+
+{% endblock %}
