@@ -15,5 +15,7 @@ urlpatterns = [
     path('lista_ordenes/', OrdenList.as_view(), name="ListaOrdenes"),
     path('detalle_orden_list/<indice>/', detalle_orden_list, name="DetallesOrden"),
     path('producto/detalle/<str:pk>/', DetalleProducto.as_view(), name="DetalleProducto"),
+    path('orden/delete/<int:pk>/', OrdenDelete.as_view(), name="EliminarOrden"),
+    path('admin_ordenes/', OrdenAdmin.as_view(), name="AdminOrdenes"),
 ]
 

@@ -103,7 +103,7 @@ class ProveedorListView(ListView):
 @method_decorator(login_required, name='dispatch')
 class OrdenList(ListView):
     model = OrdenCompra
-    template_name = 'core/lista_ordenes.html'
+    template_name = 'core/orden_compra/lista_ordenes.html'
 
     def get_queryset(self):
         return OrdenCompra.objects.filter(id_proveedor=self.request.user.id_usuario)
@@ -117,8 +117,7 @@ def detalle_orden_list(request, indice):
         'index':indice
     }
 
-    return render(request, 'core/Orden_Seleccionada.html', data)
-
+    return render(request, 'core/orden_compra/Orden_Seleccionada.html', data)
 
 
 class DetalleProducto(UpdateView):
@@ -127,3 +126,15 @@ class DetalleProducto(UpdateView):
     template_name = 'core/productos/detalle_producto.html'
 
 
+
+@method_decorator(login_required, name='dispatch')
+class OrdenDelete(DeleteView):
+    model = OrdenCompra
+    template_name = 'core/orden_compra/eliminar_orden.html'
+    success_url = reverse_lazy('OrdenAdmin')
+
+
+@method_decorator(login_required, name='dispatch')
+class OrdenAdmin(ListView):
+    model = OrdenCompra
+    template_name = 'core/orden_compra/orden_admin.html'

@@ -205,7 +205,7 @@ class Recepcion(models.Model):
     fecha = models.DateField()
     estado = models.FloatField()
     id_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='id_usuario')
-    id_orden = models.ForeignKey(OrdenCompra, models.DO_NOTHING, db_column='id_orden')
+    id_orden = models.ForeignKey(OrdenCompra, models.CASCADE, db_column='id_orden')
 
     class Meta:
         managed = False

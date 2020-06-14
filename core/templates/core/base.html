@@ -69,10 +69,12 @@
                                     {% if user.is_admin %}
                                         <a class="dropdown-item" href="/admin">Gerencia</a>
                                     {% endif %}
-                                    <a class="dropdown-item" href="{% url 'RegistroOrden' %}">Ordenes de compra</a>
+                                    <a class="dropdown-item" href="{% url 'AdminOrdenes' %}">Administración de Ordenes de compra</a>
                                     <a class="dropdown-item" href="{% url 'ListaProductos' %}">Productos</a>
                                     <a class="dropdown-item" href="{% url 'ListaProveedor' %}">Listado Proveedores</a>
                                     <a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesión</a>
+
+
                                 </div>
                             </div>
                         {% endif %}
