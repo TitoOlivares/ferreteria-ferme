@@ -5,7 +5,6 @@ urlpatterns = [
     path('', home, name="home"),
     path('registro/', registro_usuario.as_view(), name="registro_usuario"),
     path('registro/done', registration_done, name="registration_done"),
-    path('orden/', RegistroOrden.as_view(), name="RegistroOrden"),
     path('detalleorden/', RegistroDetalleOrden.as_view(), name="RegistroDetalle"),
     path('lista_proveedores/', ProveedorListView.as_view(), name="ListaProveedor"),
     path('productos/new/', registro_producto.as_view(), name="registro_producto"),
@@ -16,6 +15,6 @@ urlpatterns = [
     path('detalle_orden_list/<indice>/', detalle_orden_list, name="DetallesOrden"),
     path('producto/detalle/<str:pk>/', DetalleProducto.as_view(), name="DetalleProducto"),
     path('orden/delete/<int:pk>/', OrdenDelete.as_view(), name="EliminarOrden"),
-    path('admin_ordenes/', OrdenAdmin.as_view(), name="AdminOrdenes"),
+    path('admin_ordenes/', orden_admin, name="AdminOrdenes"),
 ]
 

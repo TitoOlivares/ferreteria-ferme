@@ -51,19 +51,20 @@ class ProductEdit(UpdateView):
     success_url = reverse_lazy('ListaProductos')
 
 
-@method_decorator(login_required, name='dispatch')
-class RegistroOrden(CreateView):
-    model = OrdenCompra
-    form_class = OrdenForm
-    template_name = 'core/orden_compra/registro_orden.html'
-    success_url = reverse_lazy('RegistroDetalle')
+def orden_admin(request):
 
-    def post(self, request, *args, **kwargs):
+    formulario = OrdenForm()
+    data = {
+        'lista': OrdenCompra.objects.all(),
+        'formulario': formulario
+    }
+
+    if request.method == 'POST':
         form = OrdenForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(self.success_url)
-        return render(request, self.template_name, {'form', form})
+
+    return render(request, 'core/orden_compra/orden_admin.html', data)
 
 
 @method_decorator(login_required, name='dispatch')
@@ -112,9 +113,9 @@ class OrdenList(ListView):
 @login_required
 def detalle_orden_list(request, indice):
     detalles = DetalleOrden.objects.filter(id_orden=indice)
-    data ={
-        'detalles':detalles,
-        'index':indice
+    data = {
+        'detalles': detalles,
+        'index': indice
     }
 
     return render(request, 'core/orden_compra/Orden_Seleccionada.html', data)
@@ -126,15 +127,13 @@ class DetalleProducto(UpdateView):
     template_name = 'core/productos/detalle_producto.html'
 
 
-
 @method_decorator(login_required, name='dispatch')
 class OrdenDelete(DeleteView):
     model = OrdenCompra
     template_name = 'core/orden_compra/eliminar_orden.html'
     success_url = reverse_lazy('OrdenAdmin')
 
-
-@method_decorator(login_required, name='dispatch')
-class OrdenAdmin(ListView):
-    model = OrdenCompra
-    template_name = 'core/orden_compra/orden_admin.html'
+# @method_decorator(login_required, name='dispatch')
+# class OrdenAdmin(ListView):
+#     model = OrdenCompra
+#     template_name = 'core/orden_compra/orden_admin.html'
