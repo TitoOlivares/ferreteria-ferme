@@ -63,6 +63,9 @@ def orden_admin(request):
         form = OrdenForm(request.POST)
         if form.is_valid():
             form.save()
+            return redirect(to='RegistroDetalle')
+        data['form'] = form
+
 
     return render(request, 'core/orden_compra/orden_admin.html', data)
 
