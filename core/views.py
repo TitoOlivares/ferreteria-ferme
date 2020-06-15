@@ -184,6 +184,15 @@ class FacturaAnular(UpdateView):
     success_url = reverse_lazy('AdminFactura')
 
 
+@method_decorator(login_required, name='dispatch')
+class FacturaListCliente(ListView):
+    model = Factura
+    template_name = 'core/facturas/facturas_cliente.html'
+
+    def get_queryset(self):
+        return Factura.objects.filter(id_usuario=self.request.user.id_usuario)
+
+
 # Modulo boleta
 @login_required
 def boleta_admin(request):

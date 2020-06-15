@@ -26,6 +26,7 @@ urlpatterns = [
     path('detalle_factura/', NuevoDetalleFactura.as_view(), name="NuevoDetalleFact"),
     path('detalle_fact_list/<indice>/', detalle_fact_list, name="DetallesFactura"),
     path('facturas/anular/<int:pk>/', FacturaAnular.as_view(), name="AnularFactura"),
+    path('misfacturas/', FacturaListCliente.as_view(), name="FacturasCliente"),
 
     # urls Boletas
     path('admin_boletas/', boleta_admin, name="AdminBoletas"),

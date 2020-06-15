@@ -1,0 +1,52 @@
+{% extends 'core/lista_base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block titulo_lista %}
+    <h3 class="card-title text-center">
+        <i class="fas fa-list"></i>
+        Listado de Facturas usuario: {{ user.nombre }}
+    </h3>
+{% endblock %}
+
+{% block columnas %}
+    <tr>
+        <th>Numero</th>
+        <th>Fecha</th>
+        <th>Razon Social</th>
+        <th>Giro</th>
+        <th>Dirección</th>
+        <th>Fono contacto</th>
+        <th>Ciente</th>
+        <th>Estado</th>
+        <th>Opciones</th>
+    </tr>
+{% endblock %}
+
+{% block filas %}
+    {% for factura in object_list %}
+        <tr>
+            <td>{{ factura.nro_factura }}</td>
+            <td>{{ factura.fecha }}</td>
+            <td>{{ factura.razon_soc }}</td>
+            <td>{{ factura.giro }}</td>
+            <td>{{ factura.direccion }}</td>
+            <td>{{ factura.contacto }}</td>
+            <td>{{ factura.id_usuario }}</td>
+            <td>
+                {% if factura.estado == True %}
+                    <a>Válida</a>
+                {% else%}
+                    <a >Anulada</a>
+
+                {% endif %}
+            </td>
+            <td>
+                <a href="{% url 'DetallesFactura' factura.nro_factura %}">
+                    Ver detalle
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+
+{% endblock %}
