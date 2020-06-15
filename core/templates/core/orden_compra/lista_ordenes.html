@@ -18,7 +18,7 @@
         <th>Orden</th>
         <th>Proveedor</th>
         <th>Fecha</th>
-        <th>Link detalles</th>
+        <th>Ver orden</th>
 
     </tr>
 {% endblock %}
@@ -34,8 +34,9 @@
                 <td>{{ orden.id_proveedor }}</td>
                 <td>{{ orden.fecha }}</td>
                 <td>
-                    <a href="{% url 'DetallesOrden' orden.id_orden %}" class="btn btn-warning btn-flat"><i
-                        class="fas fa-edit"></i></a>
+                    <a href="{% url 'DetallesOrden' orden.id_orden %}">
+                        Ver detalle
+                    </a>
 
 
                 </td>

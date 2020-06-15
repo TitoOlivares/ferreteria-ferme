@@ -14,6 +14,7 @@ from .models import *
 
 # Create your views here.
 
+# Home
 def home(request):
     producto = Producto.objects.all()
     categoria = CatProducto.objects.all()
@@ -24,6 +25,7 @@ def home(request):
     return render(request, 'core/home.html', data)
 
 
+# User registration and login
 class registro_usuario(CreateView):
     model = Usuario
     form_class = UsuarioForm
@@ -35,6 +37,7 @@ def registration_done(request):
     return render(request, 'registration/registration_done.html')
 
 
+# Product module
 class registro_producto(CreateView):
     model = ProductoTemp
     form_class = ProductoForm
@@ -50,6 +53,27 @@ class ProductEdit(UpdateView):
     success_url = reverse_lazy('ListaProductos')
 
 
+@method_decorator(login_required, name='dispatch')
+class ProductList(ListView):
+    model = Producto
+    template_name = 'core/productos/lista_productos.html'
+
+
+@method_decorator(login_required, name='dispatch')
+class ProductDelete(DeleteView):
+    model = Producto
+    template_name = 'core/productos/eliminar_producto.html'
+    success_url = reverse_lazy('ListaProductos')
+
+
+@method_decorator(login_required, name='dispatch')
+class DetalleProducto(UpdateView):
+    model = Producto
+    form_class = ProductoFormEdit
+    template_name = 'core/productos/detalle_producto.html'
+
+
+# Ordenes de compra
 def orden_admin(request):
     formulario = OrdenForm()
     data = {
@@ -68,19 +92,6 @@ def orden_admin(request):
 
 
 @method_decorator(login_required, name='dispatch')
-class ProductList(ListView):
-    model = Producto
-    template_name = 'core/productos/lista_productos.html'
-
-
-@method_decorator(login_required, name='dispatch')
-class ProductDelete(DeleteView):
-    model = Producto
-    template_name = 'core/productos/eliminar_producto.html'
-    success_url = reverse_lazy('ListaProductos')
-
-
-@method_decorator(login_required, name='dispatch')
 class RegistroDetalleOrden(CreateView):
     model = DetalleOrden
     form_class = DetalleOrdenForm
@@ -93,12 +104,6 @@ class RegistroDetalleOrden(CreateView):
             form.save()
             return HttpResponseRedirect(self.success_url)
         return render(request, self.template_name, {'form', form})
-
-
-@method_decorator(login_required, name='dispatch')
-class ProveedorListView(ListView):
-    model = Proveedor
-    template_name = 'core/lista_proveedores.html'
 
 
 @method_decorator(login_required, name='dispatch')
@@ -122,18 +127,13 @@ def detalle_orden_list(request, indice):
 
 
 @method_decorator(login_required, name='dispatch')
-class DetalleProducto(UpdateView):
-    model = Producto
-    form_class = ProductoFormEdit
-    template_name = 'core/productos/detalle_producto.html'
-
-
-@method_decorator(login_required, name='dispatch')
 class OrdenDelete(DeleteView):
     model = OrdenCompra
     template_name = 'core/orden_compra/eliminar_orden.html'
     success_url = reverse_lazy('AdminOrdenes')
 
+
+# Modulo factura
 @login_required
 def factura_admin(request):
     formulario= FacturaForm
@@ -183,6 +183,8 @@ class FacturaAnular(UpdateView):
     template_name = 'core/facturas/anular_factura.html'
     success_url = reverse_lazy('AdminFactura')
 
+
+# Modulo boleta
 @login_required
 def boleta_admin(request):
     formulario = BoletaForm()
@@ -234,3 +236,10 @@ class BoletaListCliente(ListView):
 
     def get_queryset(self):
         return Boleta.objects.filter(id_usuario=self.request.user.id_usuario)
+
+
+# Vista proveedores
+@method_decorator(login_required, name='dispatch')
+class ProveedorListView(ListView):
+    model = Proveedor
+    template_name = 'core/lista_proveedores.html'
