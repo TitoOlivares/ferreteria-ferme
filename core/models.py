@@ -13,7 +13,7 @@ from django.utils import timezone
 class Boleta(models.Model):
     nro_boleta = models.AutoField(primary_key=True)
     fecha = models.DateField(default=timezone.now)
-    estado = models.BooleanField(default=True)
+    estado = models.BooleanField(default=True, verbose_name='Desmarque esta casilla para anular la boleta')
     id_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='id_usuario', verbose_name='Cliente')
     id_venta = models.ForeignKey('Venta', models.DO_NOTHING, db_column='id_venta', verbose_name='Nro Venta')
 
@@ -117,7 +117,7 @@ class Factura(models.Model):
     giro = models.CharField(max_length=100)
     direccion = models.CharField(max_length=300)
     contacto = models.IntegerField()
-    estado = models.BooleanField(default=False, verbose_name='Desmarque esta casilla para anular boleta')
+    estado = models.BooleanField(default=True, verbose_name='Desmarque esta casilla para anular la factura')
     id_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='id_usuario')
     id_venta = models.ForeignKey('Venta', models.DO_NOTHING, db_column='id_venta')
 

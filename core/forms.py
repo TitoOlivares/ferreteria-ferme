@@ -123,7 +123,7 @@ class DetalleBoletaForm(ModelForm):
 class FacturaForm(ModelForm):
     class Meta:
         model = Factura
-        fields = ['razon_soc', 'giro', 'direccion', 'contacto', 'id_usuario', 'id_venta', 'estado']
+        fields = ['razon_soc', 'giro', 'direccion', 'contacto', 'id_usuario', 'id_venta']
 
 
 class DetalleFacturaForm(ModelForm):
@@ -133,6 +133,12 @@ class DetalleFacturaForm(ModelForm):
 
 
 class EditFacturaForm(ModelForm):
+    class Meta:
+        model = Factura
+        fields = ['estado']
+
+
+class EditBoletaForm(ModelForm):
     class Meta:
         model = Factura
         fields = ['estado']

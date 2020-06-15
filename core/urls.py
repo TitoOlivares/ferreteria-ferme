@@ -33,5 +33,6 @@ urlpatterns = [
     path('detalleboleta/', RegistroDetalleBoleta.as_view(), name="RegistroDetalleBoleta"),
     path('detalle_boleta_list/<indice>/', detalle_boleta_list, name="DetallesBoleta"),
     path('misboletas/', BoletaListCliente.as_view(), name="BoletasCliente"),
+    path('boleta/anular/<int:pk>/', BoletaAnular.as_view(), name="AnularBoleta"),
 ]
 

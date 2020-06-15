@@ -247,6 +247,14 @@ class BoletaListCliente(ListView):
         return Boleta.objects.filter(id_usuario=self.request.user.id_usuario)
 
 
+@method_decorator(login_required, name='dispatch')
+class BoletaAnular(UpdateView):
+    model = Boleta
+    form_class = EditBoletaForm
+    template_name = 'core/boletas/anular_boleta.html'
+    success_url = reverse_lazy('AdminBoletas')
+
+
 # Vista proveedores
 @method_decorator(login_required, name='dispatch')
 class ProveedorListView(ListView):
