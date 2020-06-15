@@ -57,8 +57,8 @@
                 <a href="{% url 'DetallesFactura' factura.nro_factura %}" class="btn btn-info btn-flat"><i
                         class="fa fa-info-circle"></i></a>
                 {% if factura.estado == True %}
-                    <a href="{% url 'AnularFactura' factura.nro_factura %}" class="btn btn-danger btn-flat"><i
-                            ></i></a>
+                    <a href="{% url 'AnularFactura' factura.nro_factura %}" class="btn btn-warning btn-flat"><i
+                            class="fa fa-ban"></i></a>
                 {% endif %}
             </td>
 
