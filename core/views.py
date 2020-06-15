@@ -171,3 +171,11 @@ def detalle_fact_list(request, indice):
     }
 
     return render(request, 'core/facturas/factura_seleccionada.html', data)
+
+
+@method_decorator(login_required, name='dispatch')
+class FacturaAnular(UpdateView):
+    model = Factura
+    form_class = EditFacturaForm
+    template_name = 'core/facturas/anular_factura.html'
+    success_url = reverse_lazy('AdminFactura')

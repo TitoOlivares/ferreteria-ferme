@@ -45,7 +45,7 @@
             <td>{{ factura.contacto }}</td>
             <td>{{ factura.id_usuario }}</td>
             <td>
-                {% if factura.estado == 1 %}
+                {% if factura.estado == True %}
                     <a>Válida</a>
                 {% else%}
                     <a >Anulada</a>
@@ -56,8 +56,8 @@
             <td>
                 <a href="{% url 'DetallesFactura' factura.nro_factura %}" class="btn btn-info btn-flat"><i
                         class="fa fa-info-circle"></i></a>
-                {% if factura.estado == 1 %}
-                    <a href="#" class="btn btn-danger btn-flat"><i
+                {% if factura.estado == True %}
+                    <a href="{% url 'AnularFactura' factura.nro_factura %}" class="btn btn-danger btn-flat"><i
                             ></i></a>
                 {% endif %}
             </td>

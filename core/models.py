@@ -115,7 +115,7 @@ class Factura(models.Model):
     giro = models.CharField(max_length=100)
     direccion = models.CharField(max_length=300)
     contacto = models.IntegerField()
-    estado = models.FloatField(default=1)
+    estado = models.BooleanField(default=False, verbose_name='Desmarque esta casilla para anular boleta')
     id_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='id_usuario')
     id_venta = models.ForeignKey('Venta', models.DO_NOTHING, db_column='id_venta')
 

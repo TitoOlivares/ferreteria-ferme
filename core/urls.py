@@ -19,6 +19,7 @@ urlpatterns = [
     path('admin_facturas/', factura_admin, name="AdminFactura"),
     path('detalle_factura/', NuevoDetalleFactura.as_view(), name="NuevoDetalleFact"),
     path('detalle_fact_list/<indice>/', detalle_fact_list, name="DetallesFactura"),
+    path('facturas/anular/<int:pk>/', FacturaAnular.as_view(), name="AnularFactura"),
 
 ]
 

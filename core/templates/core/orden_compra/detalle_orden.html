@@ -23,6 +23,7 @@
                         {% csrf_token %}
                         {{ form | crispy }}
 
+
                         <button type="submit" class="btn btn-primary">Ingresar</button>
                         <div  class="btn btn-primary" > <a style="color: white" href="{% url 'AdminOrdenes' %}"> Finalizar </a></div>
 

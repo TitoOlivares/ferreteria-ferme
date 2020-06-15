@@ -110,10 +110,16 @@ class DetalleOrdenForm(ModelForm):
 class FacturaForm(ModelForm):
     class Meta:
         model = Factura
-        fields = ['razon_soc', 'giro', 'direccion', 'contacto', 'id_usuario', 'id_venta']
+        fields = ['razon_soc', 'giro', 'direccion', 'contacto', 'id_usuario', 'id_venta', 'estado']
 
 
 class DetalleFacturaForm(ModelForm):
     class Meta:
         model = DetalleFactura
         fields = ['nro_factura', 'id_producto', 'cantidad', 'precio_unit']
+
+
+class EditFacturaForm(ModelForm):
+    class Meta:
+        model = Factura
+        fields = ['estado']
