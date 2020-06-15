@@ -16,5 +16,9 @@ urlpatterns = [
     path('producto/detalle/<str:pk>/', DetalleProducto.as_view(), name="DetalleProducto"),
     path('orden/delete/<int:pk>/', OrdenDelete.as_view(), name="EliminarOrden"),
     path('admin_ordenes/', orden_admin, name="AdminOrdenes"),
+    path('admin_facturas/', factura_admin, name="AdminFactura"),
+    path('detalle_factura/', NuevoDetalleFactura.as_view(), name="NuevoDetalleFact"),
+    path('detalle_fact_list/<indice>/', detalle_fact_list, name="DetallesFactura"),
+
 ]
 

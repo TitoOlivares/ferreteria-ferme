@@ -50,10 +50,10 @@ class DetalleBoleta(models.Model):
 
 class DetalleFactura(models.Model):
     num_detalle = models.AutoField(primary_key=True)
-    nro_factura = models.ForeignKey('Factura', models.CASCADE, db_column='nro_factura')
-    id_producto = models.ForeignKey('Producto', models.CASCADE, db_column='id_producto')
+    nro_factura = models.ForeignKey('Factura', models.CASCADE, db_column='nro_factura',verbose_name='Factura:')
+    id_producto = models.ForeignKey('Producto', models.CASCADE, db_column='id_producto', verbose_name='Producto:')
     cantidad = models.FloatField()
-    precio_unit = models.FloatField()
+    precio_unit = models.FloatField(verbose_name='Precio unitario')
 
     class Meta:
         managed = False
@@ -72,8 +72,6 @@ class DetalleOrden(models.Model):
         managed = False
         db_table = 'detalle_orden'
         unique_together = (('id_orden', 'num_detalle'),)
-
-
 
 
 class DetalleVenta(models.Model):
@@ -112,18 +110,21 @@ class EstadoVenta(models.Model):
 
 class Factura(models.Model):
     nro_factura = models.BigAutoField(primary_key=True)
-    fecha = models.DateField()
+    fecha = models.DateField(default=timezone.now)
     razon_soc = models.CharField(max_length=100)
     giro = models.CharField(max_length=100)
     direccion = models.CharField(max_length=300)
     contacto = models.IntegerField()
-    estado = models.FloatField()
+    estado = models.FloatField(default=1)
     id_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='id_usuario')
     id_venta = models.ForeignKey('Venta', models.DO_NOTHING, db_column='id_venta')
 
     class Meta:
         managed = False
         db_table = 'factura'
+
+    def __str__(self):
+        return 'Factura N°: {} / fecha: {}'.format(self.nro_factura, self.fecha)
 
 
 class OrdenCompra(models.Model):
@@ -318,3 +319,5 @@ class Venta(models.Model):
     class Meta:
         managed = False
         db_table = 'venta'
+
+

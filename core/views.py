@@ -4,13 +4,9 @@ from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect
-#
-from django.views.generic import TemplateView
-#
 
-
-from .forms import UsuarioForm, ProductoForm, OrdenForm, DetalleOrdenForm, ProductoFormEdit
-from .models import ProductoTemp, CatProducto, Usuario, Producto, OrdenCompra, DetalleOrden, Proveedor
+from .forms import *
+from .models import *
 
 
 # Create your views here.
@@ -52,7 +48,6 @@ class ProductEdit(UpdateView):
 
 
 def orden_admin(request):
-
     formulario = OrdenForm()
     data = {
         'lista': OrdenCompra.objects.all(),
@@ -65,7 +60,6 @@ def orden_admin(request):
             form.save()
             return redirect(to='RegistroDetalle')
         data['form'] = form
-
 
     return render(request, 'core/orden_compra/orden_admin.html', data)
 
@@ -124,6 +118,7 @@ def detalle_orden_list(request, indice):
     return render(request, 'core/orden_compra/Orden_Seleccionada.html', data)
 
 
+@method_decorator(login_required, name='dispatch')
 class DetalleProducto(UpdateView):
     model = Producto
     form_class = ProductoFormEdit
@@ -134,9 +129,45 @@ class DetalleProducto(UpdateView):
 class OrdenDelete(DeleteView):
     model = OrdenCompra
     template_name = 'core/orden_compra/eliminar_orden.html'
-    success_url = reverse_lazy('OrdenAdmin')
+    success_url = reverse_lazy('AdminOrdenes')
 
-# @method_decorator(login_required, name='dispatch')
-# class OrdenAdmin(ListView):
-#     model = OrdenCompra
-#     template_name = 'core/orden_compra/orden_admin.html'
+@login_required
+def factura_admin(request):
+    formulario= FacturaForm
+    data = {
+        'lista': Factura.objects.all(),
+        'formulario': formulario
+    }
+    if request.method == 'POST':
+        form = FacturaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(to='NuevoDetalleFact')   #<--  aqui va la vista de los detalles
+        data['form'] = form
+
+    return render(request, 'core/facturas/factura_admin.html', data)
+
+
+class NuevoDetalleFactura(CreateView):
+    model = DetalleFactura
+    form_class = DetalleFacturaForm
+    template_name = 'core/facturas/detalle_factura.html'
+    success_url = reverse_lazy('NuevoDetalleFact')
+
+    def post(self, request, *args, **kwargs):
+        form = DetalleFacturaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(self.success_url)
+        return render(request, self.template_name, {'form', form})
+
+
+@login_required
+def detalle_fact_list(request, indice):
+    detalles = DetalleFactura.objects.filter(nro_factura=indice)
+    data = {
+        'detalles': detalles,
+        'index': indice
+    }
+
+    return render(request, 'core/facturas/factura_seleccionada.html', data)

@@ -1,0 +1,103 @@
+{% extends 'core/lista_base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block head %}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+{% endblock %}
+
+{% block titulo_lista %}
+    <h3 class="card-title text-center">
+        <i class="fas fa-list"></i>
+        Listado de Facturas
+    </h3>
+{% endblock %}
+
+{% block columnas %}
+
+
+    <tr>
+        <th>Numero</th>
+        <th>Fecha</th>
+        <th>Razon Social</th>
+        <th>Giro</th>
+        <th>Dirección</th>
+        <th>Fono contacto</th>
+        <th>Creado por:</th>
+        <th>Estado</th>
+        <th>Opciones</th>
+
+    </tr>
+{% endblock %}
+
+{% block filas %}
+
+
+
+    {% for factura in lista %}
+
+        <tr>
+            <td>{{ factura.nro_factura }}</td>
+            <td>{{ factura.fecha }}</td>
+            <td>{{ factura.razon_soc }}</td>
+            <td>{{ factura.giro }}</td>
+            <td>{{ factura.direccion }}</td>
+            <td>{{ factura.contacto }}</td>
+            <td>{{ factura.id_usuario }}</td>
+            <td>
+                {% if factura.estado == 1 %}
+                    <a>Válida</a>
+                {% else%}
+                    <a >Anulada</a>
+
+                {% endif %}
+            </td>
+
+            <td>
+                <a href="{% url 'DetallesFactura' factura.nro_factura %}" class="btn btn-info btn-flat"><i
+                        class="fa fa-info-circle"></i></a>
+                {% if factura.estado == 1 %}
+                    <a href="#" class="btn btn-danger btn-flat"><i
+                            ></i></a>
+                {% endif %}
+            </td>
+
+
+        </tr>
+
+    {% endfor %}
+
+
+    <div class="modal fade" id="NuevaFactura">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header text-center">
+                    <h4 class="modal-title">Nueva factura</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        {{ formulario | crispy }}
+
+                        <button type="submit" class="btn btn-primary">Crear</button>
+                    </form>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+{% block boton_lista %}
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#NuevaFactura">
+        Crear Factura
+    </button>
+{% endblock %}
