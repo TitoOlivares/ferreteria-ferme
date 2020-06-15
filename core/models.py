@@ -10,17 +10,19 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from django.utils import timezone
 
 
-
 class Boleta(models.Model):
     nro_boleta = models.AutoField(primary_key=True)
-    fecha = models.DateField()
-    estado = models.FloatField()
-    id_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='id_usuario')
-    id_venta = models.ForeignKey('Venta', models.DO_NOTHING, db_column='id_venta')
+    fecha = models.DateField(default=timezone.now)
+    estado = models.BooleanField(default=True)
+    id_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='id_usuario', verbose_name='Cliente')
+    id_venta = models.ForeignKey('Venta', models.DO_NOTHING, db_column='id_venta', verbose_name='Nro Venta')
 
     class Meta:
         managed = False
         db_table = 'boleta'
+
+    def __str__(self):
+        return '{}'.format(self.nro_boleta)
 
 
 class CatProducto(models.Model):
@@ -37,10 +39,10 @@ class CatProducto(models.Model):
 
 class DetalleBoleta(models.Model):
     num_detalle = models.AutoField(primary_key=True)
-    nro_boleta = models.ForeignKey('Boleta', models.CASCADE, db_column='nro_boleta')
-    id_producto = models.ForeignKey('Producto', models.CASCADE, db_column='id_producto')
+    nro_boleta = models.ForeignKey('Boleta', models.CASCADE, db_column='nro_boleta', verbose_name='Boleta nro')
+    id_producto = models.ForeignKey('Producto', models.CASCADE, db_column='id_producto', verbose_name='Producto')
     cantidad = models.FloatField()
-    precio_unit = models.FloatField()
+    precio_unit = models.FloatField(verbose_name='Precio unitario')
 
     class Meta:
         managed = False
@@ -130,9 +132,9 @@ class Factura(models.Model):
 class OrdenCompra(models.Model):
     id_orden = models.AutoField(primary_key=True)
     fecha = models.DateField(default=timezone.now)
-    id_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='id_usuario') ##
+    id_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='id_usuario', verbose_name='Usuario')
     id_estado = models.ForeignKey(EstadoOrden, models.DO_NOTHING, db_column='id_estado', default=1)
-    id_proveedor = models.ForeignKey('Proveedor', models.DO_NOTHING, db_column='id_proveedor')
+    id_proveedor = models.ForeignKey('Proveedor', models.DO_NOTHING, db_column='id_proveedor', verbose_name='Proveedor')
 
     class Meta:
         managed = False
@@ -151,8 +153,8 @@ class Producto(models.Model):
     stock_critico = models.FloatField()
     marca = models.CharField(max_length=50)
     fecha_venc = models.DateField(blank=True, null=True)
-    id_categoria = models.ForeignKey(CatProducto, models.DO_NOTHING, db_column='id_categoria')
-    id_proveedor = models.ForeignKey('Proveedor', models.DO_NOTHING, db_column='id_proveedor')
+    id_categoria = models.ForeignKey(CatProducto, models.DO_NOTHING, db_column='id_categoria', verbose_name='Categoría')
+    id_proveedor = models.ForeignKey('Proveedor', models.DO_NOTHING, db_column='id_proveedor', verbose_name='Proveedor')
     url_img = models.CharField(max_length=500, blank=True, null=True)
 
     class Meta:
@@ -174,8 +176,8 @@ class ProductoTemp(models.Model):
     stock_critico = models.FloatField()
     marca = models.CharField(max_length=50)
     fecha_venc = models.DateField(blank=True, null=True)
-    id_categoria = models.ForeignKey(CatProducto, models.DO_NOTHING, db_column='id_categoria')
-    id_proveedor = models.ForeignKey('Proveedor', models.DO_NOTHING, db_column='id_proveedor')
+    id_categoria = models.ForeignKey(CatProducto, models.DO_NOTHING, db_column='id_categoria', verbose_name='Categoría')
+    id_proveedor = models.ForeignKey('Proveedor', models.DO_NOTHING, db_column='id_proveedor', verbose_name='Proveedor')
     url_img = models.CharField(max_length=500, blank=True, null=True)
 
     class Meta:
@@ -320,4 +322,5 @@ class Venta(models.Model):
         managed = False
         db_table = 'venta'
 
-
+    def __str__(self):
+        return '{}'.format(self.id_venta)

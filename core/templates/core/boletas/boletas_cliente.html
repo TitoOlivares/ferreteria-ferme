@@ -1,0 +1,42 @@
+{% extends 'core/lista_base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block titulo_lista %}
+    <h3 class="card-title text-center">
+        <i class="fas fa-list"></i>
+        Listado de Boletas usuario: {{ user.nombre }}
+    </h3>
+{% endblock %}
+
+{% block columnas %}
+    <tr>
+        <th>N° Boleta</th>
+        <th>Fecha</th>
+        <th>Estado</th>
+        <th>Cliente</th>
+        <th>N° Venta</th>
+        <th>Detalle</th>
+    </tr>
+{% endblock %}
+
+{% block filas %}
+    {% for boleta in object_list %}
+        <tr>
+            <td>{{ boleta.nro_boleta }}</td>
+            <td>{{ boleta.fecha }}</td>
+            {% if boleta.estado == True %}
+                <td>Activa</td>
+            {% else %}
+                <td>Anulada</td>
+            {% endif %}
+            <td>{{ boleta.id_usuario }}</td>
+            <td>{{ boleta.id_venta }}</td>
+            <td>
+                <a href="{% url 'DetallesBoleta' boleta.nro_boleta %}" class="btn btn-info btn-flat"><i
+                        class="fa fa-info-circle"></i></a>
+            </td>
+        </tr>
+    {% endfor %}
+
+{% endblock %}

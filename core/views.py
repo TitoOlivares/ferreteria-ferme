@@ -4,6 +4,9 @@ from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect
+#
+from django.views.generic import TemplateView
+#
 
 from .forms import *
 from .models import *
@@ -36,7 +39,7 @@ class registro_producto(CreateView):
     model = ProductoTemp
     form_class = ProductoForm
     template_name = 'core/productos/registro_producto.html'
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('ListaProductos')
 
 
 @method_decorator(login_required, name='dispatch')
@@ -179,3 +182,55 @@ class FacturaAnular(UpdateView):
     form_class = EditFacturaForm
     template_name = 'core/facturas/anular_factura.html'
     success_url = reverse_lazy('AdminFactura')
+
+@login_required
+def boleta_admin(request):
+    formulario = BoletaForm()
+    data = {
+        'lista': Boleta.objects.all(),
+        'formulario': formulario
+    }
+
+    if request.method == 'POST':
+        form = BoletaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(to='RegistroDetalleBoleta')
+        data['form'] = form
+
+    return render(request, 'core/boletas/listado_boletas.html', data)
+
+
+@method_decorator(login_required, name='dispatch')
+class RegistroDetalleBoleta(CreateView):
+    model = DetalleBoleta
+    form_class = DetalleBoletaForm
+    template_name = 'core/boletas/detalle_boleta.html'
+    success_url = reverse_lazy('RegistroDetalleBoleta')
+
+    def post(self, request, *args, **kwargs):
+        form = DetalleBoletaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(self.success_url)
+        return render(request, self.template_name, {'form', form})
+
+
+@login_required
+def detalle_boleta_list(request, indice):
+    detalles = DetalleBoleta.objects.filter(nro_boleta=indice)
+    data = {
+        'detalles': detalles,
+        'index': indice
+    }
+
+    return render(request, 'core/boletas/boleta_seleccionada.html', data)
+
+
+@method_decorator(login_required, name='dispatch')
+class BoletaListCliente(ListView):
+    model = Boleta
+    template_name = 'core/boletas/boletas_cliente.html'
+
+    def get_queryset(self):
+        return Boleta.objects.filter(id_usuario=self.request.user.id_usuario)

@@ -23,7 +23,7 @@
         <th>Giro</th>
         <th>Dirección</th>
         <th>Fono contacto</th>
-        <th>Creado por:</th>
+        <th>Ciente:</th>
         <th>Estado</th>
         <th>Opciones</th>
 
@@ -57,7 +57,7 @@
                 <a href="{% url 'DetallesFactura' factura.nro_factura %}" class="btn btn-info btn-flat"><i
                         class="fa fa-info-circle"></i></a>
                 {% if factura.estado == True %}
-                    <a href="{% url 'AnularFactura' factura.nro_factura %}" class="btn btn-warning btn-flat"><i
+                    <a href="{% url 'AnularFactura' factura.nro_factura %}" class="btn btn-danger btn-flat"><i
                             class="fa fa-ban"></i></a>
                 {% endif %}
             </td>

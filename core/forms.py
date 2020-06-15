@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django import forms
-from core.models import Usuario, ProductoTemp, OrdenCompra, DetalleOrden, Producto, Factura, DetalleFactura
+from core.models import *
 from django.forms import TextInput, EmailInput, NumberInput, DateInput, Textarea
 from django.contrib.auth.forms import UserCreationForm
 
@@ -95,6 +95,7 @@ class ProductoFormEdit(ModelForm):
             )
         }
 
+
 class OrdenForm(ModelForm):
     class Meta:
         model = OrdenCompra
@@ -105,6 +106,18 @@ class DetalleOrdenForm(ModelForm):
     class Meta:
         model = DetalleOrden
         fields = ['id_orden', 'id_producto', 'cantidad', 'precio_unit']
+
+
+class BoletaForm(ModelForm):
+    class Meta:
+        model = Boleta
+        fields = ['id_usuario', 'id_venta']
+
+
+class DetalleBoletaForm(ModelForm):
+    class Meta:
+        model = DetalleBoleta
+        fields = ['nro_boleta', 'id_producto', 'cantidad', 'precio_unit']
 
 
 class FacturaForm(ModelForm):

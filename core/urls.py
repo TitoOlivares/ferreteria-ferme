@@ -20,6 +20,9 @@ urlpatterns = [
     path('detalle_factura/', NuevoDetalleFactura.as_view(), name="NuevoDetalleFact"),
     path('detalle_fact_list/<indice>/', detalle_fact_list, name="DetallesFactura"),
     path('facturas/anular/<int:pk>/', FacturaAnular.as_view(), name="AnularFactura"),
-
+    path('admin_boletas/', boleta_admin, name="AdminBoletas"),
+    path('detalleboleta/', RegistroDetalleBoleta.as_view(), name="RegistroDetalleBoleta"),
+    path('detalle_boleta_list/<indice>/', detalle_boleta_list, name="DetallesBoleta"),
+    path('misboletas/', BoletaListCliente.as_view(), name="BoletasCliente"),
 ]
 

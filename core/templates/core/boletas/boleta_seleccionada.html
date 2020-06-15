@@ -1,0 +1,37 @@
+{% extends 'core/lista_base.html' %}
+{% load static %}
+
+
+{% block titulo_lista %}
+    <h3 class="card-title text-center">
+        <i class="fas fa-list"></i>
+        Detalle Boleta N°: {{ index }}
+    </h3>
+{% endblock %}
+
+{% block columnas %}
+    <tr>
+        <th>Producto</th>
+        <th>Cantidad</th>
+        <th>Precio unitario</th>
+
+    </tr>
+{% endblock %}
+
+{% block filas %}
+
+
+
+    {% for detalle in detalles %}
+
+        <tr>
+            <td>{{ detalle.id_producto }}</td>
+            <td>{{ detalle.cantidad }}</td>
+            {% load humanize %}
+            <td> ${{ detalle.precio_unit | intcomma }}</td>
+        </tr>
+
+    {% endfor %}
+
+
+{% endblock %}
