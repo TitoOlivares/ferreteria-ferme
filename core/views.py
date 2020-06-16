@@ -279,3 +279,13 @@ class EditDetalleOrden(UpdateView):
     form_class = EditDetOrdenForm
     template_name = 'core/orden_compra/editar_detalle_orden.html'
     success_url = reverse_lazy('AdminOrdenes')
+
+
+# Vista listado personal
+@method_decorator(login_required, name='dispatch')
+class ListadoPersonal(ListView):
+    model = Usuario
+    template_name = 'core/administracion/listado_personal.html'
+
+    def get_queryset(self):
+        return Usuario.objects.filter(is_staff=True)

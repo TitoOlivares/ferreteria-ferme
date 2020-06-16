@@ -35,5 +35,8 @@ urlpatterns = [
     path('detalle_boleta_list/<indice>/', detalle_boleta_list, name="DetallesBoleta"),
     path('misboletas/', BoletaListCliente.as_view(), name="BoletasCliente"),
     path('boleta/anular/<int:pk>/', BoletaAnular.as_view(), name="AnularBoleta"),
+
+    # Listado de personal
+    path('admin/personal', ListadoPersonal.as_view(), name="ListadoPersonal"),
 ]
 
