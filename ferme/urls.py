@@ -22,3 +22,7 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
 
 ]
+
+admin.site.site_header = 'Gerencia Ferretería FERME'
+admin.site.index_title = 'Módulos de administración'
+admin.site.site_title = 'Gerencia Ferretería FERME'
