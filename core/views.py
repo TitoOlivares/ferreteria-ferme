@@ -38,6 +38,7 @@ def registration_done(request):
 
 
 # Product module
+@method_decorator(login_required, name='dispatch')
 class registro_producto(CreateView):
     model = ProductoTemp
     form_class = ProductoForm
@@ -66,7 +67,6 @@ class ProductDelete(DeleteView):
     success_url = reverse_lazy('ListaProductos')
 
 
-@method_decorator(login_required, name='dispatch')
 class DetalleProducto(UpdateView):
     model = Producto
     form_class = ProductoFormEdit
@@ -259,7 +259,7 @@ class BoletaAnular(UpdateView):
 @method_decorator(login_required, name='dispatch')
 class ProveedorListView(ListView):
     model = Proveedor
-    template_name = 'core/lista_proveedores.html'
+    template_name = 'core/administracion/lista_proveedores.html'
 
 
 # Vista listado personal
@@ -270,3 +270,56 @@ class ListadoPersonal(ListView):
 
     def get_queryset(self):
         return Usuario.objects.filter(is_staff=True)
+
+
+# Modulo de ventas
+@login_required
+def venta_admin(request):
+    formulario = VentaForm()
+    data = {
+        'lista': Venta.objects.all(),
+        'formulario': formulario
+    }
+
+    if request.method == 'POST':
+        form = VentaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(to='AgregarDetalleVenta')
+        data['form'] = form
+
+    return render(request, 'core/ventas/ventas_admin.html', data)
+
+
+@method_decorator(login_required, name='dispatch')
+class AgregarDetalleVenta(CreateView):
+    model = DetalleVenta
+    form_class = DetalleVentaForm
+    template_name = 'core/ventas/detalle_venta.html'
+    success_url = reverse_lazy('AgregarDetalleVenta')
+
+
+@login_required
+def detalle_venta_list(request, indice):
+    detalles = DetalleVenta.objects.filter(id_venta=indice)
+    data = {
+        'detalles': detalles,
+        'index': indice
+    }
+
+    return render(request, 'core/ventas/venta_seleccionada.html', data)
+
+
+@method_decorator(login_required, name='dispatch')
+class VentaEdit(UpdateView):
+    model = Venta
+    form_class = EditVentaForm
+    template_name = 'core/ventas/editar_venta.html'
+    success_url = reverse_lazy('VentasAdmin')
+
+
+@method_decorator(login_required, name='dispatch')
+class VentaDelete(DeleteView):
+    model = Venta
+    template_name = 'core/ventas/eliminar_venta.html'
+    success_url = reverse_lazy('VentasAdmin')

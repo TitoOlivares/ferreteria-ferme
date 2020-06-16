@@ -30,6 +30,7 @@
                     <h4 class="text-muted">{{ producto.marca }}</h4>
                     <h5>${{ producto.precio_unit|intcomma }}.- c/u</h5>
                     <p class="card-text">Cod. producto: {{ producto.id_producto }}</p>
+                    <h5>Categoria: {{ producto.id_categoria }}</h5>
                     <p class="card-text">{{ producto.descripcion }}</p>
                     {% if producto.stock <= producto.stock_critico %}
                         <p class="card-text font-weight-bold text-danger">Stock: {{ producto.stock }} unidades</p>

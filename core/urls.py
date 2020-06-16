@@ -37,5 +37,11 @@ urlpatterns = [
 
     # Listado de personal
     path('admin/personal', ListadoPersonal.as_view(), name="ListadoPersonal"),
-]
 
+    ############ TEMPORAL VISTA DE COMPRAS CLIENTE ####################
+    path('venta_admin/', venta_admin, name="VentasAdmin"),
+    path('venta/detalle', AgregarDetalleVenta.as_view(), name="AgregarDetalleVenta"),
+    path('venta/detalle/<indice>/', detalle_venta_list, name="DetallesVenta"),
+    path('venta/edit/<int:pk>/', VentaEdit.as_view(), name="EditVenta"),
+    path('venta/delete/<int:pk>/', VentaDelete.as_view(), name="EliminarVenta"),
+]

@@ -1,0 +1,86 @@
+{% extends 'core/lista_base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block head %}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+{% endblock %}
+
+{% block titulo_lista %}
+    <h3 class="card-title text-center">
+        <i class="fas fa-list"></i>
+        Listado de ventas
+    </h3>
+{% endblock %}
+
+{% block columnas %}
+
+
+    <tr>
+        <th>N° Venta</th>
+        <th>Fecha</th>
+        <th>Estado</th>
+        <th>Cliente</th>
+        <th>Acciones</th>
+
+    </tr>
+{% endblock %}
+
+{% block filas %}
+
+
+
+    {% for venta in lista %}
+
+        <tr>
+            <td>{{ venta.id_venta }}</td>
+            <td>{{ venta.fecha }}</td>
+            <td>{{ venta.id_estado }}</td>
+            <td>{{ venta.id_usuario }}</td>
+            <td>
+                <a href="{% url 'DetallesVenta' venta.id_venta %}" class="btn btn-info btn-flat"><i
+                        class="fa fa-info-circle"></i></a>
+                <a href="{% url 'EditVenta' venta.id_venta %}" class="btn btn-warning btn-flat"><i
+                        class="fas fa-edit"></i></a>
+                <a href="{% url 'EliminarVenta' venta.id_venta %}" class="btn btn-danger btn-flat"><i
+                        class="fas fa-trash"></i></a>
+            </td>
+
+
+        </tr>
+
+    {% endfor %}
+
+
+    <div class="modal fade" id="OrdenCompra">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header text-center">
+                    <h4 class="modal-title">Nueva venta</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        {{ formulario | crispy }}
+
+                        <button type="submit" class="btn btn-primary">Crear</button>
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+{% block boton_lista %}
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#OrdenCompra">
+        Nueva Venta
+    </button>
+{% endblock %}

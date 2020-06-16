@@ -79,9 +79,9 @@ class DetalleOrden(models.Model):
 class DetalleVenta(models.Model):
     num_detalle = models.AutoField(primary_key=True)
     id_venta = models.ForeignKey('Venta', models.CASCADE, db_column='id_venta')
-    id_producto = models.ForeignKey('Producto', models.CASCADE, db_column='id_producto')
+    id_producto = models.ForeignKey('Producto', models.CASCADE, db_column='id_producto', verbose_name='Producto')
     cantidad = models.FloatField()
-    precio_unit = models.FloatField()
+    precio_unit = models.FloatField(verbose_name='Precio unitario')
 
     class Meta:
         managed = False
@@ -108,6 +108,9 @@ class EstadoVenta(models.Model):
     class Meta:
         managed = False
         db_table = 'estado_venta'
+
+    def __str__(self):
+        return self.descripcion
 
 
 class Factura(models.Model):
@@ -314,9 +317,9 @@ class Usuario(AbstractBaseUser):
 
 class Venta(models.Model):
     id_venta = models.AutoField(primary_key=True)
-    fecha = models.DateField()
-    id_estado = models.ForeignKey(EstadoVenta, models.DO_NOTHING, db_column='id_estado')
-    id_usuario = models.ForeignKey(Usuario, models.DO_NOTHING, db_column='id_usuario')
+    fecha = models.DateField(default=timezone.now)
+    id_estado = models.ForeignKey(EstadoVenta, models.DO_NOTHING, db_column='id_estado', default=1)
+    id_usuario = models.ForeignKey(Usuario, models.DO_NOTHING, db_column='id_usuario', verbose_name='Cliente')
 
     class Meta:
         managed = False
