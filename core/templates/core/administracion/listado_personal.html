@@ -29,7 +29,7 @@
     {% for producto in object_list %}
         <tr>
             <td>{{ producto.rut }}</td>
-            <td>{{ producto.nombre }}</td>
+            <td>{{ producto.nombre }} {{ producto.apellido }}</td>
             <td>{{ producto.cargo }}</td>
         </tr>
     {% endfor %}

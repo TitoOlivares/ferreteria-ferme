@@ -34,7 +34,7 @@
                 <td>{{ orden.id_proveedor }}</td>
                 <td>{{ orden.fecha }}</td>
                 <td>
-                    <a href="{% url 'DetallesOrden' orden.id_orden %}">
+                    <a href="{% url 'DetallesOrden' orden.id_orden orden.id_estado %}">
                         Ver detalle
                     </a>
 
