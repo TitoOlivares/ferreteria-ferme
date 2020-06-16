@@ -143,6 +143,14 @@ class OrdenDelete(DeleteView):
     success_url = reverse_lazy('AdminOrdenes')
 
 
+@method_decorator(login_required, name='dispatch')
+class OrdenEdit(UpdateView):
+    model = OrdenCompra
+    form_class = OrdenEditForm
+    template_name = 'core/orden_compra/editar_orden.html'
+    success_url = reverse_lazy('AdminOrdenes')
+
+
 # Modulo factura
 @login_required
 def factura_admin(request):

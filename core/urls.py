@@ -20,7 +20,8 @@ urlpatterns = [
     path('detalle_orden_list/<indice>/<est>', detalle_orden_list, name="DetallesOrden"),
     path('orden/delete/<int:pk>/', OrdenDelete.as_view(), name="EliminarOrden"),
     path('lista_ordenes/', OrdenList.as_view(), name="ListaOrdenes"),
-    path('orden/edit/<int:pk>/', EditDetalleOrden.as_view(), name="EditarDetalleOrden"),
+    path('orden/editdetalle/<int:pk>/', EditDetalleOrden.as_view(), name="EditarDetalleOrden"),
+    path('orden/edit/<int:pk>/', OrdenEdit.as_view(), name="OrdenEdit"),
 
     # urls Facturas
     path('admin_facturas/', factura_admin, name="AdminFactura"),

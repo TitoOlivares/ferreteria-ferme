@@ -102,6 +102,12 @@ class OrdenForm(ModelForm):
         fields = ['id_usuario', 'id_proveedor']
 
 
+class OrdenEditForm(ModelForm):
+    class Meta:
+        model = OrdenCompra
+        fields = ['id_estado']
+
+
 class DetalleOrdenForm(ModelForm):
     class Meta:
         model = DetalleOrden
