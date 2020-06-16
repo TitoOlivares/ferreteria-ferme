@@ -38,12 +38,12 @@
             <td>{{ orden.fecha }}</td>
             <td>{{ orden.id_estado }}</td>
             <td>
-                <a href="{% url 'DetallesOrden' orden.id_orden %}" class="btn btn-info btn-flat"><i
+                <a href="{% url 'DetallesOrden' orden.id_orden 0%}" class="btn btn-info btn-flat"><i
                         class="fa fa-info-circle"></i></a>
                 <a href="{% url 'EliminarOrden' orden.id_orden %}" class="btn btn-danger btn-flat"><i
                         class="fas fa-trash"></i></a>
                 {% if orden.id_estado.id_estado == 1 %}
-                    <a href="#" class="btn btn-warning btn-flat"><i
+                    <a href="{% url 'DetallesOrden' orden.id_orden 1 %}" class="btn btn-warning btn-flat"><i
                             class="fas fa-edit"></i></a>
                 {% endif %}
 

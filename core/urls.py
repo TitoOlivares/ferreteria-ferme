@@ -17,9 +17,10 @@ urlpatterns = [
     # urls ordenes de compra
     path('admin_ordenes/', orden_admin, name="AdminOrdenes"),
     path('detalleorden/', RegistroDetalleOrden.as_view(), name="RegistroDetalle"),
-    path('detalle_orden_list/<indice>/', detalle_orden_list, name="DetallesOrden"),
+    path('detalle_orden_list/<indice>/<est>', detalle_orden_list, name="DetallesOrden"),
     path('orden/delete/<int:pk>/', OrdenDelete.as_view(), name="EliminarOrden"),
     path('lista_ordenes/', OrdenList.as_view(), name="ListaOrdenes"),
+    path('orden/edit/<int:pk>/', EditDetalleOrden.as_view(), name="EditarDetalleOrden"),
 
     # urls Facturas
     path('admin_facturas/', factura_admin, name="AdminFactura"),

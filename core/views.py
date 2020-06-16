@@ -116,12 +116,22 @@ class OrdenList(ListView):
 
 
 @login_required
-def detalle_orden_list(request, indice):
+def detalle_orden_list(request, indice, est):
     detalles = DetalleOrden.objects.filter(id_orden=indice)
+    detextra = DetalleOrdenForm
     data = {
         'detalles': detalles,
-        'index': indice
+        'index': indice,
+        'estado': est,
+        'formulario': detextra
     }
+
+    if request.method == 'POST':
+        form = DetalleOrdenForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(to='AdminOrdenes')
+        data['form'] = form
 
     return render(request, 'core/orden_compra/Orden_Seleccionada.html', data)
 
@@ -260,6 +270,15 @@ class BoletaAnular(UpdateView):
 class ProveedorListView(ListView):
     model = Proveedor
     template_name = 'core/administracion/lista_proveedores.html'
+
+
+# Vista para editar detalles de orden
+@method_decorator(login_required, name='dispatch')
+class EditDetalleOrden(UpdateView):
+    model = DetalleOrden
+    form_class = EditDetOrdenForm
+    template_name = 'core/orden_compra/editar_detalle_orden.html'
+    success_url = reverse_lazy('AdminOrdenes')
 
 
 # Vista listado personal
