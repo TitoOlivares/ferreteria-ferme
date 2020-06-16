@@ -65,9 +65,15 @@
                     {% for i in productos %}
                         <div class="col-lg-4 col-md-6 mb-4">
                             <div class="card h-100">
-                                <a href="{% url 'DetalleProducto' i.id_producto %}"><img class="card-img-top"
-                                                                                         src="{{ i.url_img }}"
-                                                                                         alt=""></a>
+                                <a href="{% url 'DetalleProducto' i.id_producto %}">
+                                    <img class="card-img-top"
+                                            {% if not i.url_img %}
+                                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Imagen_no_disponible.svg/1200px-Imagen_no_disponible.svg.png"
+                                            {% else %}
+                                         src="{{ i.url_img }}"
+                                            {% endif %}
+                                         alt="">
+                                </a>
                                 <div class="card-body">
                                     <h4 class="card-title">
                                         <a href="{% url 'DetalleProducto' i.id_producto %}">{{ i.nombre }}</a>
