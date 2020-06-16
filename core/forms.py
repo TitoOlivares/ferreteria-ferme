@@ -142,3 +142,9 @@ class EditBoletaForm(ModelForm):
     class Meta:
         model = Factura
         fields = ['estado']
+
+
+class EditDetOrdenForm(ModelForm):
+    class Meta:
+        model = DetalleOrden
+        fields = ['id_producto', 'cantidad', 'precio_unit']
