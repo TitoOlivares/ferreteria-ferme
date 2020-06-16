@@ -260,3 +260,13 @@ class BoletaAnular(UpdateView):
 class ProveedorListView(ListView):
     model = Proveedor
     template_name = 'core/lista_proveedores.html'
+
+
+# Vista listado personal
+@method_decorator(login_required, name='dispatch')
+class ListadoPersonal(ListView):
+    model = Usuario
+    template_name = 'core/administracion/listado_personal.html'
+
+    def get_queryset(self):
+        return Usuario.objects.filter(is_staff=True)

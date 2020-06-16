@@ -1,0 +1,36 @@
+{% extends 'core/lista_base.html' %}
+{% load static %}
+{% load humanize %}
+{#{% load crispy_forms_tags %}#}
+{% block head %}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+{% endblock %}
+
+{% block titulo_lista %}
+    <h3 class="card-title text-center">
+        <i class="fas fa-list"></i>
+        Listado de Personal
+    </h3>
+    <div class="text-center">
+        <span align="center">Personal autorizado para realizar ordenes de compra</span>
+    </div>
+{% endblock %}
+
+{% block columnas %}
+    <tr>
+        <th>RUT</th>
+        <th>Nombre</th>
+        <th>Cargo</th>
+    </tr>
+{% endblock %}
+
+{% block filas %}
+    {% for producto in object_list %}
+        <tr>
+            <td>{{ producto.rut }}</td>
+            <td>{{ producto.nombre }}</td>
+            <td>{{ producto.cargo }}</td>
+        </tr>
+    {% endfor %}
+{% endblock %}
