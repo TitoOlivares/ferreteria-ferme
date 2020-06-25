@@ -84,7 +84,9 @@ def orden_admin(request):
     if request.method == 'POST':
         form = OrdenForm(request.POST)
         if form.is_valid():
-            form.save()
+            post = form.save(commit=False)
+            post.id_usuario = request.user
+            post.save()
             return redirect(to='RegistroDetalle')
         data['form'] = form
 
@@ -101,7 +103,13 @@ class RegistroDetalleOrden(CreateView):
     def post(self, request, *args, **kwargs):
         form = DetalleOrdenForm(request.POST)
         if form.is_valid():
-            form.save()
+            post = form.save(commit=False)
+            index = OrdenCompra.objects.filter(id_usuario=request.user).order_by('-id_orden')[:1]
+            precio = Producto.objects.filter(nombre=post.id_producto).values('precio_unit')
+            post.id_orden = index.first()
+            print(precio,post.id_producto)
+            post.precio_unit = precio
+            post.save()
             return HttpResponseRedirect(self.success_url)
         return render(request, self.template_name, {'form', form})
 
@@ -129,7 +137,10 @@ def detalle_orden_list(request, indice, est):
     if request.method == 'POST':
         form = DetalleOrdenForm(request.POST)
         if form.is_valid():
-            form.save()
+            post = form.save(commit=False)
+            indice = OrdenCompra.objects.filter(id_orden=indice)
+            post.id_orden = indice.first()
+            post.save()
             return redirect(to='AdminOrdenes')
         data['form'] = form
 

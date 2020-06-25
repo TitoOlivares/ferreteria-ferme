@@ -99,7 +99,7 @@ class ProductoFormEdit(ModelForm):
 class OrdenForm(ModelForm):
     class Meta:
         model = OrdenCompra
-        fields = ['id_usuario', 'id_proveedor']
+        fields = ['id_proveedor']
 
 
 class OrdenEditForm(ModelForm):
@@ -111,7 +111,7 @@ class OrdenEditForm(ModelForm):
 class DetalleOrdenForm(ModelForm):
     class Meta:
         model = DetalleOrden
-        fields = ['id_orden', 'id_producto', 'cantidad', 'precio_unit']
+        fields = ['id_producto', 'cantidad']
 
 
 class BoletaForm(ModelForm):
