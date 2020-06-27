@@ -155,16 +155,18 @@ class EditDetOrdenForm(ModelForm):
         model = DetalleOrden
         fields = ['id_producto', 'cantidad', 'precio_unit']
 
+
 class VentaForm(ModelForm):
     class Meta:
         model = Venta
-        fields = ['id_usuario']
+        fields = ['id_venta']
+
 
 
 class DetalleVentaForm(ModelForm):
     class Meta:
         model = DetalleVenta
-        fields = ['id_venta', 'id_producto', 'cantidad', 'precio_unit']
+        fields = ['id_producto', 'cantidad']
 
 
 class EditVentaForm(ModelForm):

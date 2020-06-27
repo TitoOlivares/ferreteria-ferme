@@ -73,7 +73,7 @@ class DetalleProducto(UpdateView):
     template_name = 'core/productos/detalle_producto.html'
 
 
-# Ordenes de compra
+##### Ordenes de compra    ###################
 def orden_admin(request):
     formulario = OrdenForm()
     data = {
@@ -107,7 +107,7 @@ class RegistroDetalleOrden(CreateView):
             index = OrdenCompra.objects.filter(id_usuario=request.user).order_by('-id_orden')[:1]
             precio = Producto.objects.filter(nombre=post.id_producto).values('precio_unit')
             post.id_orden = index.first()
-            print(precio,post.id_producto)
+            print(precio, post.id_producto)
             post.precio_unit = precio
             post.save()
             return HttpResponseRedirect(self.success_url)
@@ -322,7 +322,9 @@ def venta_admin(request):
     if request.method == 'POST':
         form = VentaForm(request.POST)
         if form.is_valid():
-            form.save()
+            post = form.save(commit=False)
+            post.id_usuario = request.user
+            post.save()
             return redirect(to='AgregarDetalleVenta')
         data['form'] = form
 
@@ -335,6 +337,18 @@ class AgregarDetalleVenta(CreateView):
     form_class = DetalleVentaForm
     template_name = 'core/ventas/detalle_venta.html'
     success_url = reverse_lazy('AgregarDetalleVenta')
+
+    def post(self, request, *args, **kwargs):
+        form = DetalleVentaForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            index = Venta.objects.filter(id_usuario=request.user).order_by('-id_venta')[:1]
+            precio = Producto.objects.filter(nombre=post.id_producto).values('precio_unit')
+            post.id_venta = index.first()
+            post.precio_unit = precio
+            post.save()
+            return HttpResponseRedirect(self.success_url)
+        return render(request, self.template_name, {'form', form})
 
 
 @login_required
