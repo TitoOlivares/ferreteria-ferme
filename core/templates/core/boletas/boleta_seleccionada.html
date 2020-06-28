@@ -14,6 +14,7 @@
         <th>Producto</th>
         <th>Cantidad</th>
         <th>Precio unitario</th>
+        <th>Total Item</th>
 
     </tr>
 {% endblock %}
@@ -29,6 +30,7 @@
             <td>{{ detalle.cantidad }}</td>
             {% load humanize %}
             <td> ${{ detalle.precio_unit | intcomma }}</td>
+            <td> ${{ detalle.total_item | intcomma }}</td>
         </tr>
 
     {% endfor %}

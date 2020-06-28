@@ -1,5 +1,6 @@
 {% extends 'core/lista_base.html' %}
 {% load static %}
+{% load humanize %}
 {% load crispy_forms_tags %}
 {% block head %}
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
@@ -19,6 +20,7 @@
         <th>Producto</th>
         <th>Cantidad</th>
         <th>Precio unitario</th>
+        <th>Total Item</th>
         {% if estado == '1' %}
             <th>Opciones</th>
         {% endif %}
@@ -40,8 +42,8 @@
             <td>{{ detalle.id_orden }}</td>
             <td>{{ detalle.id_producto }}</td>
             <td>{{ detalle.cantidad }}</td>
-            {% load humanize %}
             <td> ${{ detalle.precio_unit | intcomma }}</td>
+            <td> ${{ detalle.total_item | intcomma }}</td>
             <td> {% if estado == '1' %}
                     <a href="{% url 'EditarDetalleOrden' detalle.num_detalle%}" class="btn btn-warning btn-flat"><i
                         class="fas fa-edit"></i></a>
@@ -49,7 +51,6 @@
 
 
         </tr>
-
     {% endfor %}
 
     <div class="modal fade" id="OrdenCompra">
@@ -80,7 +81,6 @@
 
 
 {% endblock %}
-
 
 
 
