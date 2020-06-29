@@ -10,6 +10,7 @@ from django.views.generic import TemplateView
 
 from .forms import *
 from .models import *
+from django.db.models import Sum, F
 
 
 # Create your views here.
@@ -127,11 +128,13 @@ class OrdenList(ListView):
 def detalle_orden_list(request, indice, est):
     detalles = DetalleOrden.objects.filter(id_orden=indice)
     detextra = DetalleOrdenForm
+    totalItem = DetalleOrden.objects.filter(id_orden=indice).annotate(totalItem=Sum(F('precio_unit') * F('cantidad')))
     data = {
         'detalles': detalles,
         'index': indice,
         'estado': est,
-        'formulario': detextra
+        'formulario': detextra,
+        'totalItem': totalItem
     }
 
     if request.method == 'POST':
@@ -139,7 +142,9 @@ def detalle_orden_list(request, indice, est):
         if form.is_valid():
             post = form.save(commit=False)
             indice = OrdenCompra.objects.filter(id_orden=indice)
+            precio = Producto.objects.filter(nombre=post.id_producto).values('precio_unit')
             post.id_orden = indice.first()
+            post.precio_unit = precio
             post.save()
             return redirect(to='AdminOrdenes')
         data['form'] = form

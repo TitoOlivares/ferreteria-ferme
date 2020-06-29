@@ -8,6 +8,7 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from django.utils import timezone
+from django.db.models import Sum
 
 
 class Boleta(models.Model):
@@ -82,10 +83,6 @@ class DetalleOrden(models.Model):
         managed = False
         db_table = 'detalle_orden'
         unique_together = (('id_orden', 'num_detalle'),)
-
-    @property
-    def total_item(self):
-        return self.cantidad * self.precio_unit
 
 
 class DetalleVenta(models.Model):
