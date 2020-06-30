@@ -84,6 +84,10 @@ class DetalleOrden(models.Model):
         db_table = 'detalle_orden'
         unique_together = (('id_orden', 'num_detalle'),)
 
+    @property
+    def total_item(self):
+        return self.cantidad * self.precio_unit
+
 
 class DetalleVenta(models.Model):
     num_detalle = models.AutoField(primary_key=True)

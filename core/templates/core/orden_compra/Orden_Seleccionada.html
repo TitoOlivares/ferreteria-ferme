@@ -43,7 +43,7 @@
             <td>{{ detalle.id_producto }}</td>
             <td>{{ detalle.cantidad }}</td>
             <td> ${{ detalle.precio_unit | intcomma }}</td>
-            <td> ${{ detalle.totalItem | intcomma }}</td>
+            <td> ${{ detalle.total_item | intcomma }}</td>
             <td> {% if estado == '1' %}
                     <a href="{% url 'EditarDetalleOrden' detalle.num_detalle%}" class="btn btn-warning btn-flat"><i
                         class="fas fa-edit"></i></a>
