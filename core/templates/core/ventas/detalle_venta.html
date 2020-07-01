@@ -20,12 +20,18 @@
             <!-- Modal body -->
             <div class="modal-body">
                 <form action="" method="post">
+                    <p>{{ listaVacia }}</p>
+
                     {% csrf_token %}
                     {{ form | crispy }}
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    {% if listaVacia == 0 %}
+                        <div  class="btn btn-primary" > <a style="color: white" href="{% url 'VentasAdmin' %}"> Cancelar </a></div>
+                    {% else%}
+                        <button type="submit" class="btn btn-primary" href="{% url 'VentasAdmin' %}">Guardar y finalizar</button>
+                    {% endif %}
 
 
-                    <button type="submit" class="btn btn-primary">Ingresar</button>
-                    <div  class="btn btn-primary" > <a style="color: white" href="{% url 'VentasAdmin' %}"> Finalizar </a></div>
 
                 </form>
 

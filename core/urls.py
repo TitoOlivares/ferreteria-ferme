@@ -11,7 +11,7 @@ urlpatterns = [
     path('productos/list', ProductList.as_view(), name="ListaProductos"),
     path('productos/new/', registro_producto.as_view(), name="registro_producto"),
     path('productos/edit/<str:pk>/', ProductEdit.as_view(), name="EditarProductos"),
-    path('producto/detalle/<str:pk>/', DetalleProducto.as_view(), name="DetalleProducto"),
+    path('producto/detalle/<indice>', detalle_producto, name="DetalleProducto"),
     path('productos/delete/<str:pk>/', ProductDelete.as_view(), name="EliminarProductos"),
 
     # urls ordenes de compra
@@ -42,7 +42,7 @@ urlpatterns = [
 
     ############ TEMPORAL VISTA DE COMPRAS CLIENTE ####################
     path('venta_admin/', venta_admin, name="VentasAdmin"),
-    path('venta/detalle', AgregarDetalleVenta.as_view(), name="AgregarDetalleVenta"),
+    path('venta/detalle', agregar_detalle_venta, name="AgregarDetalleVenta"),
     path('venta/detalle/<indice>/', detalle_venta_list, name="DetallesVenta"),
     path('venta/edit/<int:pk>/', VentaEdit.as_view(), name="EditVenta"),
     path('venta/delete/<int:pk>/', VentaDelete.as_view(), name="EliminarVenta"),
