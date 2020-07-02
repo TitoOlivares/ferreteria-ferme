@@ -23,6 +23,17 @@ def home(request):
         'categorias': categoria,
         'formulario': formulario
     }
+
+    if request.method == 'POST':
+        form = VentaForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.id_usuario = request.user
+            post.save()
+            return redirect(to='AgregarDetalleVenta')
+        else:
+            print('formulario incorrecto')
+        data['form'] = form
     return render(request, 'core/home.html', data)
 
 
@@ -344,7 +355,7 @@ def agregar_detalle_venta(request):
     }
     if request.method == 'POST':
         form = DetalleVentaForm(request.POST)
-        if form.is_valid():
+        if form.is_valid() and form.save(commit=False).cantidad > 0:
             post = form.save(commit=False)
             index = Venta.objects.filter(id_usuario=request.user).order_by('-id_venta')[:1]
             precio = Producto.objects.filter(nombre=post.id_producto).values('precio_unit')
@@ -355,26 +366,6 @@ def agregar_detalle_venta(request):
         data['form'] = form
 
     return render(request, 'core/ventas/detalle_venta.html', data)
-
-
-# @method_decorator(login_required, name='dispatch')
-# class AgregarDetalleVenta(CreateView):
-#     model = DetalleVenta
-#     form_class = DetalleVentaForm
-#     template_name = 'core/ventas/detalle_venta.html'
-#     success_url = reverse_lazy('AgregarDetalleVenta')
-#
-#     def post(self, request, *args, **kwargs):
-#         form = DetalleVentaForm(request.POST)
-#         if form.is_valid():
-#             post = form.save(commit=False)
-#             index = Venta.objects.filter(id_usuario=request.user).order_by('-id_venta')[:1]
-#             precio = Producto.objects.filter(nombre=post.id_producto).values('precio_unit')
-#             post.id_venta = index.first()
-#             post.precio_unit = precio
-#             post.save()
-#             return HttpResponseRedirect(self.success_url)
-#         return render(request, self.template_name, {'form', form})
 
 
 @login_required

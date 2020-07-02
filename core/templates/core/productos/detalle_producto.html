@@ -37,19 +37,7 @@
                     {% else %}
                         <p class="card-text font-weight-bold">Stock: {{ producto.stock }} unidades</p>
                     {% endif %}
-                    {% if user.is_authenticated %}
-                        <button type="submit" class="btn btn-info">
-                            <i class="fas fa-cart-plus"></i> Agregar al carro
-                        </button>
-                    {% else %}
-                        <div class="alert alert-warning">
-                            <i class="fas fa-error"></i>
-                            <strong>¡Aviso!</strong> Para agregar productos al carro debe ingresar al sistema
-                        </div>
-                        <button disabled class="btn btn-info">
-                            <i class="fas fa-cart-plus"></i> Agregar al carro
-                        </button>
-                    {% endif %}
+
                 </div>
             </div>
         </div>

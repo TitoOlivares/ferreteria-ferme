@@ -92,43 +92,44 @@
 
                 </div>
                 <!-- /.row -->
+                <div class="modal fade" id="OrdenCompra">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header text-center">
+                                <h4 class="modal-title">Nueva venta</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <form action="" method="post">
+                                    {% csrf_token %}
+                                    {{ form | crispy }}
+
+                                    <button type="submit" class="btn btn-primary">Comprar productos</button>
+                                </form>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
 
             </div>
             <!-- /.col-lg-9 -->
 
         </div>
         <!-- /.row -->
+        {% if user.is_authenticated %}
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#OrdenCompra">
+                Nueva Venta
+            </button>
+        {% endif %}
+
 
     </div>
     <!-- /.container -->
 
-
-
-{% endblock %}
-
-{% block boton_lista %}
-    <div class="modal fade" id="OrdenCompra">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <!-- Modal Header -->
-                <div class="modal-header text-center">
-                    <h4 class="modal-title">Nueva venta</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <form action="" method="post">
-                        {% csrf_token %}
-                        {{ form | crispy }}
-
-                        <button type="submit" class="btn btn-primary">Comprar productos</button>
-                    </form>
-                </div>
-
-
-            </div>
-        </div>
-    </div>
 {% endblock %}
