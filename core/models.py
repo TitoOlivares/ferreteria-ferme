@@ -167,9 +167,6 @@ class Producto(models.Model):
     def __str__(self):
         return self.nombre
 
-    def __str__(self):
-        return self.nombre
-
 
 class ProductoTemp(models.Model):
     nombre = models.CharField(primary_key=True, max_length=50)
@@ -198,9 +195,6 @@ class Proveedor(models.Model):
     class Meta:
         managed = False
         db_table = 'proveedor'
-
-    def __str__(self):
-        return self.nombre
 
     def __str__(self):
         return self.nombre
