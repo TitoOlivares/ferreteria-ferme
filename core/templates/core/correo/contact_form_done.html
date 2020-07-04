@@ -1,0 +1,25 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+{% endblock %}
+
+{% block title %}
+    Registro exitoso
+{% endblock %}
+
+{% block content %}
+    <style>
+        .alert {
+            margin-top: 10%;
+            margin-left: 5%;
+            margin-right: 5%;
+        }
+    </style>
+    <div class="alert alert-success alert-dismissible text-center" style="margin-bottom: 13%">
+        <h4><i class="icon fa fa-check"></i> Confirmación!</h4>
+        ¡Gracias por comunicarte con nosotros! Nos pondremos en contacto contigo a la brevedad
+    </div>
+{% endblock %}

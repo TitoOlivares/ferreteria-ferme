@@ -46,4 +46,9 @@ urlpatterns = [
     path('venta/detalle/<indice>/', detalle_venta_list, name="DetallesVenta"),
     path('venta/edit/<int:pk>/', VentaEdit.as_view(), name="EditVenta"),
     path('venta/delete/<int:pk>/', VentaDelete.as_view(), name="EliminarVenta"),
+
+
+
+    path('contacto/', contact_form, name="contact"),
+    path('contacto/done', contact_form_done, name="contact_done"),
 ]

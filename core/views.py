@@ -1,11 +1,12 @@
-from django.core import serializers
-from django.shortcuts import render, redirect
-from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, ListView, UpdateView, DeleteView
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
+from django.core.mail import EmailMultiAlternatives
 from django.http import HttpResponseRedirect
-from django.db.models import Count
+from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.generic import CreateView, ListView, UpdateView, DeleteView
+from django.template.loader import get_template
 
 from .forms import *
 from .models import *
@@ -392,3 +393,45 @@ class VentaDelete(DeleteView):
     model = Venta
     template_name = 'core/ventas/eliminar_venta.html'
     success_url = reverse_lazy('VentasAdmin')
+
+
+# send mail
+def send_email(name, mail, phone, subject, message):
+    context = {
+        'mail': mail,
+        'name': name,
+        'phone': phone,
+        'subject': subject,
+        'message': message
+    }
+    template = get_template('core/correo/correo.html')
+    content = template.render(context)
+    email = EmailMultiAlternatives(
+        'Correo de prueba',
+        'Ferretería FERME',
+        settings.EMAIL_HOST_USER,
+        [mail],
+        cc=[settings.EMAIL_HOST_USER]
+    )
+
+    email.attach_alternative(content, 'text/html')
+    email.send()
+
+
+# email test
+def contact_form(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        mail = request.POST.get('mail')
+        phone = request.POST.get('phone')
+        subject = request.POST.get('subject')
+        message = request.POST.get('message')
+
+        send_email(name, mail, phone, subject, message)
+        return redirect(to='contact_done')
+
+    return render(request, 'core/correo/contact_form.html', {})
+
+
+def contact_form_done(request):
+    return render(request, 'core/correo/contact_form_done.html')
