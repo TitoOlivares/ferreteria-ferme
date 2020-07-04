@@ -329,7 +329,7 @@ class ListadoPersonal(ListView):
 def venta_admin(request):
     formulario = VentaForm()
     data = {
-        'lista': Venta.objects.all(),
+        'lista': Venta.objects.all().order_by('id_venta').reverse(),
         'formulario': formulario
     }
 
