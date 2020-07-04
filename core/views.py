@@ -1,12 +1,11 @@
+from django.core import serializers
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect
-#
-from django.views.generic import TemplateView
-#
+from django.db.models import Count
 
 from .forms import *
 from .models import *
@@ -18,10 +17,23 @@ from .models import *
 def home(request):
     producto = Producto.objects.all()
     categoria = CatProducto.objects.all()
+    formulario = VentaForm
     data = {
         'productos': producto,
         'categorias': categoria,
+        'formulario': formulario
     }
+
+    if request.method == 'POST':
+        form = VentaForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.id_usuario = request.user
+            post.save()
+            return redirect(to='AgregarDetalleVenta')
+        else:
+            print('formulario incorrecto')
+        data['form'] = form
     return render(request, 'core/home.html', data)
 
 
@@ -67,13 +79,16 @@ class ProductDelete(DeleteView):
     success_url = reverse_lazy('ListaProductos')
 
 
-class DetalleProducto(UpdateView):
-    model = Producto
-    form_class = ProductoFormEdit
-    template_name = 'core/productos/detalle_producto.html'
+# nuevo detalle producto
+def detalle_producto(request, indice):
+    data = {
+        'producto': Producto.objects.get(id_producto=indice)
+    }
+
+    return render(request, 'core/productos/detalle_producto.html', data)
 
 
-##### Ordenes de compra    ###################
+# Ordenes de compra
 def orden_admin(request):
     formulario = OrdenForm()
     data = {
@@ -107,7 +122,6 @@ class RegistroDetalleOrden(CreateView):
             index = OrdenCompra.objects.filter(id_usuario=request.user).order_by('-id_orden')[:1]
             precio = Producto.objects.filter(nombre=post.id_producto).values('precio_unit')
             post.id_orden = index.first()
-            print(precio, post.id_producto)
             post.precio_unit = precio
             post.save()
             return HttpResponseRedirect(self.success_url)
@@ -165,7 +179,7 @@ class OrdenEdit(UpdateView):
 # Modulo factura
 @login_required
 def factura_admin(request):
-    formulario= FacturaForm
+    formulario = FacturaForm
     data = {
         'lista': Factura.objects.all(),
         'formulario': formulario
@@ -174,7 +188,7 @@ def factura_admin(request):
         form = FacturaForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect(to='NuevoDetalleFact')   #<--  aqui va la vista de los detalles
+            return redirect(to='NuevoDetalleFact')  # <--  aqui va la vista de los detalles
         data['form'] = form
 
     return render(request, 'core/facturas/factura_admin.html', data)
@@ -331,24 +345,27 @@ def venta_admin(request):
     return render(request, 'core/ventas/ventas_admin.html', data)
 
 
-@method_decorator(login_required, name='dispatch')
-class AgregarDetalleVenta(CreateView):
-    model = DetalleVenta
-    form_class = DetalleVentaForm
-    template_name = 'core/ventas/detalle_venta.html'
-    success_url = reverse_lazy('AgregarDetalleVenta')
-
-    def post(self, request, *args, **kwargs):
+def agregar_detalle_venta(request):
+    form = DetalleVentaForm
+    index = Venta.objects.filter(id_usuario=request.user).order_by('-id_venta')[:1]
+    listaVacia = DetalleVenta.objects.filter(id_venta=index).count()
+    data = {
+        'form': form,
+        'listaVacia': listaVacia
+    }
+    if request.method == 'POST':
         form = DetalleVentaForm(request.POST)
-        if form.is_valid():
+        if form.is_valid() and form.save(commit=False).cantidad > 0:
             post = form.save(commit=False)
             index = Venta.objects.filter(id_usuario=request.user).order_by('-id_venta')[:1]
             precio = Producto.objects.filter(nombre=post.id_producto).values('precio_unit')
             post.id_venta = index.first()
             post.precio_unit = precio
             post.save()
-            return HttpResponseRedirect(self.success_url)
-        return render(request, self.template_name, {'form', form})
+            return redirect(to='AgregarDetalleVenta')
+        data['form'] = form
+
+    return render(request, 'core/ventas/detalle_venta.html', data)
 
 
 @login_required
