@@ -435,3 +435,7 @@ def contact_form(request):
 
 def contact_form_done(request):
     return render(request, 'core/correo/contact_form_done.html')
+
+
+def confirmacion_venta(request):
+    return render(request, 'core/ventas/confirmacion_venta.html')
