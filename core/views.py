@@ -350,7 +350,8 @@ def venta_admin(request):
 def agregar_detalle_venta(request):
     form = DetalleVentaForm
     index = Venta.objects.filter(id_usuario=request.user).order_by('-id_venta')[:1]
-    indice = Venta.objects.filter(id_usuario=request.user).order_by('-id_venta')[:1].values_list('id_venta', flat=True)[0]
+    indice = Venta.objects.filter(id_usuario=request.user).order_by('-id_venta')[:1].values_list('id_venta', flat=True)[
+        0]
     listaVacia = DetalleVenta.objects.filter(id_venta=index).count()
     data = {
         'form': form,
@@ -410,11 +411,10 @@ def send_email(name, mail, phone, subject, message):
     template = get_template('core/correo/correo.html')
     content = template.render(context)
     email = EmailMultiAlternatives(
-        'Correo de prueba',
+        'Contacto Ferretería FERME',
         'Ferretería FERME',
-        settings.EMAIL_HOST_USER,
+        mail,
         [settings.EMAIL_HOST_USER],
-        cc=[mail]
     )
 
     email.attach_alternative(content, 'text/html')
@@ -440,7 +440,7 @@ def contact_form_done(request):
     return render(request, 'core/correo/contact_form_done.html')
 
 
-def send_confirmation_email(name, mail, phone, subject, message, details):
+def send_confirmation_email(name, mail, subject, details, venta):
     lista = []
     for i in details:
         total = i.total_item
@@ -449,20 +449,18 @@ def send_confirmation_email(name, mail, phone, subject, message, details):
     context = {
         'mail': mail,
         'name': name,
-        'phone': phone,
         'subject': subject,
-        'message': message,
         'detalles': details,
-        'total': total
+        'total': total,
+        'venta': venta
     }
     template = get_template('core/correo/confirmacion_venta.html')
     content = template.render(context)
     email = EmailMultiAlternatives(
-        'Correo de prueba',
+        subject,
         'Ferretería FERME',
         settings.EMAIL_HOST_USER,
-        [settings.EMAIL_HOST_USER],
-        cc=[mail]
+        [mail],
     )
 
     email.attach_alternative(content, 'text/html')
@@ -470,12 +468,11 @@ def send_confirmation_email(name, mail, phone, subject, message, details):
 
 
 def confirmacion_venta(request, index):
-    name = request.user.nombre
+    name = request.user.nombre + ' ' + request.user.apellido
     mail = request.user.email
-    phone = request.user.telefono
     subject = 'Confirmación de pedido'
-    message = 'Esto es un mensaje de prueba'
     details = DetalleVenta.objects.filter(id_venta=index)
-    print(name, mail, phone, subject, message, details)
-    send_confirmation_email(name, mail, phone, subject, message, details)
+    venta = Venta.objects.filter(id_venta=index).values_list('id_venta', flat=True)[0]
+    print(name, mail, subject, details, venta)
+    send_confirmation_email(name, mail, subject, details, venta)
     return render(request, 'core/ventas/confirmacion_venta.html')

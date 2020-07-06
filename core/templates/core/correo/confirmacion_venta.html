@@ -5,21 +5,119 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    {% load humanize %}
+    <style>
+        header {
+            background-color: #90d7ff;
+            align-content: center;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        footer {
+            margin-top: 50px;
+        }
+
+        table, th, td {
+            border: 1px solid;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 5px;
+        }
+
+        .total {
+            text-align: right;
+        }
+
+        .pago {
+            align-content: center;
+            font-size: 20px;
+        }
+
+        .datos {
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
-{{ mail }}
-{{ name }}
+<header>
+    <h3 align="center">
+        Confirmación de pedido de compra
+    </h3>
+</header>
+Estimado {{ name }},<br><br>
+<p>
+    A continuación adjuntamos el detalle de su pedido en nuestro local.
+</p>
+<p>
+    Recuerde que el pago del mismo debe acreditarse <b>dentro de las próximas 24 hrs.</b> de lo contrario, el pedido
+    será anulado y deberá generar uno nuevo.
+</p>
+<p>
+    El comprobante de depósito debe ser adjuntado al correo <a href="mailto: ventas@ferme.cl">ventas@ferme.cl</a>
+    indicando en el asunto del correo su nombre y el número de su compra
+</p>
+<p>
+    Número de la venta: <b>{{ venta }}</b> <br>
+</p>
 <table>
+    <tr>
+        <th>Producto</th>
+        <th>Cantidad</th>
+        <th>Precio unitario</th>
+        <th>Subtotal</th>
+    </tr>
     {% for detail in detalles %}
-        <ul>
-            <li>{{ detail.id_producto }} - {{ detail.cantidad }} - {{ detail.precio_unit }}
-                - {{ detail.total_item }}</li>
-        </ul>
+        <tr>
+            <td>{{ detail.id_producto }}</td>
+            <td>{{ detail.cantidad }}</td>
+            <td>${{ detail.precio_unit | intcomma }}</td>
+            <td>${{ detail.total_item | intcomma }}</td>
+        </tr>
     {% endfor %}
+    <tr>
+        <td colspan="4" class="total">
+            Total compra: ${{ total | intcomma }}
+        </td>
+    </tr>
 
-    {{ total }}
 </table>
 
+<p align="center" class="pago">Le recordamos que el método de pago es por depósito en caja vecina, serviestado o banco
+    estado o vía trasneferencia electrónica con los siguientes datos:</p>
+
+<table align="center" style="margin-top: 20px">
+    <tr>
+        <th align="center" class="datos">
+            <img src="https://www.corporativo.bancoestado.cl/sites/default/files/noticias_bancoestado/LogoNuevo-400.jpg"
+                 alt="Banco Estado" width="200" height="150" align="center">
+        </th>
+    </tr>
+    <tr>
+        <td align="center" class="datos">
+            Número de cuenta: 100 098 472 <br>
+            Tipo de cuenta: Cuenta Corriente <br>
+            Titular: Ferretería Ferme SPA <br>
+            RUT: 78.553.982-4 <br>
+            Banco: Banco del Estado de Chile <br>
+            Email: ventas@ferme.cl <br>
+        </td>
+    </tr>
+</table>
+
+
+<p>
+    Si usted ha recibido este correo por error, por favor, omita este mensaje.
+</p>
+<p>
+    Si gusta, puede contactarnos a través de este <a href="http://localhost:8000/contacto/">link</a>
+</p>
+
+<footer>
+    <i>Cordialmente, <a href="http://localhost:8000">Ferretería FERME</a></i>
+</footer>
 
 </body>
 </html>
