@@ -346,13 +346,16 @@ def venta_admin(request):
     return render(request, 'core/ventas/ventas_admin.html', data)
 
 
+@login_required
 def agregar_detalle_venta(request):
     form = DetalleVentaForm
     index = Venta.objects.filter(id_usuario=request.user).order_by('-id_venta')[:1]
+    indice = Venta.objects.filter(id_usuario=request.user).order_by('-id_venta')[:1].values_list('id_venta', flat=True)[0]
     listaVacia = DetalleVenta.objects.filter(id_venta=index).count()
     data = {
         'form': form,
-        'listaVacia': listaVacia
+        'listaVacia': listaVacia,
+        'indice': indice
     }
     if request.method == 'POST':
         form = DetalleVentaForm(request.POST)
@@ -410,8 +413,8 @@ def send_email(name, mail, phone, subject, message):
         'Correo de prueba',
         'Ferretería FERME',
         settings.EMAIL_HOST_USER,
-        [mail],
-        cc=[settings.EMAIL_HOST_USER]
+        [settings.EMAIL_HOST_USER],
+        cc=[mail]
     )
 
     email.attach_alternative(content, 'text/html')
@@ -437,5 +440,42 @@ def contact_form_done(request):
     return render(request, 'core/correo/contact_form_done.html')
 
 
-def confirmacion_venta(request):
+def send_confirmation_email(name, mail, phone, subject, message, details):
+    lista = []
+    for i in details:
+        total = i.total_item
+        lista.append(total)
+    total = sum(lista)
+    context = {
+        'mail': mail,
+        'name': name,
+        'phone': phone,
+        'subject': subject,
+        'message': message,
+        'detalles': details,
+        'total': total
+    }
+    template = get_template('core/correo/confirmacion_venta.html')
+    content = template.render(context)
+    email = EmailMultiAlternatives(
+        'Correo de prueba',
+        'Ferretería FERME',
+        settings.EMAIL_HOST_USER,
+        [settings.EMAIL_HOST_USER],
+        cc=[mail]
+    )
+
+    email.attach_alternative(content, 'text/html')
+    email.send()
+
+
+def confirmacion_venta(request, index):
+    name = request.user.nombre
+    mail = request.user.email
+    phone = request.user.telefono
+    subject = 'Confirmación de pedido'
+    message = 'Esto es un mensaje de prueba'
+    details = DetalleVenta.objects.filter(id_venta=index)
+    print(name, mail, phone, subject, message, details)
+    send_confirmation_email(name, mail, phone, subject, message, details)
     return render(request, 'core/ventas/confirmacion_venta.html')
