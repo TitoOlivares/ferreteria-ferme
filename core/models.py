@@ -44,6 +44,11 @@ class DetalleBoleta(models.Model):
     cantidad = models.FloatField()
     precio_unit = models.FloatField(verbose_name='Precio unitario')
 
+
+    @property
+    def total_item(self):
+        return self.cantidad*self.precio_unit
+
     class Meta:
         managed = False
         db_table = 'detalle_boleta'
@@ -56,6 +61,10 @@ class DetalleFactura(models.Model):
     id_producto = models.ForeignKey('Producto', models.CASCADE, db_column='id_producto', verbose_name='Producto:')
     cantidad = models.FloatField()
     precio_unit = models.FloatField(verbose_name='Precio unitario')
+
+    @property
+    def total_item(self):
+        return self.cantidad*self.precio_unit
 
     class Meta:
         managed = False
@@ -70,6 +79,10 @@ class DetalleOrden(models.Model):
     cantidad = models.FloatField()
     precio_unit = models.FloatField(verbose_name='Precio unitario')
 
+    @property
+    def total_item(self):
+        return self.cantidad*self.precio_unit
+
     class Meta:
         managed = False
         db_table = 'detalle_orden'
@@ -82,6 +95,10 @@ class DetalleVenta(models.Model):
     id_producto = models.ForeignKey('Producto', models.CASCADE, db_column='id_producto', verbose_name='Producto')
     cantidad = models.FloatField()
     precio_unit = models.FloatField(verbose_name='Precio unitario')
+
+    @property
+    def total_item(self):
+        return self.cantidad*self.precio_unit
 
     class Meta:
         managed = False

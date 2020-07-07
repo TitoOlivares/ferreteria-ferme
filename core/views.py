@@ -141,11 +141,18 @@ class OrdenList(ListView):
 def detalle_orden_list(request, indice, est):
     detalles = DetalleOrden.objects.filter(id_orden=indice)
     detextra = DetalleOrdenForm
+    lista = DetalleOrden.objects.filter(id_orden=indice)
+    valores = []
+    for i in lista:
+        valores.append(i.total_item)
+    totalGral = sum(valores)
+
     data = {
         'detalles': detalles,
         'index': indice,
         'estado': est,
-        'formulario': detextra
+        'formulario': detextra,
+        'total': totalGral
     }
 
     if request.method == 'POST':
@@ -211,9 +218,21 @@ class NuevoDetalleFactura(CreateView):
 @login_required
 def detalle_fact_list(request, indice):
     detalles = DetalleFactura.objects.filter(nro_factura=indice)
+    factura = Factura.objects.filter(nro_factura=indice).values_list\
+        ('nro_factura', 'fecha', 'giro', 'razon_soc', 'direccion')[0]
+    valores = []
+    nombre = Factura.objects.filter(nro_factura=indice)
+    # cliente = Usuario.objects.filter(nombre=nombre.id_usuario)
+    for i in detalles:
+        valores.append(i.total_item)
+
+    totalGral= sum(valores)
     data = {
         'detalles': detalles,
-        'index': indice
+        'index': indice,
+        'factura': factura,
+        'total': totalGral,
+        'cliente': 'cliente'
     }
 
     return render(request, 'core/facturas/factura_seleccionada.html', data)
@@ -273,10 +292,21 @@ class RegistroDetalleBoleta(CreateView):
 @login_required
 def detalle_boleta_list(request, indice):
     detalles = DetalleBoleta.objects.filter(nro_boleta=indice)
+    lista = DetalleBoleta.objects.filter(nro_boleta=indice)
+    boleta = Boleta.objects.filter(nro_boleta=indice).values_list('fecha', 'id_venta')
+    valores = []
+    for i in lista:
+        valores.append(i.total_item)
+    totalGral = sum(valores) #neto
+    # iva = round(totalGral * 0.19)
+    print(totalGral)
+
     data = {
         'detalles': detalles,
-        'index': indice
+        'index': indice,
+        'total': totalGral
     }
+    print(request.user.email, boleta)
 
     return render(request, 'core/boletas/boleta_seleccionada.html', data)
 
@@ -349,13 +379,15 @@ def agregar_detalle_venta(request):
     form = DetalleVentaForm
     index = Venta.objects.filter(id_usuario=request.user).order_by('-id_venta')[:1]
     listaVacia = DetalleVenta.objects.filter(id_venta=index).count()
+
     data = {
         'form': form,
         'listaVacia': listaVacia
     }
     if request.method == 'POST':
         form = DetalleVentaForm(request.POST)
-        if form.is_valid() and form.save(commit=False).cantidad > 0:
+        if form.is_valid() and 0 < form.save(commit=False).cantidad < Producto.objects.filter(nombre=form.save \
+                    (commit=False).id_producto).values_list('stock', flat=True)[0]:
             post = form.save(commit=False)
             index = Venta.objects.filter(id_usuario=request.user).order_by('-id_venta')[:1]
             precio = Producto.objects.filter(nombre=post.id_producto).values('precio_unit')
@@ -363,7 +395,9 @@ def agregar_detalle_venta(request):
             post.precio_unit = precio
             post.save()
             return redirect(to='AgregarDetalleVenta')
+
         data['form'] = form
+
 
     return render(request, 'core/ventas/detalle_venta.html', data)
 
@@ -371,9 +405,20 @@ def agregar_detalle_venta(request):
 @login_required
 def detalle_venta_list(request, indice):
     detalles = DetalleVenta.objects.filter(id_venta=indice)
+    lista = DetalleVenta.objects.filter(id_venta=indice)
+    factura = Venta.objects.filter(id_venta=indice)
+    valores = []
+
+    for i in lista:
+        valores.append(i.total_item)
+
+    totalGral = sum(valores)
+    print(totalGral)
     data = {
         'detalles': detalles,
-        'index': indice
+        'index': indice,
+        'total': totalGral,
+        'info': factura
     }
 
     return render(request, 'core/ventas/venta_seleccionada.html', data)

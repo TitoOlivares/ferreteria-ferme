@@ -14,7 +14,7 @@
             margin-right: 5%;
         }
     </style>
-    <div class="card card-default">
+    <div class="card card-default" id="content">
         <div class="card-header">
             {% block titulo_lista %}
 
@@ -24,42 +24,41 @@
         <div class="card-body">
             <div class="table-responsive">
 
-                <table class="table" id="data">
-                    {% block data %}
+                <table class="table">
+                    {% block dataPrint %}
 
                     {% endblock %}
                     <thead>
 
-                    {% block columnas %}
+                    {% block columnasPrint %}
 
                     {% endblock %}
 
                     </thead>
                     <tbody>
-                    {% block filas %}
+                    {% block filasPrint %}
 
                     {% endblock %}
 
                     </tbody>
                 </table>
-
             </div>
 
         </div>
         <!-- /.card-body -->
-            <div class="card-footer">
-                {% block boton_lista %}
+        <div class="card-footer">
+            {% block boton_lista %}
 
-                {% endblock %}
-            </div>
+            {% endblock %}
+        </div>
 
-    <!-- /.card -->
+        <!-- /.card -->
     </div>
 
     <div>
-    {% block export %}
+        {% block export %}
 
-    {% endblock %}
+        {% endblock %}
     </div>
 {% endblock %}
 

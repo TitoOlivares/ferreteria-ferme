@@ -1,4 +1,4 @@
-{% extends 'core/lista_base.html' %}
+{% extends 'core/exportable_base.html' %}
 {% load static %}
 
 
@@ -9,18 +9,16 @@
     </h3>
 {% endblock %}
 
-{% block columnas %}
+{% block columnasPrint %}
     <tr>
         <th>Producto</th>
         <th>Cantidad</th>
         <th>Precio unitario</th>
-
+        <th>Total item</th>
     </tr>
 {% endblock %}
 
-{% block filas %}
-
-
+{% block filasPrint %}
 
     {% for detalle in detalles %}
 
@@ -29,9 +27,41 @@
             <td>{{ detalle.cantidad }}</td>
             {% load humanize %}
             <td> ${{ detalle.precio_unit | intcomma }}</td>
+            <td>${{ detalle.total_item }}</td>
         </tr>
 
     {% endfor %}
 
 
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        function f(){
+            var doc = new jsPDF();
+            var elementHTML = $('#content').html();
+            var specialElementHandlers = {
+                '#elementH': function (element, renderer) {
+                    return true;
+                }
+            };
+            doc.fromHTML(elementHTML, 15, 15, {
+                'width': 170,
+                'elementHandlers': specialElementHandlers
+            });
+
+// Save the PDF
+            doc.save('Boleta.pdf');
+        }
+    </script>
+{% endblock %}
+
+{% block boton_lista %}
+    <div align="right" style="margin-right: 13%"><a >Total: ${{ total | intcomma }}</a></div>
+{% endblock %}
+
+{% block export %}
+    <button type="button" class="btn btn-primary" onclick="f()" id="test" style="margin-left: 10%; margin-bottom: 3%; margin-top: 3%">
+        Guardar Boleta
+    </button>
 {% endblock %}
