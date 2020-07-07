@@ -11,6 +11,12 @@
         <i class="fas fa-list"></i>
         Venta N°: {{ index }}
     </h3>
+    <h5> Nombre: {{ cliente.0 }} {{ cliente.1 }}</h5>
+    <h5> Teléfono: {{ cliente.2 }}</h5>
+    <h5> Correo: {{ cliente.3 }}</h5>
+    <h5> Venta N°: {{ info.0 }}</h5>
+    <h5> Fecha: {{ info.1 }}</h5>
+
 {% endblock %}
 
 {% block columnasPrint %}
@@ -68,7 +74,9 @@
 {% endblock %}
 
 {% block boton_lista %}
-    <div align="right" style="margin-right: 13%"><a >Total: ${{ total | intcomma }}</a></div>
+    <div align="right" style="margin-right: 13%">
+        <h5>Total: ${{ total | intcomma }}</h5>
+    </div>
 {% endblock %}
 
 {% block export %}

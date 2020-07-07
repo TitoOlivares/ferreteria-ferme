@@ -14,8 +14,24 @@
 {% block titulo_lista %}
     <h3 class="card-title text-center">
         <i class="fas fa-list"></i>
-        Factura N°: {{ index }}
+        Detalles Factura N°: {{ index }}
     </h3>
+
+        <div>
+
+
+                    <h5> Nombre: {{ cliente.0 }} {{ cliente.1 }}</h5>
+                    <h5> Teléfono: {{ cliente.2 }}</h5>
+                    <h5> Factura N°: {{ factura.0 }}</h5>
+                    <h5> Fecha: {{ factura.1 }}</h5>
+                    <h5> Giro: {{ factura.2 }}</h5>
+                    <h5> Razón Social: {{ factura.3 }}</h5>
+                    <h5> Dirección {{ factura.4 }}</h5>
+
+
+        </div>
+
+
 {% endblock %}
 
 {% block data %}
@@ -69,11 +85,16 @@
 {% endblock %}
 
 {% block boton_lista %}
-    <div align="right" style="margin-right: 13%"><a >Total: ${{ total | intcomma }}</a></div>
+    <div align="right" style="margin-right: 13%">
+        <h5 >Total: ${{ total | intcomma }}</h5>
+        <h5 >Neto: ${{ neto | intcomma }}</h5>
+        <h5 >Iva: ${{ iva | intcomma }}</h5>
+
+    </div>
 {% endblock %}
 
 {% block export %}
     <button type="button" class="btn btn-primary" onclick="f()" id="test" style="margin-left: 10%; margin-bottom: 3%; margin-top: 3%">
-        Guardar Factura
+        Exportar Factura
     </button>
 {% endblock %}

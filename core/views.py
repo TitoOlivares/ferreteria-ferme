@@ -142,18 +142,18 @@ class OrdenList(ListView):
 def detalle_orden_list(request, indice, est):
     detalles = DetalleOrden.objects.filter(id_orden=indice)
     detextra = DetalleOrdenForm
-    lista = DetalleOrden.objects.filter(id_orden=indice)
-    valores = []
-    for i in lista:
-        valores.append(i.total_item)
-    totalGral = sum(valores)
+    provId = OrdenCompra.objects.filter(id_orden=indice).values_list('id_proveedor', flat=True)[0]
+    prov = Usuario.objects.filter(id_usuario=provId).values_list('nombre',flat=True)[0]
+    proveedor = Proveedor.objects.filter(nombre=prov).values_list('nombre', 'rut', 'telefono', 'rubro')[0]
+    info = OrdenCompra.objects.filter(id_orden=indice).values_list('id_orden', 'fecha')[0]
 
     data = {
         'detalles': detalles,
         'index': indice,
         'estado': est,
         'formulario': detextra,
-        'total': totalGral
+        'proveedor': proveedor,
+        'info': info
     }
 
     if request.method == 'POST':
@@ -222,20 +222,25 @@ def detalle_fact_list(request, indice):
     factura = Factura.objects.filter(nro_factura=indice).values_list\
         ('nro_factura', 'fecha', 'giro', 'razon_soc', 'direccion')[0]
     valores = []
-    nombre = Factura.objects.filter(nro_factura=indice)
-    # cliente = Usuario.objects.filter(nombre=nombre.id_usuario)
+    nombre = Factura.objects.filter(nro_factura=indice).values_list('id_usuario', flat=True)[0]
+    cliente = Usuario.objects.filter(id_usuario=nombre).values_list('nombre', 'apellido', 'telefono')[0]
     for i in detalles:
         valores.append(i.total_item)
 
-    totalGral= sum(valores)
+    neto= sum(valores)
+    iva = round(neto*0.19)
+    totalGral = round(neto-iva)
+
     data = {
         'detalles': detalles,
         'index': indice,
         'factura': factura,
+        'neto': neto,
+        'iva': iva,
         'total': totalGral,
-        'cliente': 'cliente'
+        'cliente': cliente
     }
-
+    print(cliente,nombre)
     return render(request, 'core/facturas/factura_seleccionada.html', data)
 
 
@@ -293,19 +298,21 @@ class RegistroDetalleBoleta(CreateView):
 @login_required
 def detalle_boleta_list(request, indice):
     detalles = DetalleBoleta.objects.filter(nro_boleta=indice)
-    lista = DetalleBoleta.objects.filter(nro_boleta=indice)
-    boleta = Boleta.objects.filter(nro_boleta=indice).values_list('fecha', 'id_venta')
+    boleta = Boleta.objects.filter(nro_boleta=indice).values_list('fecha', 'id_venta')[0]
+    nro = Boleta.objects.filter(nro_boleta=indice).values_list('id_usuario', flat=True)[0]
+    cliente = Usuario.objects.filter(id_usuario=nro).values_list('nombre', 'apellido','telefono')[0]
     valores = []
-    for i in lista:
+    for i in detalles:
         valores.append(i.total_item)
-    totalGral = sum(valores) #neto
-    # iva = round(totalGral * 0.19)
+    totalGral = sum(valores)
     print(totalGral)
 
     data = {
         'detalles': detalles,
         'index': indice,
-        'total': totalGral
+        'total': totalGral,
+        'boleta': boleta,
+        'cliente': cliente
     }
 
     return render(request, 'core/boletas/boleta_seleccionada.html', data)
@@ -406,11 +413,12 @@ def agregar_detalle_venta(request):
 @login_required
 def detalle_venta_list(request, indice):
     detalles = DetalleVenta.objects.filter(id_venta=indice)
-    lista = DetalleVenta.objects.filter(id_venta=indice)
-    factura = Venta.objects.filter(id_venta=indice)
+    cli = Venta.objects.filter(id_venta=indice).values_list('id_usuario', flat=True)[0]
+    venta = Venta.objects.filter(id_venta=indice).values_list('id_venta', 'fecha')[0]
+    cliente = Usuario.objects.filter(id_usuario=cli).values_list('nombre', 'apellido', 'telefono', 'email')[0]
     valores = []
 
-    for i in lista:
+    for i in detalles:
         valores.append(i.total_item)
 
     totalGral = sum(valores)
@@ -419,7 +427,8 @@ def detalle_venta_list(request, indice):
         'detalles': detalles,
         'index': indice,
         'total': totalGral,
-        'info': factura
+        'info': venta,
+        'cliente': cliente
     }
 
     return render(request, 'core/ventas/venta_seleccionada.html', data)
