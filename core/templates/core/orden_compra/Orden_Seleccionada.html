@@ -1,5 +1,6 @@
 {% extends 'core/exportable_base.html' %}
 {% load static %}
+{% load humanize %}
 {% load crispy_forms_tags %}
 {% block head %}
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
@@ -41,7 +42,6 @@
             <td>{{ detalle.id_orden }}</td>
             <td>{{ detalle.id_producto }}</td>
             <td>{{ detalle.cantidad }}</td>
-            {% load humanize %}
             <td> ${{ detalle.precio_unit | intcomma }}</td>
             <td> ${{ detalle.total_item }}</td>
             <td> {% if estado == '1' %}
@@ -50,9 +50,7 @@
                  {% endif %}
             </td>
 
-
         </tr>
-
     {% endfor %}
 
     <div class="modal fade" id="OrdenCompra" id="hidden">
@@ -83,6 +81,11 @@
 
 
 {% endblock %}
+
+
+
+
+
 
 {% block boton_lista %}
     {% if estado == '1' %}

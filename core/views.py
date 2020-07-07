@@ -1,11 +1,12 @@
-from django.core import serializers
-from django.shortcuts import render, redirect
-from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, ListView, UpdateView, DeleteView
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
+from django.core.mail import EmailMultiAlternatives
 from django.http import HttpResponseRedirect
-from django.db.models import Count
+from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.generic import CreateView, ListView, UpdateView, DeleteView
+from django.template.loader import get_template
 
 from .forms import *
 from .models import *
@@ -306,7 +307,6 @@ def detalle_boleta_list(request, indice):
         'index': indice,
         'total': totalGral
     }
-    print(request.user.email, boleta)
 
     return render(request, 'core/boletas/boleta_seleccionada.html', data)
 
@@ -375,14 +375,17 @@ def venta_admin(request):
     return render(request, 'core/ventas/ventas_admin.html', data)
 
 
+@login_required
 def agregar_detalle_venta(request):
     form = DetalleVentaForm
     index = Venta.objects.filter(id_usuario=request.user).order_by('-id_venta')[:1]
+    indice = Venta.objects.filter(id_usuario=request.user).order_by('-id_venta')[:1].values_list('id_venta', flat=True)[
+        0]
     listaVacia = DetalleVenta.objects.filter(id_venta=index).count()
-
     data = {
         'form': form,
-        'listaVacia': listaVacia
+        'listaVacia': listaVacia,
+        'indice': indice
     }
     if request.method == 'POST':
         form = DetalleVentaForm(request.POST)
@@ -395,9 +398,7 @@ def agregar_detalle_venta(request):
             post.precio_unit = precio
             post.save()
             return redirect(to='AgregarDetalleVenta')
-
         data['form'] = form
-
 
     return render(request, 'core/ventas/detalle_venta.html', data)
 
@@ -437,3 +438,82 @@ class VentaDelete(DeleteView):
     model = Venta
     template_name = 'core/ventas/eliminar_venta.html'
     success_url = reverse_lazy('VentasAdmin')
+
+
+# send mail
+def send_email(name, mail, phone, subject, message):
+    context = {
+        'mail': mail,
+        'name': name,
+        'phone': phone,
+        'subject': subject,
+        'message': message
+    }
+    template = get_template('core/correo/correo.html')
+    content = template.render(context)
+    email = EmailMultiAlternatives(
+        'Contacto Ferretería FERME',
+        'Ferretería FERME',
+        mail,
+        [settings.EMAIL_HOST_USER],
+    )
+
+    email.attach_alternative(content, 'text/html')
+    email.send()
+
+
+# email test
+def contact_form(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        mail = request.POST.get('mail')
+        phone = request.POST.get('phone')
+        subject = request.POST.get('subject')
+        message = request.POST.get('message')
+
+        send_email(name, mail, phone, subject, message)
+        return redirect(to='contact_done')
+
+    return render(request, 'core/correo/contact_form.html', {})
+
+
+def contact_form_done(request):
+    return render(request, 'core/correo/contact_form_done.html')
+
+
+def send_confirmation_email(name, mail, subject, details, venta):
+    lista = []
+    for i in details:
+        total = i.total_item
+        lista.append(total)
+    total = sum(lista)
+    context = {
+        'mail': mail,
+        'name': name,
+        'subject': subject,
+        'detalles': details,
+        'total': total,
+        'venta': venta
+    }
+    template = get_template('core/correo/confirmacion_venta.html')
+    content = template.render(context)
+    email = EmailMultiAlternatives(
+        subject,
+        'Ferretería FERME',
+        settings.EMAIL_HOST_USER,
+        [mail],
+    )
+
+    email.attach_alternative(content, 'text/html')
+    email.send()
+
+
+def confirmacion_venta(request, index):
+    name = request.user.nombre + ' ' + request.user.apellido
+    mail = request.user.email
+    subject = 'Confirmación de pedido'
+    details = DetalleVenta.objects.filter(id_venta=index)
+    venta = Venta.objects.filter(id_venta=index).values_list('id_venta', flat=True)[0]
+    print(name, mail, subject, details, venta)
+    send_confirmation_email(name, mail, subject, details, venta)
+    return render(request, 'core/ventas/confirmacion_venta.html')

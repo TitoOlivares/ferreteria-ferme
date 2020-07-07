@@ -103,12 +103,13 @@
                             </div>
 
                             <!-- Modal body -->
-                            <div class="modal-body">
+                            <div class="modal-body text-center">
+                                <img src="{% static 'core/img/Demo.gif' %}" width="450" alt="Demo">
                                 <form action="" method="post">
                                     {% csrf_token %}
                                     {{ form | crispy }}
 
-                                    <button type="submit" class="btn btn-primary">Comprar productos</button>
+                                    <button type="submit" class="btn btn-primary" style="margin-top: 10%">Comprar productos</button>
                                 </form>
                             </div>
 

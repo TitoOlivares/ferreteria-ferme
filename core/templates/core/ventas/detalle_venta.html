@@ -7,7 +7,7 @@
 
 
 
-    <div  id="DetalleOrden">
+    <div  id="DetalleOrden" style="margin: 10% 20%">
 
         <div class="modal-content">
 
@@ -23,16 +23,16 @@
 
                     {% csrf_token %}
                     {{ form | crispy }}
-                    {% if listaVacia == 0 %}
-                        <button type="submit" class="btn btn-primary">Guardar</button>
-                        <div  class="btn btn-primary" > <a style="color: white" href="{% url 'home' %}"> Cancelar </a></div>
-                    {% else%}
-                        <button type="submit" class="btn btn-primary" href="{% url 'VentasAdmin' %}">Guardar y continuar</button>
-                        <div  class="btn btn-primary" > <a style="color: white" href="{% url 'home' %}"> Finalizar </a></div>
-                    {% endif %}
+                    <div class="text-center">
+                        {% if listaVacia == 0 %}
+                            <button type="submit" class="btn btn-primary" style="margin-top: 10px">Guardar</button>
+                            <div  class="btn btn-primary" style="margin-top: 10px"> <a style="color: white" href="{% url 'home' %}"> Cancelar </a></div>
+                        {% else%}
+                            <button type="submit" class="btn btn-primary" style="margin-top: 10px" href="{% url 'VentasAdmin' %}">Guardar y continuar</button>
+                            <div  class="btn btn-primary" style="margin-top: 10px"> <a style="color: white" href="{% url 'ConfirmacionVenta' indice %}"> Finalizar </a></div>
+                        {% endif %}
+                    </div>
 
-
-                        <p>{{ mensaje }}</p>
                 </form>
 
             </div>
