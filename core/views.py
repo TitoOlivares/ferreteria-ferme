@@ -229,7 +229,7 @@ def detalle_fact_list(request, indice):
 
     neto= sum(valores)
     iva = round(neto*0.19)
-    totalGral = round(neto-iva)
+    totalGral = round(neto+iva)
 
     data = {
         'detalles': detalles,

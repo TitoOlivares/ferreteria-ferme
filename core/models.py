@@ -75,8 +75,6 @@ class DetalleFactura(models.Model):
         unique_together = (('nro_factura', 'num_detalle'),)
 
 
-
-
 class DetalleOrden(models.Model):
     num_detalle = models.AutoField(primary_key=True)
     id_orden = models.ForeignKey('OrdenCompra', models.CASCADE, db_column='id_orden', verbose_name='Orden')
