@@ -1,0 +1,40 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        p{
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>
+        Correo de confirmación
+    </h1>
+    <h5>
+        Asunto: {{ subject }} ||
+        Correo: {{ mail }}
+    </h5>
+    <p>
+        Estimado {{ name }} este correo se ha generado automáticamente
+    </p>
+    <p>
+        Nombre: {{ name }}
+    </p>
+
+    <p>
+
+        Teléfono: {{ phone }}
+    </p>
+
+    <p>
+        Mensaje: {{ message }}
+    </p>
+</div>
+</body>
+</html>

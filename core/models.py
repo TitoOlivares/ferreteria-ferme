@@ -8,6 +8,7 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from django.utils import timezone
+from django.db.models import Sum
 
 
 class Boleta(models.Model):
@@ -44,10 +45,19 @@ class DetalleBoleta(models.Model):
     cantidad = models.FloatField()
     precio_unit = models.FloatField(verbose_name='Precio unitario')
 
+
+    @property
+    def total_item(self):
+        return self.cantidad*self.precio_unit
+
     class Meta:
         managed = False
         db_table = 'detalle_boleta'
         unique_together = (('nro_boleta', 'num_detalle'),)
+
+    @property
+    def total_item(self):
+        return self.cantidad * self.precio_unit
 
 
 class DetalleFactura(models.Model):
@@ -57,10 +67,18 @@ class DetalleFactura(models.Model):
     cantidad = models.FloatField()
     precio_unit = models.FloatField(verbose_name='Precio unitario')
 
+    @property
+    def total_item(self):
+        return self.cantidad*self.precio_unit
+
     class Meta:
         managed = False
         db_table = 'detalle_factura'
         unique_together = (('nro_factura', 'num_detalle'),)
+
+    @property
+    def total_item(self):
+        return self.cantidad * self.precio_unit
 
 
 class DetalleOrden(models.Model):
@@ -70,10 +88,18 @@ class DetalleOrden(models.Model):
     cantidad = models.FloatField()
     precio_unit = models.FloatField(verbose_name='Precio unitario')
 
+    @property
+    def total_item(self):
+        return self.cantidad*self.precio_unit
+
     class Meta:
         managed = False
         db_table = 'detalle_orden'
         unique_together = (('id_orden', 'num_detalle'),)
+
+    @property
+    def total_item(self):
+        return self.cantidad * self.precio_unit
 
 
 class DetalleVenta(models.Model):
@@ -83,10 +109,18 @@ class DetalleVenta(models.Model):
     cantidad = models.FloatField()
     precio_unit = models.FloatField(verbose_name='Precio unitario')
 
+    @property
+    def total_item(self):
+        return self.cantidad*self.precio_unit
+
     class Meta:
         managed = False
         db_table = 'detalle_venta'
         unique_together = (('num_detalle', 'id_venta'),)
+
+    @property
+    def total_item(self):
+        return self.cantidad * self.precio_unit
 
 
 class EstadoOrden(models.Model):

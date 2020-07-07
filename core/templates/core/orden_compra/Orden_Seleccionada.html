@@ -1,5 +1,6 @@
-{% extends 'core/lista_base.html' %}
+{% extends 'core/exportable_base.html' %}
 {% load static %}
+{% load humanize %}
 {% load crispy_forms_tags %}
 {% block head %}
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
@@ -13,12 +14,13 @@
     </h3>
 {% endblock %}
 
-{% block columnas %}
+{% block columnasPrint %}
     <tr>
         <th>Orden</th>
         <th>Producto</th>
         <th>Cantidad</th>
         <th>Precio unitario</th>
+        <th>Total item</th>
         {% if estado == '1' %}
             <th>Opciones</th>
         {% endif %}
@@ -29,7 +31,7 @@
     </tr>
 {% endblock %}
 
-{% block filas %}
+{% block filasPrint %}
 
 
 
@@ -40,19 +42,18 @@
             <td>{{ detalle.id_orden }}</td>
             <td>{{ detalle.id_producto }}</td>
             <td>{{ detalle.cantidad }}</td>
-            {% load humanize %}
             <td> ${{ detalle.precio_unit | intcomma }}</td>
+            <td> ${{ detalle.total_item }}</td>
             <td> {% if estado == '1' %}
                     <a href="{% url 'EditarDetalleOrden' detalle.num_detalle%}" class="btn btn-warning btn-flat"><i
                         class="fas fa-edit"></i></a>
-                {% endif %}</td>
-
+                 {% endif %}
+            </td>
 
         </tr>
-
     {% endfor %}
 
-    <div class="modal fade" id="OrdenCompra">
+    <div class="modal fade" id="OrdenCompra" id="hidden">
         <div class="modal-dialog">
             <div class="modal-content">
 
@@ -91,6 +92,33 @@
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#OrdenCompra">
             Añadir productos
         </button>
-    {% endif %}
 
+    {% endif %}
+    <div align="right" style="margin-right: 13%"><a >Total: ${{ total | intcomma }}</a></div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        function f(){
+            var doc = new jsPDF();
+            var elementHTML = $('#content').html();
+            var specialElementHandlers = {
+                '#hidden': function (element, renderer) {
+                    return true;
+                }
+            };
+            doc.fromHTML(elementHTML, 15, 15, {
+                'width': 170,
+                'elementHandlers': specialElementHandlers
+            });
+
+// Save the PDF
+            doc.save('Venta{{ index }}.pdf');
+        }
+    </script>
+{% endblock %}
+
+{% block export %}
+    <button type="button" class="btn btn-primary" onclick="f()" id="test" style="margin-left: 10%; margin-bottom: 3%; margin-top: 3%">
+        Guardar Comprobante
+    </button>
 {% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'core/css/confirmacion_venta.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="alert alert-success alert-dismissible text-center">
+        <h4><i class="icon fa fa-check"></i> Confirmación!</h4>
+        <p>Hemos ingresado exitosamente tu compra. <br>
+            A continuación, podrá ver los detalles para el pago.</p>
+        <p class="font-weight-bold">Recuerde: una vez realizado el pago, envíe su
+            comprobante al correo <a href="mailto: ventas@ferme.cl">ventas@ferme.cl</a><br>
+            Si el pago no se efectúa dentro de 24 horas desde la realización del pedido, este será anulado.
+        </p>
+    </div>
+
+    <div class="card">
+        <div class="card-header text-center">
+            <h3>
+                Formas de pago
+            </h3>
+        </div>
+        <div class="card-body">
+            <ul>
+                <li>
+                    <div class="card inner-card">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="column text-center">
+                                    <p class="font-weight-bold">Depósito en efectivo o transferencia electrónica con los
+                                        siguientes datos:</p>
+                                    <img src="{% static 'core/img/caja_vecina.png' %}" alt="Caja vecina" width="300"
+                                         height="100">
+                                    <img src="{% static 'core/img/ServiEstado.png' %}" alt="Transferencia electrónica"
+                                         width="250"
+                                         height="100">
+                                </div>
+
+                            </div>
+                            <div class="col-sm-6" style="border: 1px solid; justify-content: center">
+                                <p>Número de cuenta: 100 098 472</p>
+                                <p>Tipo de cuenta: Cuenta Corriente</p>
+                                <p>Titular: Ferretería Ferme SPA</p>
+                                <p>RUT: 78.553.982-4</p>
+                                <p>Banco: Banco del Estado de Chile</p>
+                                <p>Email: ventas@ferme.cl</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+
