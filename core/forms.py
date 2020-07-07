@@ -169,6 +169,8 @@ class DetalleVentaForm(ModelForm):
         fields = ['id_producto', 'cantidad']
 
 
+
+
 class EditVentaForm(ModelForm):
     class Meta:
         model = Venta
