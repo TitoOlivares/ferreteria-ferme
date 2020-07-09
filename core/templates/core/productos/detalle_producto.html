@@ -1,6 +1,7 @@
 {% extends 'core/base.html' %}
 {% load static %}
 {% load humanize %}
+{% load crispy_forms_tags %}
 
 {% block head %}
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
@@ -52,6 +53,35 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="OrdenCompra">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header text-center">
+                        <h4 class="modal-title">Nueva venta</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body text-center">
+                        <img src="{% static 'core/img/Demo.gif' %}" width="450" alt="Demo">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            {{ form | crispy }}
+
+                            <button type="submit" class="btn btn-primary" style="margin-top: 10%">Comprar
+                                productos
+                            </button>
+                        </form>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
     </div>
 
 {% endblock %}
