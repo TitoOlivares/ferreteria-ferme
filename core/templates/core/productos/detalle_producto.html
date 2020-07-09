@@ -38,6 +38,17 @@
                         <p class="card-text font-weight-bold">Stock: {{ producto.stock }} unidades</p>
                     {% endif %}
 
+                    {% if not user.is_authenticated %}
+                        <div class="text-center" style="margin-top: 15%; font-size: 14px">
+                            <p class="card-text">Para comprar este y otros productos de nuestro catálogo, inicia sesión
+                                <a href="{% url 'login' %}">AQUÍ</a></p>
+                            <p class="card-text">Si no tienes una cuenta, crea una <a
+                                    href="{% url 'registro_usuario' %}">AQUÍ</a>
+                            </p>
+                        </div>
+
+                    {% endif %}
+
                 </div>
             </div>
         </div>
