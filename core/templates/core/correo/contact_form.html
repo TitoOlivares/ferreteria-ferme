@@ -29,7 +29,13 @@
 
             <div class="form-group" align="left">
                 <label for="">Asunto:</label>
-                <input type="text" class="form-control" name="subject" required>
+{#                <input type="text" class="form-control" name="subject" required>#}
+                <select name="subject" id="subject" class="form-control">
+                    <option value="Información" selected>Información</option>
+                    <option value="Reclamo">Reclamo</option>
+                    <option value="Ventas">Ventas</option>
+                    <option value="Otro">Otro</option>
+                </select>
             </div>
 
             <div class="form-group" align="left">
