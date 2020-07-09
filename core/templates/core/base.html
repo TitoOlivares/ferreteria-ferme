@@ -50,15 +50,17 @@
                     {% if user.is_authenticated %}
                         {% if not user.is_admin and not user.is_staff and not user.is_superuser and not user.es_proveedor %}
                             <li class="nav-item">
-                                <a class="nav-link"  data-toggle="modal" href="#" data-target="#OrdenCompra">Carro de compra</a>
+                                <a class="nav-link" data-toggle="modal" href="#" data-target="#OrdenCompra">Carro de
+                                    compra</a>
                             </li>
                             <div class="dropdown">
                                 <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
                                     Cuenta
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="{% url 'BoletasCliente' %}">Mis boletas</a>
-                                    {% if user.esempresa == True %}
+                                    {% if user.esempresa == False %}
+                                        <a class="dropdown-item" href="{% url 'BoletasCliente' %}">Mis boletas</a>
+                                    {% elif user.esempresa == True %}
                                         <a class="dropdown-item" href="{% url 'FacturasCliente' %}">Mis facturas</a>
                                     {% endif %}
                                     <a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesión</a>
