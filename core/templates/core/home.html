@@ -97,7 +97,7 @@
                         <div class="modal-content">
 
                             <!-- Modal Header -->
-                            <div class="modal-header text-center">
+                            <div class="modal-header">
                                 <h4 class="modal-title">Nueva venta</h4>
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
@@ -109,16 +109,31 @@
                                     {% csrf_token %}
                                     {{ form | crispy }}
 
+                                    <div class="advertencia">
+                                        {% if user.comuna not in 'Vina' %}
+                                            <b>Estimado cliente: Antes de generar su pedido, le
+                                                recordamos que las compras con la
+                                                modalidad de despacho a domicilio solo están disponibles dentro de la
+                                                comuna
+                                                de
+                                                Viña del Mar. Según nuestros registros, su dirección está dentro de la
+                                                comuna de
+                                                {{ user.comuna }}, por lo que, una vez realizada la compra, su pedido
+                                                estará
+                                                disponible en nuestro local para su retiro. Agradecemos su
+                                                comprensión.</b>
+                                        {% endif %}
+                                    </div>
+
                                     <button type="submit" class="btn btn-primary" style="margin-top: 10%">Comprar
                                         productos
                                     </button>
                                 </form>
                             </div>
-
-
                         </div>
                     </div>
                 </div>
+
 
             </div>
             <!-- /.col-lg-9 -->
