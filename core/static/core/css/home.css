@@ -1,13 +1,21 @@
-.row{
+.row {
     margin-top: 5%;
     width: 100%;
 }
 
-.col{
+.col {
     margin-bottom: 20px;
 }
 
-.cat-container{
+.cat-container {
     position: sticky;
     top: 70px;
+}
+
+.zoom {
+    transition: transform .2s;
+}
+
+.zoom:hover {
+    transform: scale(1.1);
 }
