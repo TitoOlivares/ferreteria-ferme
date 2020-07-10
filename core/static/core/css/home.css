@@ -20,8 +20,7 @@
     transform: scale(1.1);
 }
 
-.advertencia {
-    font-size: 14px;
-    margin: 10% 10% 0;
-    text-align: justify;
+.alert {
+    text-align: justify !important;
+    margin-top: 10% !important;
 }

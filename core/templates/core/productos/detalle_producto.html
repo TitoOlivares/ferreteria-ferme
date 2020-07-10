@@ -7,9 +7,8 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
           integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <style>
-        .advertencia {
-            font-size: 14px;
-            margin: 10% 10% 0;
+        .alert {
+            margin-top: 10%;
             text-align: justify;
         }
     </style>
@@ -84,7 +83,7 @@
                             {% csrf_token %}
                             {{ form | crispy }}
 
-                            <div class="advertencia">
+                            <div class="alert alert-warning">
                                 {% if user.comuna not in 'Vina' %}
                                     <b>Estimado cliente: Antes de generar su pedido, le
                                         recordamos que las compras con la

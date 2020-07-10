@@ -109,7 +109,7 @@
                                     {% csrf_token %}
                                     {{ form | crispy }}
 
-                                    <div class="advertencia">
+                                    <div class="alert alert-warning">
                                         {% if user.comuna not in 'Vina' %}
                                             <b>Estimado cliente: Antes de generar su pedido, le
                                                 recordamos que las compras con la
