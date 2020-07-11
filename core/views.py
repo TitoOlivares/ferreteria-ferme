@@ -526,3 +526,10 @@ def confirmacion_venta(request, index):
     print(name, mail, subject, details, venta)
     send_confirmation_email(name, mail, subject, details, venta)
     return render(request, 'core/ventas/confirmacion_venta.html')
+
+
+class Despacho(CreateView):
+    model = Despacho
+    form_class = DespachoForm
+    template_name = 'core/despacho_form.html'
+    success_url = reverse_lazy('home')

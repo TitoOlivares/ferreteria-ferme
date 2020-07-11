@@ -52,4 +52,6 @@ urlpatterns = [
 
     path('contacto/', contact_form, name="contact"),
     path('contacto/done', contact_form_done, name="contact_done"),
+
+    path('despacho/', Despacho.as_view(), name="despacho"),
 ]
