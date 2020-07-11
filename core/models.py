@@ -45,6 +45,7 @@ class Despacho(models.Model):
     telefono = models.FloatField()
     id_usuario = models.ForeignKey('Usuario', models.CASCADE, db_column='id_usuario', verbose_name='Cliente')
     id_venta = models.ForeignKey('Venta', models.CASCADE, db_column='id_venta', verbose_name='Nro de venta')
+    nombre = models.CharField(max_length=50)
 
     class Meta:
         managed = False

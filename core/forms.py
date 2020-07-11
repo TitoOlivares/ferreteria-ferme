@@ -175,16 +175,3 @@ class EditVentaForm(ModelForm):
     class Meta:
         model = Venta
         fields = ['id_estado']
-
-
-class DespachoForm(ModelForm):
-    class Meta:
-        model = Despacho
-        fields = ['fecha', 'direccion', 'telefono', 'id_usuario', 'id_venta']
-        widgets = {
-            'fecha': DateInput(
-                attrs={
-                    'class': 'datepicker'
-                }
-            )
-        }
