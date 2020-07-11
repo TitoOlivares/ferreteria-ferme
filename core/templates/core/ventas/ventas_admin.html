@@ -44,6 +44,10 @@
                         class="fas fa-edit"></i></a>
                 <a href="{% url 'EliminarVenta' venta.id_venta %}" class="btn btn-danger btn-flat"><i
                         class="fas fa-trash"></i></a>
+                {% if venta.id_estado.id_estado == 3 %}
+                    <a href="#" class="btn btn-success btn-flat"><i
+                            class="fa fa-truck"></i></a>
+                {% endif %}
             </td>
 
 
