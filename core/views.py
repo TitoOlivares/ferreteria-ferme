@@ -490,7 +490,7 @@ def contact_form_done(request):
     return render(request, 'core/correo/contact_form_done.html')
 
 
-def send_confirmation_email(name, mail, subject, details, venta):
+def send_confirmation_email(name, mail, subject, details, venta, address, city, empresa):
     lista = []
     for i in details:
         total = i.total_item
@@ -502,7 +502,10 @@ def send_confirmation_email(name, mail, subject, details, venta):
         'subject': subject,
         'detalles': details,
         'total': total,
-        'venta': venta
+        'venta': venta,
+        'address': address,
+        'city': city,
+        'empresa': empresa,
     }
     template = get_template('core/correo/confirmacion_venta.html')
     content = template.render(context)
@@ -520,9 +523,12 @@ def send_confirmation_email(name, mail, subject, details, venta):
 def confirmacion_venta(request, index):
     name = request.user.nombre + ' ' + request.user.apellido
     mail = request.user.email
+    city = request.user.comuna
+    address = request.user.direccion
+    empresa = request.user.esempresa
     subject = 'Confirmación de pedido'
     details = DetalleVenta.objects.filter(id_venta=index)
     venta = Venta.objects.filter(id_venta=index).values_list('id_venta', flat=True)[0]
-    print(name, mail, subject, details, venta)
-    send_confirmation_email(name, mail, subject, details, venta)
+    print(name, mail, subject, details, venta, address, city, empresa)
+    send_confirmation_email(name, mail, subject, details, venta, address, city, empresa)
     return render(request, 'core/ventas/confirmacion_venta.html')

@@ -7,7 +7,7 @@
     <title>Document</title>
     {% load humanize %}
     <style>
-        header {
+        header, .despacho {
             background-color: #90d7ff;
             align-content: center;
             padding: 20px;
@@ -57,8 +57,22 @@ Estimado {{ name }},<br><br>
 </p>
 <p>
     El comprobante de depósito debe ser adjuntado al correo <a href="mailto: ventas@ferme.cl">ventas@ferme.cl</a>
-    indicando en el asunto del correo su nombre y el número de su compra
+    indicando en el asunto del correo su nombre y el número de su compra. <br>
 </p>
+
+{% if empresa is True %}
+    Luego, podrás acceder a tu factura desde <a href="http://localhost:8000/misfacturas/">este enlace</a>
+{% else %}
+    Luego, podrás acceder a tu boleta desde <a href="http://localhost:8000/misboletas/">este enlace</a>
+{% endif %}
+
+{% if city == 'Viña del mar' %}
+    <p align="center" class="despacho">
+        Una vez confirmada su venta, enviaremos su pedido a su dirección {{ address }}, {{ city }} en las próximas 48
+        hrs.
+    </p>
+{% endif %}
+
 <p>
     Número de la venta: <b>{{ venta }}</b> <br>
 </p>
