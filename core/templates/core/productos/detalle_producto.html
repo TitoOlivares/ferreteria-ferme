@@ -83,8 +83,8 @@
                             {% csrf_token %}
                             {{ form | crispy }}
 
-                            <div class="alert alert-warning">
-                                {% if user.comuna not in 'Vina' %}
+                            {% if user.comuna not in 'Viña del mar' %}
+                                <div class="alert alert-warning">
                                     <b>Estimado cliente: Antes de generar su pedido, le
                                         recordamos que las compras con la
                                         modalidad de despacho a domicilio solo están disponibles dentro de la
@@ -96,8 +96,8 @@
                                         estará
                                         disponible en nuestro local para su retiro. Agradecemos su
                                         comprensión.</b>
-                                {% endif %}
-                            </div>
+                                </div>
+                            {% endif %}
 
                             <button type="submit" class="btn btn-primary" style="margin-top: 10%">Comprar
                                 productos
