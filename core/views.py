@@ -158,10 +158,13 @@ def detalle_orden_list(request, indice, est):
 
     if request.method == 'POST':
         form = DetalleOrdenForm(request.POST)
-        if form.is_valid():
+        if form.is_valid() and 0 < form.save(commit=False).cantidad < Producto.objects.filter(nombre=form.save \
+                    (commit=False).id_producto).values_list('stock', flat=True)[0]:
             post = form.save(commit=False)
             indice = OrdenCompra.objects.filter(id_orden=indice)
             post.id_orden = indice.first()
+            precio = Producto.objects.filter(nombre=post.id_producto).values('precio_unit')
+            post.precio_unit = precio
             post.save()
             return redirect(to='AdminOrdenes')
         data['form'] = form
