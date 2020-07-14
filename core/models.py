@@ -38,6 +38,20 @@ class CatProducto(models.Model):
         return self.nombre
 
 
+class Despacho(models.Model):
+    id_despacho = models.AutoField(primary_key=True)
+    fecha = models.DateField(verbose_name='Fecha despacho')
+    direccion = models.CharField(max_length=100)
+    telefono = models.FloatField()
+    id_usuario = models.ForeignKey('Usuario', models.CASCADE, db_column='id_usuario', verbose_name='Cliente')
+    id_venta = models.ForeignKey('Venta', models.CASCADE, db_column='id_venta', verbose_name='Nro de venta')
+    nombre = models.CharField(max_length=50)
+
+    class Meta:
+        managed = False
+        db_table = 'despacho'
+
+
 class DetalleBoleta(models.Model):
     num_detalle = models.AutoField(primary_key=True)
     nro_boleta = models.ForeignKey('Boleta', models.CASCADE, db_column='nro_boleta', verbose_name='Boleta nro')
@@ -113,7 +127,7 @@ class DetalleVenta(models.Model):
 
 class EstadoOrden(models.Model):
     id_estado = models.FloatField(primary_key=True)
-    descripcion = models.CharField(max_length=20)
+    descripcion = models.Field(max_length=20)
 
     class Meta:
         managed = False

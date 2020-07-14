@@ -40,7 +40,7 @@ urlpatterns = [
     # Listado de personal
     path('admin/personal', ListadoPersonal.as_view(), name="ListadoPersonal"),
 
-    ############ TEMPORAL VISTA DE COMPRAS CLIENTE ####################
+    # Compras cliente
     path('venta_admin/', venta_admin, name="VentasAdmin"),
     path('venta/detalle', agregar_detalle_venta, name="AgregarDetalleVenta"),
     path('venta/detalle/<indice>/', detalle_venta_list, name="DetallesVenta"),
@@ -48,8 +48,7 @@ urlpatterns = [
     path('venta/delete/<int:pk>/', VentaDelete.as_view(), name="EliminarVenta"),
     path('venta/confirm/<index>', confirmacion_venta, name="ConfirmacionVenta"),
 
-
-
+    # Formulario de contacto
     path('contacto/', contact_form, name="contact"),
     path('contacto/done', contact_form_done, name="contact_done"),
 ]

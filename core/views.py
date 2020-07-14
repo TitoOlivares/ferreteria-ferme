@@ -143,7 +143,7 @@ def detalle_orden_list(request, indice, est):
     detalles = DetalleOrden.objects.filter(id_orden=indice)
     detextra = DetalleOrdenForm
     provId = OrdenCompra.objects.filter(id_orden=indice).values_list('id_proveedor', flat=True)[0]
-    prov = Usuario.objects.filter(id_usuario=provId).values_list('nombre',flat=True)[0]
+    prov = Usuario.objects.filter(id_usuario=provId).values_list('nombre', flat=True)[0]
     proveedor = Proveedor.objects.filter(nombre=prov).values_list('nombre', 'rut', 'telefono', 'rubro')[0]
     info = OrdenCompra.objects.filter(id_orden=indice).values_list('id_orden', 'fecha')[0]
 
@@ -219,7 +219,7 @@ class NuevoDetalleFactura(CreateView):
 @login_required
 def detalle_fact_list(request, indice):
     detalles = DetalleFactura.objects.filter(nro_factura=indice)
-    factura = Factura.objects.filter(nro_factura=indice).values_list\
+    factura = Factura.objects.filter(nro_factura=indice).values_list \
         ('nro_factura', 'fecha', 'giro', 'razon_soc', 'direccion')[0]
     valores = []
     nombre = Factura.objects.filter(nro_factura=indice).values_list('id_usuario', flat=True)[0]
@@ -227,9 +227,9 @@ def detalle_fact_list(request, indice):
     for i in detalles:
         valores.append(i.total_item)
 
-    neto= sum(valores)
-    iva = round(neto*0.19)
-    totalGral = round(neto+iva)
+    neto = sum(valores)
+    iva = round(neto * 0.19)
+    totalGral = round(neto + iva)
 
     data = {
         'detalles': detalles,
@@ -240,7 +240,7 @@ def detalle_fact_list(request, indice):
         'total': totalGral,
         'cliente': cliente
     }
-    print(cliente,nombre)
+    print(cliente, nombre)
     return render(request, 'core/facturas/factura_seleccionada.html', data)
 
 
@@ -300,7 +300,7 @@ def detalle_boleta_list(request, indice):
     detalles = DetalleBoleta.objects.filter(nro_boleta=indice)
     boleta = Boleta.objects.filter(nro_boleta=indice).values_list('fecha', 'id_venta')[0]
     nro = Boleta.objects.filter(nro_boleta=indice).values_list('id_usuario', flat=True)[0]
-    cliente = Usuario.objects.filter(id_usuario=nro).values_list('nombre', 'apellido','telefono')[0]
+    cliente = Usuario.objects.filter(id_usuario=nro).values_list('nombre', 'apellido', 'telefono')[0]
     valores = []
     for i in detalles:
         valores.append(i.total_item)
@@ -463,7 +463,7 @@ def send_email(name, mail, phone, subject, message):
     email = EmailMultiAlternatives(
         'Contacto Ferretería FERME',
         'Ferretería FERME',
-        mail,
+        settings.EMAIL_HOST_USER,
         [settings.EMAIL_HOST_USER],
     )
 
@@ -490,7 +490,7 @@ def contact_form_done(request):
     return render(request, 'core/correo/contact_form_done.html')
 
 
-def send_confirmation_email(name, mail, subject, details, venta):
+def send_confirmation_email(name, mail, subject, details, venta, address, city, empresa):
     lista = []
     for i in details:
         total = i.total_item
@@ -502,12 +502,15 @@ def send_confirmation_email(name, mail, subject, details, venta):
         'subject': subject,
         'detalles': details,
         'total': total,
-        'venta': venta
+        'venta': venta,
+        'address': address,
+        'city': city,
+        'empresa': empresa,
     }
     template = get_template('core/correo/confirmacion_venta.html')
     content = template.render(context)
     email = EmailMultiAlternatives(
-        subject,
+        'Confrimación de pedido',
         'Ferretería FERME',
         settings.EMAIL_HOST_USER,
         [mail],
@@ -520,9 +523,12 @@ def send_confirmation_email(name, mail, subject, details, venta):
 def confirmacion_venta(request, index):
     name = request.user.nombre + ' ' + request.user.apellido
     mail = request.user.email
+    city = request.user.comuna
+    address = request.user.direccion
+    empresa = request.user.esempresa
     subject = 'Confirmación de pedido'
     details = DetalleVenta.objects.filter(id_venta=index)
     venta = Venta.objects.filter(id_venta=index).values_list('id_venta', flat=True)[0]
-    print(name, mail, subject, details, venta)
-    send_confirmation_email(name, mail, subject, details, venta)
+    print(name, mail, subject, details, venta, address, city, empresa)
+    send_confirmation_email(name, mail, subject, details, venta, address, city, empresa)
     return render(request, 'core/ventas/confirmacion_venta.html')

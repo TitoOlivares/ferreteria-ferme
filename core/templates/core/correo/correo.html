@@ -5,36 +5,33 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+
     <style>
-        p{
-            font-size: 20px;
+        header {
+            background-color: #90d7ff;
+            align-content: center;
+            padding: 20px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <h1>
-        Correo de confirmación
-    </h1>
-    <h5>
-        Asunto: {{ subject }} ||
-        Correo: {{ mail }}
-    </h5>
-    <p>
-        Estimado {{ name }} este correo se ha generado automáticamente
-    </p>
-    <p>
-        Nombre: {{ name }}
-    </p>
+    <header>
+        <h3 align="center">
+            Contacto ferretería FERME
+        </h3>
+    </header>
 
-    <p>
-
-        Teléfono: {{ phone }}
-    </p>
-
-    <p>
-        Mensaje: {{ message }}
-    </p>
+    ¡Gracias por ponerse en contacto con nosotros!
+    <p>Datos de contacto:</p>
+    <ul>
+        <li>Nombre: {{ name }}</li>
+        <li>Correo de contacto: {{ mail }}</li>
+        <li>Teléfono de contacto: {{ phone }}</li>
+        <li>Asunto: {{ subject }}</li>
+        <li>Mensaje: {{ message }}</li>
+    </ul>
 </div>
 </body>
 </html>

@@ -1,10 +1,17 @@
 {% extends 'core/base.html' %}
 {% load static %}
 {% load humanize %}
+{% load crispy_forms_tags %}
 
 {% block head %}
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
           integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <style>
+        .alert {
+            margin-top: 10%;
+            text-align: justify;
+        }
+    </style>
 {% endblock %}
 
 {% block content %}
@@ -38,9 +45,69 @@
                         <p class="card-text font-weight-bold">Stock: {{ producto.stock }} unidades</p>
                     {% endif %}
 
+                    {% if not user.is_authenticated %}
+                        <div class="text-center" style="margin-top: 15%; font-size: 14px">
+                            <p class="card-text">Para comprar este y otros productos de nuestro catálogo, inicia sesión
+                                <a href="{% url 'login' %}">AQUÍ</a></p>
+                            <p class="card-text">Si no tienes una cuenta, crea una <a
+                                    href="{% url 'registro_usuario' %}">AQUÍ</a>
+                            </p>
+                        </div>
+
+                    {% else %}
+                        <button class="btn btn-info" data-toggle="modal" href="#" data-target="#OrdenCompra">
+                            <i class="fas fa-shopping-cart"></i>
+                            Comprar
+                        </button>
+
+                    {% endif %}
+
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="OrdenCompra">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Nueva venta</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body text-center">
+                        <img src="{% static 'core/img/Demo.gif' %}" width="450" alt="Demo">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            {{ form | crispy }}
+
+                            {% if user.comuna not in 'Viña del mar' %}
+                                <div class="alert alert-warning">
+                                    <b>Estimado cliente: Antes de generar su pedido, le
+                                        recordamos que las compras con la
+                                        modalidad de despacho a domicilio solo están disponibles dentro de la
+                                        comuna
+                                        de
+                                        Viña del Mar. Según nuestros registros, su dirección está dentro de la
+                                        comuna de
+                                        {{ user.comuna }}, por lo que, una vez realizada la compra, su pedido
+                                        estará
+                                        disponible en nuestro local para su retiro. Agradecemos su
+                                        comprensión.</b>
+                                </div>
+                            {% endif %}
+
+                            <button type="submit" class="btn btn-primary" style="margin-top: 10%">Comprar
+                                productos
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 {% endblock %}
