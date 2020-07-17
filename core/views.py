@@ -83,8 +83,20 @@ class ProductDelete(DeleteView):
 # nuevo detalle producto
 def detalle_producto(request, indice):
     data = {
-        'producto': Producto.objects.get(id_producto=indice)
+        'producto': Producto.objects.get(id_producto=indice),
+        'form': VentaForm()
     }
+
+    if request.method == 'POST':
+        form = VentaForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.id_usuario = request.user
+            post.save()
+            return redirect(to='AgregarDetalleVenta')
+        else:
+            print('formulario incorrecto')
+        data['form'] = form
 
     return render(request, 'core/productos/detalle_producto.html', data)
 
